@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { authService } from 'fbase';
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -18,8 +18,6 @@ const Auth = () => {
 
   const { email, password } = loginInputs;
 
-  const auth = getAuth(); // component in out ?
-
   const onChange = (event) => {
     const { name, value } = event.target;
     setLoginInputs({
@@ -34,10 +32,14 @@ const Auth = () => {
       let data;
       if (newAccount) {
         // create newAccount
-        data = await createUserWithEmailAndPassword(auth, email, password);
+        data = await createUserWithEmailAndPassword(
+          authService,
+          email,
+          password
+        );
       } else {
         // log in
-        data = await signInWithEmailAndPassword(auth, email, password);
+        data = await signInWithEmailAndPassword(authService, email, password);
       }
       console.log('Auth data', data);
     } catch (error) {
@@ -51,19 +53,18 @@ const Auth = () => {
     setNewAccount((prev) => !prev);
   };
 
-  const onSocialClick = async (event) => {
-    const { name } = event.target;
+  const onSocialClick = async ({ target: { name } }) => {
     let provider;
     try {
       if (name === 'google') {
         provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const result = await signInWithPopup(authService, provider);
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
       } else if (name === 'github') {
         provider = new GithubAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        const credential = GithubAuthProvider.credentialFromResult(result);
+        const result = await signInWithPopup(authService, provider);
+        // const credential = GithubAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
       }
     } catch (error) {
