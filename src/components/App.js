@@ -12,12 +12,12 @@ function App() {
   useEffect(() => {
     // 사용자의 로그인 상태의 변화를 관찰하는 관찰자 추가
     onAuthStateChanged(authService, (user) => {
-      console.log('user', user);
+      console.log('App user', user);
       if (user) {
-        // console.log(user);
         setUserObj(user);
       } else {
         // User is signed out
+        console.log('not user');
       }
       setInit(true);
     });
@@ -30,7 +30,8 @@ function App() {
       ) : (
         <div>Initializing....</div>
       )}
-      <footer>&copy; {new Date().getFullYear()} Switter</footer>
+
+      {/* <footer>&copy; {new Date().getFullYear()} Switter</footer> */}
     </>
   );
 }

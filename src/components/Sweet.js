@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { ref, deleteObject } from '@firebase/storage';
 
 const Sweet = ({ sweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -13,6 +14,8 @@ const Sweet = ({ sweetObj, isOwner }) => {
       // delete sweet
       // await deleteDoc(doc(dbService, 'sweets', sweetObj.id));
       await deleteDoc(doc(dbService, `sweets/${sweetObj.id}`));
+      await deleteDoc(doc(dbService, `sweets/${sweetObj.id}`));
+      await deleteObject(ref(storageService, sweetObj.attachmentUrl));
     }
   };
 
@@ -20,7 +23,7 @@ const Sweet = ({ sweetObj, isOwner }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('sweetObj', sweetObj, '/ newSweet', newSweet);
+    // console.log('sweetObj', sweetObj, '/ newSweet', newSweet);
     await updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
       text: newSweet,
     });
@@ -48,6 +51,9 @@ const Sweet = ({ sweetObj, isOwner }) => {
       ) : (
         <>
           <h4>{sweetObj.text}</h4>
+          {sweetObj.attachmentUrl && (
+            <img src={sweetObj.attachmentUrl} width="50px" height="50px" />
+          )}
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete Sweet</button>
