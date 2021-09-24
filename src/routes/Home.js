@@ -132,7 +132,7 @@ const Home = ({ userObj }) => {
         <input type="submit" value="Sweet" />
         {attachment && (
           <div>
-            <img src={attachment} width="50px" height="50px" />
+            <img src={attachment} alt="imgs" width="50px" height="50px" />
             <button onClick={onClearAttachment}>Clear</button>
           </div>
         )}
