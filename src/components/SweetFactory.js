@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SweetFactory = ({ userObj }) => {
+  // console.log('SweetFactory userObj', userObj);
   const [sweet, setSweet] = useState('');
   const [attachment, setAttachment] = useState('');
 
@@ -32,6 +33,7 @@ const SweetFactory = ({ userObj }) => {
       createdAt: Date.now(),
       creatorId: userObj.uid,
       attachmentUrl,
+      dName: userObj.displayName,
       email: userObj.email,
     };
     await addDoc(collection(dbService, 'sweets'), sweetObj);

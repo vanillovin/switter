@@ -5,7 +5,8 @@ import { ref, deleteObject } from '@firebase/storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Sweet = ({ sweetObj, isOwner, userObj }) => {
+const Sweet = ({ sweetObj, isOwner }) => {
+  // console.log('Sweet sweetObj', sweetObj);
   const [editing, setEditing] = useState(false);
   const [newSweet, setNewSweet] = useState(sweetObj.text);
 
@@ -40,9 +41,7 @@ const Sweet = ({ sweetObj, isOwner, userObj }) => {
     return `${month}.${date}`;
   };
 
-  const getUserEmail = () => {
-    return sweetObj.email.split('@')[0];
-  };
+  // const getUserEmail = () => sweetObj.email.split('@')[0];
 
   return (
     <div className="sweet">
@@ -69,7 +68,7 @@ const Sweet = ({ sweetObj, isOwner, userObj }) => {
           <div className="hello">
             <div className="info">
               <span style={{ fontWeight: 'bold', marginRight: 4 }}>
-                {getUserEmail()}
+                {sweetObj.dName || '♥'}
               </span>
               <span
                 style={{
