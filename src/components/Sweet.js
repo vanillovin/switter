@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { dbService, storageService } from 'fbase';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { ref, deleteObject } from '@firebase/storage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Sweet = ({ sweetObj, isOwner }) => {
+const Sweet = ({ sweetObj, isOwner, userObj }) => {
   const [editing, setEditing] = useState(false);
   const [newSweet, setNewSweet] = useState(sweetObj.text);
 
@@ -23,7 +25,7 @@ const Sweet = ({ sweetObj, isOwner }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // console.log('sweetObj', sweetObj, '/ newSweet', newSweet);
+    console.log('sweetObj', sweetObj, '/ newSweet', newSweet);
     await updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
       text: newSweet,
     });
@@ -32,38 +34,63 @@ const Sweet = ({ sweetObj, isOwner }) => {
 
   const onChange = ({ target: { value } }) => setNewSweet(value);
 
+  const getCreatedAt = () => {
+    const month = new Date(sweetObj.createdAt).getMonth() + 1;
+    const date = new Date(sweetObj.createdAt).getDate();
+    return `${month}.${date}`;
+  };
+
   return (
-    <div>
+    <div className="sweet">
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="container sweetEdit">
             <input
               type="text"
               placeholder="Edit your sweet"
               value={newSweet}
               required
+              autoFocus
               onChange={onChange}
+              className="formInput"
             />
-            <input type="submit" value="Update Sweet" />
+            <input type="submit" value="Update Sweet" className="formBtn" />
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
         </>
       ) : (
         <>
-          <h4>{sweetObj.text}</h4>
+          <div className="hello">
+            <div className="info">
+              <span style={{ fontWeight: 'bold', marginRight: 4 }}>
+                {userObj.displayName || '♥'}
+              </span>
+              <span
+                style={{
+                  color: 'gray',
+                  fontSize: 10,
+                  fontWeight: 400,
+                }}
+              >
+                {getCreatedAt()}
+              </span>
+            </div>
+            {isOwner && (
+              <div className="sweet__actions">
+                <span onClick={onDeleteClick}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </span>
+                <span onClick={toggleEditing}>
+                  <FontAwesomeIcon icon={faPencilAlt} />
+                </span>
+              </div>
+            )}
+          </div>
+          <span className="sweet__text">{sweetObj.text}</span>
           {sweetObj.attachmentUrl && (
-            <img
-              src={sweetObj.attachmentUrl}
-              alt="img"
-              width="50px"
-              height="50px"
-            />
-          )}
-          {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Sweet</button>
-              <button onClick={toggleEditing}>Edit Sweet</button>
-            </>
+            <img alt="img" src={sweetObj.attachmentUrl} />
           )}
         </>
       )}
