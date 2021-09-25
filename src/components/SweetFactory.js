@@ -32,6 +32,7 @@ const SweetFactory = ({ userObj }) => {
       createdAt: Date.now(),
       creatorId: userObj.uid,
       attachmentUrl,
+      email: userObj.email,
     };
     await addDoc(collection(dbService, 'sweets'), sweetObj);
     setSweet('');

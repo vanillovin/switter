@@ -40,6 +40,10 @@ const Sweet = ({ sweetObj, isOwner, userObj }) => {
     return `${month}.${date}`;
   };
 
+  const getUserEmail = () => {
+    return sweetObj.email.split('@')[0];
+  };
+
   return (
     <div className="sweet">
       {editing ? (
@@ -65,7 +69,7 @@ const Sweet = ({ sweetObj, isOwner, userObj }) => {
           <div className="hello">
             <div className="info">
               <span style={{ fontWeight: 'bold', marginRight: 4 }}>
-                {userObj.displayName || '♥'}
+                {getUserEmail()}
               </span>
               <span
                 style={{

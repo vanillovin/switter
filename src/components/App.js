@@ -17,6 +17,7 @@ function App() {
       if (user) {
         // setUserObj(user);
         setUserObj({
+          email: user.email,
           displayName: user.displayName,
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args),
@@ -35,6 +36,7 @@ function App() {
     const user = authService.currentUser;
     console.log(authService.currentUser.displayName);
     setUserObj({
+      email: user.email,
       displayName: user.displayName,
       uid: user.uid,
       updateProfile: (args) => user.updateProfile(args),
