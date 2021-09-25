@@ -104,7 +104,7 @@ const SweetFactory = ({ userObj }) => {
           value={sweet}
           onChange={onChange}
           type="text"
-          placeholder="What kind of sweet thoughts are you having?"
+          placeholder="What sweet thoughts are you thinking of?"
           maxLength={120}
         />
         <input
