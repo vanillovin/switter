@@ -163,6 +163,7 @@ form.container {
   width: 40px;
   height: 40px;
   color: white;
+  border: 1px solid #5f3dc4;
 }
 .factoryInput__label {
   color: #ffb344;
@@ -414,7 +415,7 @@ form.profileForm .formBtn:hover {
     align-items: flex-start;
   }
   li {
-    margin: 0 20px;
+    margin: 0 10px;
     margin-bottom: 0;
   }
   .home,
