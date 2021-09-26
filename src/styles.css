@@ -34,13 +34,13 @@ form {
   color: #e05d5d;
 }
 nav {
-  width: 85px; /*80*/
+  width: 80px;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   background-color: white;
-  padding: 45px 0; /*40 0*/
+  padding: 40px 0;
 }
 ul {
   display: flex;
@@ -51,10 +51,8 @@ li {
   margin-bottom: 45px; /*40*/
 }
 li span {
+  width: 55px;
   margin-top: 10px;
-}
-li.profile span {
-  width: 60px;
   text-align: center;
   overflow-wrap: break-word;
 }
@@ -149,11 +147,12 @@ form.container {
 .factoryInput__arrow {
   cursor: pointer;
   display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   background-color: #5f3dc4;
   width: 40px;
-  height: 100%;
+  height: 40px;
   color: white;
 }
 .factoryInput__label {
@@ -358,24 +357,24 @@ form.sweetEdit {
 /* button hover */
 .logOut:hover,
 .authSubmit:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 80%;
   transition: 0.2s linear;
 }
 .authBtn:hover,
 form.profileForm .formBtn:hover {
-  transition: 0.2s;
-  background-color: rgba(208, 191, 255, 0.6);
+  opacity: 60%;
+  transition: 0.2s linear;
 }
 li:hover svg {
-  color: rgba(224, 93, 93, 0.4);
+  opacity: 40%;
 }
 .factoryForm__clear:hover,
 .factoryInput__label:hover {
-  color: rgba(255, 179, 68, 0.6);
+  opacity: 60%;
 }
 .msgs .chat:hover {
-  background-color: rgba(230, 230, 230, 0.2);
   transition: 0.2s linear;
+  background-color: rgba(230, 230, 230, 0.2);
 }
 .back:hover {
   color: #000;
