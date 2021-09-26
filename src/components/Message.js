@@ -2,9 +2,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 
-const Message = ({ userName = '♥' }) => {
+const Message = ({ userName }) => {
   const [open, setOpen] = useState(true);
-  const [msg, setMsg] = useState(`${userName} click me :)`);
+  const [msg, setMsg] = useState(`${userName || 'hey'} click me :)`);
 
   const msgArr = [
     "Don't dwell on the past",

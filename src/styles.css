@@ -168,11 +168,9 @@ li.logo span {
   width: 40px;
   height: 100%;
   color: white;
-  /* border-radius: 20px; */
 }
 
 .factoryInput__label {
-  color: #00a19d;
   color: #ffb344;
   cursor: pointer;
 }
@@ -195,7 +193,6 @@ li.logo span {
 }
 
 .factoryForm__clear {
-  color: #00a19d;
   color: #ffb344;
   cursor: pointer;
   text-align: center;
@@ -205,6 +202,11 @@ li.logo span {
 .factoryForm__clear span {
   margin-right: 10px;
   font-size: 12px;
+}
+
+.factoryForm__clear:hover,
+.factoryInput__label:hover {
+  color: rgba(255, 179, 68, 0.6);
 }
 
 /* Sweet */
@@ -259,11 +261,7 @@ li.logo span {
 }
 
 .sweet__actions {
-  color: #ffb344;
   color: #00a19d;
-  /* position: absolute;
-  right: 10px;
-  top: 6px; */
 }
 
 .sweet__actions span {
@@ -405,20 +403,19 @@ input.formBtn:hover {
   border-radius: 20px;
   width: 200px;
   padding: 15px 20px;
-  /* margin: 20px 0 0 15px; */
 }
 
 .back {
-  top: 8px;
-  left: 14px;
   position: absolute;
+  top: 8px;
+  left: 16px;
   font-size: 26px;
   cursor: pointer;
   color: gray;
 }
 
 .back:hover {
-  color: black;
+  color: #000;
 }
 
 @media screen and (max-width: 800px) {
