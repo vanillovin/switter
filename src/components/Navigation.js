@@ -15,8 +15,19 @@ const Navigation = ({ userObj }) => {
       {/* <ul style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}> */}
       <ul style={{ display: 'flex', justifyContent: 'center' }}>
         <li className="logo">
-          <NavLink to="/">
+          <NavLink
+            to="/"
+            activeClassName=""
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              fontSize: 12,
+              color: '#E05D5D',
+            }}
+          >
             <FontAwesomeIcon icon={faTwitter} size="2x" color="#E05D5D" />
+            <span style={{ marginTop: 10 }}>♥</span>
           </NavLink>
         </li>
         <li className="home">
