@@ -50,6 +50,9 @@ ul {
 li {
   margin-bottom: 45px; /*40*/
 }
+li:hover svg {
+  color: rgba(224, 93, 93, 0.6);
+}
 li span {
   width: 55px;
   margin-top: 10px;
@@ -114,6 +117,12 @@ form.container {
   margin-top: 25px;
   background-color: black;
   color: white;
+}
+
+.logOut:hover,
+.authSubmit:hover {
+  transition: 0.2s linear;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Switter Factory */
@@ -270,6 +279,11 @@ form.sweetEdit {
   background: #d0bfff;
   cursor: pointer;
 }
+.authBtn:hover,
+form.profileForm .formBtn:hover {
+  transition: 0.2s linear;
+  background: rgba(208, 191, 255, 0.6);
+}
 
 /* AuthForm */
 .authInput {
@@ -352,25 +366,6 @@ form.sweetEdit {
   font-size: 26px;
   cursor: pointer;
   color: gray;
-}
-
-/* button hover */
-.logOut:hover,
-.authSubmit:hover {
-  opacity: 80%;
-  transition: 0.2s linear;
-}
-.authBtn:hover,
-form.profileForm .formBtn:hover {
-  opacity: 60%;
-  transition: 0.2s linear;
-}
-li:hover svg {
-  opacity: 60%;
-}
-.factoryForm__clear:hover,
-.factoryInput__label:hover {
-  opacity: 60%;
 }
 .msgs .chat:hover {
   transition: 0.2s linear;
