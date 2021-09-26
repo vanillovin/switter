@@ -366,7 +366,7 @@ form.profileForm .formBtn:hover {
   transition: 0.2s linear;
 }
 li:hover svg {
-  opacity: 40%;
+  opacity: 60%;
 }
 .factoryForm__clear:hover,
 .factoryInput__label:hover {
