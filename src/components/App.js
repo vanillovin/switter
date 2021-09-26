@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     // 사용자의 로그인 상태의 변화를 관찰하는 관찰자 추가
     onAuthStateChanged(authService, (user) => {
-      console.log('App user', user);
+      // console.log('App user', user);
       if (user) {
         // setUserObj(user);
         setUserObj({
