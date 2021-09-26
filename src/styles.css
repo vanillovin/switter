@@ -79,9 +79,7 @@ li a.active span {
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  margin: 80px 10px 0 10px;
-  /* padding: 0 10px;
-  box-sizing: border-box; */
+  margin: 80px 0;
 }
 
 .formInput {
@@ -281,7 +279,6 @@ li a.active span {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  padding: 0 10px;
 }
 
 .authBtns {
@@ -417,6 +414,13 @@ input.formBtn:hover {
 }
 
 @media screen and (max-width: 800px) {
+  .container {
+    margin-top: 60px;
+    padding: 0 20px;
+  }
+  .authContainer {
+    padding: 0 20px;
+  }
   nav {
     display: flex;
     align-items: center;
@@ -438,8 +442,5 @@ input.formBtn:hover {
   .home,
   .more {
     display: none;
-  }
-  .container {
-    margin-top: 40px;
   }
 }
