@@ -15,38 +15,19 @@ const Navigation = ({ userObj }) => {
       {/* <ul style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}> */}
       <ul style={{ display: 'flex', justifyContent: 'center' }}>
         <li className="logo">
-          <NavLink
-            to="/"
-            activeClassName=""
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              fontSize: 12,
-              color: '#E05D5D',
-            }}
-          >
+          <NavLink to="/" className="navlink" activeClassName="">
             <FontAwesomeIcon icon={faTwitter} size="2x" color="#E05D5D" />
             <span style={{ marginTop: 10 }}>♥</span>
           </NavLink>
         </li>
         <li className="home">
-          <NavLink to="/">
+          <NavLink to="/" className="navlink" activeClassName="">
             <FontAwesomeIcon icon={faHome} size="2x" color="#E05D5D" />
+            <span style={{ marginTop: 10 }}>home</span>
           </NavLink>
         </li>
         <li className="profile">
-          <NavLink
-            activeClassName=""
-            to="/profile"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              fontSize: 12,
-              color: '#E05D5D',
-            }}
-          >
+          <NavLink className="navlink" activeClassName="" to="/profile">
             <FontAwesomeIcon icon={faUser} size="2x" />
             <span style={{ marginTop: 10 }}>
               {userObj.displayName ? `${userObj.displayName}` : '♥'}
@@ -54,17 +35,7 @@ const Navigation = ({ userObj }) => {
           </NavLink>
         </li>
         <li className="msg">
-          <NavLink
-            activeClassName="active"
-            to="/msg"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              fontSize: 12,
-              color: '#E05D5D',
-            }}
-          >
+          <NavLink to="/msg" className="navlink" activeClassName="active">
             <FontAwesomeIcon icon={faEnvelope} size="2x" color="#E05D5D" />
             <span style={{ marginTop: 10 }}>{'+1'}</span>
           </NavLink>
