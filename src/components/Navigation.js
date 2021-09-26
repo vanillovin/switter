@@ -17,27 +17,25 @@ const Navigation = ({ userObj }) => {
         <li className="logo">
           <NavLink to="/" className="navlink" activeClassName="">
             <FontAwesomeIcon icon={faTwitter} size="2x" color="#E05D5D" />
-            <span style={{ marginTop: 10 }}>♥</span>
+            <span>♥</span>
           </NavLink>
         </li>
         <li className="home">
           <NavLink to="/" className="navlink" activeClassName="">
             <FontAwesomeIcon icon={faHome} size="2x" color="#E05D5D" />
-            <span style={{ marginTop: 10 }}>home</span>
+            <span>home</span>
           </NavLink>
         </li>
         <li className="profile">
           <NavLink className="navlink" activeClassName="" to="/profile">
             <FontAwesomeIcon icon={faUser} size="2x" />
-            <span style={{ marginTop: 10 }}>
-              {userObj.displayName ? `${userObj.displayName}` : '♥'}
-            </span>
+            <span>{userObj.displayName ? `${userObj.displayName}` : '♥'}</span>
           </NavLink>
         </li>
         <li className="msg">
           <NavLink to="/msg" className="navlink" activeClassName="active">
             <FontAwesomeIcon icon={faEnvelope} size="2x" color="#E05D5D" />
-            <span style={{ marginTop: 10 }}>{'+1'}</span>
+            <span>{'+1'}</span>
           </NavLink>
         </li>
         <li className="more">
