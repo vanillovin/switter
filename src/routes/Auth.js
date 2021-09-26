@@ -37,7 +37,7 @@ const Auth = () => {
     <div className="authContainer">
       <FontAwesomeIcon
         icon={faTwitter}
-        color={'#9775fa'}
+        color={'#000'}
         size="3x"
         style={{ marginBottom: 30 }}
       />
