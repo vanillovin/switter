@@ -120,7 +120,7 @@ form.container {
 }
 /* .authContainer.dark .authBtn */
 .profileForm.dark .formBtn {
-  background-color: #9aabb9;
+  background-color: #84a2bb;
 }
 
 /* Profile Page */
@@ -141,10 +141,11 @@ form.container {
   transition: 0.2s linear;
   background-color: rgba(0, 0, 0, 0.6);
 }
-.profileForm.dark .formInput,
+.profileForm.dark .formInput {
+  border: 1px solid #e7e6ed;
+}
 .profileForm.dark .formInput::placeholder {
   color: #e7e6ed;
-  border: 1px solid #e7e6ed;
 }
 
 /* Switter Factory */
@@ -315,7 +316,7 @@ form.sweetEdit {
 }
 .sweet.dark .sweetEdit .formBtn {
   color: black;
-  background-color: #9aabb9;
+  background-color: #84a2bb;
 }
 .sweet.dark .cancelBtn {
   color: black;
