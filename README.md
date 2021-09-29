@@ -11,13 +11,15 @@
 
 # 기능 소개
 
-1. 로그인 회원가입
-   ![1](public/img/1.jpg)
+1. 이메일 비번 or 구글 깃허브 로그인 회원가입
+<img src="public/img/1.JPG" width="500">
 2. 게시글
-   ![2](public/img/2.jpg)
-3. 유저 정보 로그아웃
-   ![3](public/img/3.jpg)
+<img src="public/img/2.JPG" width="500">
+3. 프로필
+<img src="public/img/3.JPG" width="500">
 4. 메신저
-   ![4](public/img/4.jpg)
+<img src="public/img/4.JPG" width="500">
+5. 다크모드
+<img src="public/img/5.JPG" width="500">
 
 # TODO
