@@ -8,6 +8,16 @@ function App() {
   const [init, setInit] = useState(false); // flase면 router 숨기기
   // userObj의 제일 처음 출발점!
   const [userObj, setUserObj] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
+
+  // darkmode test
+  // useEffect(() => {
+  //   const getLocalStorage = async () => {
+  //     let darkmode = localStorage.getItem('dark-mode');
+  //     setDarkMode(!!darkmode);
+  //   };
+  //   getLocalStorage();
+  // }, []);
 
   // 처음 시작할 때. 컴포넌트가 mount 될 때
   useEffect(() => {
@@ -43,6 +53,16 @@ function App() {
     });
   };
 
+  const onDarkMode = () => {
+    // const dark = localStorage.setItem('dark-mode', true);
+
+    console.log(localStorage.getItem('dark-mode'));
+    darkMode
+      ? (document.body.style = 'background-color: #fff8e5')
+      : (document.body.style = 'background-color: #193446');
+    setDarkMode(!darkMode);
+  };
+
   return (
     <>
       {init ? (
@@ -50,6 +70,8 @@ function App() {
           refreshUser={refreshUser}
           isLoggedIn={Boolean(userObj)}
           userObj={userObj}
+          darkMode={darkMode}
+          onDarkMode={onDarkMode}
         />
       ) : (
         <div>Initializing....</div>

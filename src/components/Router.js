@@ -6,7 +6,13 @@ import Navigation from 'components/Navigation';
 import Profile from 'routes/Profile';
 import Message from 'components/Message';
 
-const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
+const AppRouter = ({
+  refreshUser,
+  isLoggedIn,
+  userObj,
+  darkMode,
+  onDarkMode,
+}) => {
   // <Route exact path="/">
   //   {isLoggedIn ? <Home /> : <Auth />}
   // </Route>;
@@ -15,7 +21,13 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
     <Router>
       <Switch>
         <>
-          {isLoggedIn && <Navigation userObj={userObj} />}
+          {isLoggedIn && (
+            <Navigation
+              userObj={userObj}
+              darkMode={darkMode}
+              onDarkMode={onDarkMode}
+            />
+          )}
           {isLoggedIn ? (
             <div
               style={{
@@ -27,10 +39,18 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
               }}
             >
               <Route exact path="/">
-                <Home userObj={userObj} />
+                <Home
+                  userObj={userObj}
+                  darkMode={darkMode}
+                  onDarkMode={onDarkMode}
+                />
               </Route>
               <Route exact path="/profile">
-                <Profile userObj={userObj} refreshUser={refreshUser} />
+                <Profile
+                  userObj={userObj}
+                  refreshUser={refreshUser}
+                  darkMode={darkMode}
+                />
               </Route>
               <Route exact path="/msg">
                 <Message userName={userObj.displayName} />
@@ -39,7 +59,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
           ) : (
             <>
               <Route exact path="/">
-                <Auth />
+                <Auth darkMode={darkMode} />
               </Route>
               {/* <Redirect from="*" to="/" /> */}
             </>

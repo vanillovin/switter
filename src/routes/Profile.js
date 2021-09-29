@@ -4,7 +4,7 @@ import { authService } from 'fbase';
 import { signOut, updateProfile } from '@firebase/auth';
 // import { collection, getDocs, orderBy, query, where } from '@firebase/firestore';
 
-const Profile = ({ refreshUser, userObj }) => {
+const Profile = ({ refreshUser, userObj, darkMode }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
 
@@ -52,7 +52,10 @@ const Profile = ({ refreshUser, userObj }) => {
 
   return (
     <div className="container">
-      <form onSubmit={onSubmit} className="profileForm">
+      <form
+        onSubmit={onSubmit}
+        className={darkMode ? 'profileForm dark' : 'profileForm'}
+      >
         <input
           onChange={onChange}
           type="text"

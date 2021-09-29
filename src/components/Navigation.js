@@ -5,24 +5,26 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
   faEllipsisH,
   faEnvelope,
+  faHeart,
   faHome,
+  faMoon,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Navigation = ({ userObj }) => {
+const Navigation = ({ userObj, darkMode, onDarkMode }) => {
   return (
-    <nav>
+    <nav className={darkMode ? 'nav dark' : 'nav'}>
       {/* <ul style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}> */}
       <ul style={{ display: 'flex', justifyContent: 'center' }}>
         <li className="logo">
           <NavLink to="/" className="navlink" activeClassName="">
-            <FontAwesomeIcon icon={faTwitter} size="2x" color="#E05D5D" />
+            <FontAwesomeIcon icon={faTwitter} size="2x" />
             <span>♥</span>
           </NavLink>
         </li>
         <li className="home">
           <NavLink to="/" className="navlink" activeClassName="">
-            <FontAwesomeIcon icon={faHome} size="2x" color="#E05D5D" />
+            <FontAwesomeIcon icon={faHome} size="2x" />
             <span>home</span>
           </NavLink>
         </li>
@@ -34,12 +36,20 @@ const Navigation = ({ userObj }) => {
         </li>
         <li className="msg">
           <NavLink to="/msg" className="navlink" activeClassName="active">
-            <FontAwesomeIcon icon={faEnvelope} size="2x" color="#E05D5D" />
+            <FontAwesomeIcon icon={faEnvelope} size="2x" />
             <span>{'+1'}</span>
           </NavLink>
         </li>
-        <li className="more">
-          <FontAwesomeIcon icon={faEllipsisH} size="2x" color="#E05D5D" />
+        <li className="dark" onClick={onDarkMode} className="navlink">
+          <FontAwesomeIcon
+            icon={faMoon}
+            size="2x"
+            color={darkMode ? '#e9c77b' : '#193446'}
+          />
+          <span>{darkMode ? 'light' : 'dark'}</span>
+        </li>
+        <li className="more navlink">
+          <FontAwesomeIcon icon={faEllipsisH} size="2x" />
         </li>
       </ul>
     </nav>

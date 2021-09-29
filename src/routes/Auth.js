@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import AuthForm from 'components/AuthForm';
 
-const Auth = () => {
+const Auth = ({ darkMode }) => {
   const onSocialClick = async ({ target: { name } }) => {
     let provider;
     try {
@@ -34,7 +34,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="authContainer">
+    <div className={darkMode ? 'authContainer dark' : 'authContainer'}>
       <FontAwesomeIcon
         icon={faTwitter}
         color={'#9775fa'}

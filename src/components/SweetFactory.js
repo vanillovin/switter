@@ -6,7 +6,7 @@ import { ref, uploadString, getDownloadURL } from '@firebase/storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const SweetFactory = ({ userObj }) => {
+const SweetFactory = ({ userObj, darkMode }) => {
   // console.log('SweetFactory userObj', userObj);
   const [sweet, setSweet] = useState('');
   const [attachment, setAttachment] = useState('');
@@ -97,7 +97,10 @@ const SweetFactory = ({ userObj }) => {
   //   </form>
 
   return (
-    <form onSubmit={onSubmit} className="factoryForm">
+    <form
+      onSubmit={onSubmit}
+      className={darkMode ? 'factoryForm dark' : 'factoryForm'}
+    >
       <div className="factoryInput__container">
         <input
           className="factoryInput__input"

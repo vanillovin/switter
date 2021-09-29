@@ -26,14 +26,7 @@ a {
 form {
   width: 100%;
 }
-.navlink {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 12px;
-  color: #e05d5d;
-}
-nav {
+.nav {
   width: 80px;
   height: 100vh;
   position: fixed;
@@ -41,6 +34,26 @@ nav {
   left: 0;
   background-color: white;
   padding: 40px 0;
+}
+/* nav dark */
+.nav.dark {
+  border-right: 1px solid rgba(231, 230, 237, 0.4);
+  background-color: #193446;
+}
+.nav.dark .navlink,
+.nav.dark li span {
+  color: #e7e6ed;
+}
+.nav.dark .navlink:hover svg {
+  color: rgba(231, 230, 237, 0.6);
+}
+.navlink {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #e05d5d;
 }
 ul {
   display: flex;
@@ -102,7 +115,12 @@ form.container {
   color: white;
   border-radius: 20px;
   background-color: #b197fc;
+  background-color: #b197fc;
   cursor: pointer;
+}
+/* .authContainer.dark .authBtn */
+.profileForm.dark .formBtn {
+  background-color: #9aabb9;
 }
 
 /* Profile Page */
@@ -118,11 +136,15 @@ form.container {
   background-color: black;
   color: white;
 }
-
 .logOut:hover,
 .authSubmit:hover {
   transition: 0.2s linear;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.profileForm.dark .formInput,
+.profileForm.dark .formInput::placeholder {
+  color: #e7e6ed;
+  border: 1px solid #e7e6ed;
 }
 
 /* Switter Factory */
@@ -193,6 +215,29 @@ form.container {
   margin-right: 10px;
   font-size: 12px;
 }
+.factoryInput__label:hover,
+.factoryForm__clear:hover {
+  color: rgba(255, 179, 68, 0.6);
+}
+/* factory dark */
+.factoryForm.dark .factoryInput__input {
+  color: #e7e6ed;
+  border: 1px solid #e9c77b;
+}
+.factoryForm.dark .factoryInput__arrow {
+  color: black;
+  border: 1px solid #e9c77b;
+  background-color: #e9c77b;
+}
+.factoryForm.dark .factoryInput__label,
+.factoryForm.dark .factoryForm__clear {
+  color: #e9c77b;
+}
+.factoryForm.dark .factoryInput__label:hover,
+.factoryForm.dark .factoryForm__clear:hover {
+  color: rgba(233, 199, 123, 0.6);
+  /* color: rgba(245, 224, 128, 0.6); */
+}
 
 /* Sweet */
 .hello {
@@ -250,6 +295,31 @@ form.sweetEdit {
 .cancelBtn {
   cursor: pointer;
   background-color: #e5dbff;
+}
+/* sweet dark */
+.sweet.dark {
+  background-color: #193446;
+  border: 1px solid rgba(231, 230, 237, 0.4);
+}
+.sweet.dark .dname,
+.sweet.dark .sweet__text {
+  color: #e7e6ed;
+}
+.sweet.dark .sweet__actions {
+  color: #e28484;
+}
+.sweet.dark input.formInput,
+.sweet.dark .formInput::placeholder {
+  color: #e7e6ed;
+  border: 1px solid #e7e6ed;
+}
+.sweet.dark .sweetEdit .formBtn {
+  color: black;
+  background-color: #9aabb9;
+}
+.sweet.dark .cancelBtn {
+  color: black;
+  background-color: #c4d4e0;
 }
 
 /* Auth */
@@ -393,13 +463,15 @@ form.profileForm .formBtn:hover {
     padding: 0 20px;
   }
   .authBtns button {
-    padding: 10px 12px;
+    width: 156px;
+    font-size: 11.5px;
+    /* padding: 10px 12px; */
   }
   li.logo span {
     /* display: block; */
     color: #e05d5d;
   }
-  nav {
+  .nav {
     width: 100%;
     display: flex;
     align-items: center;
@@ -415,7 +487,7 @@ form.profileForm .formBtn:hover {
     align-items: flex-start;
   }
   li {
-    margin: 0 10px;
+    margin: 0 6px;
     margin-bottom: 0;
   }
   .home,

@@ -9,7 +9,7 @@ import {
 import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
 
-const Home = ({ userObj }) => {
+const Home = ({ userObj, darkMode }) => {
   const [sweets, setSweets] = useState([]);
 
   // 구식방법/오래된 방식이다(X)
@@ -56,7 +56,7 @@ const Home = ({ userObj }) => {
 
   return (
     <div className="container">
-      <SweetFactory userObj={userObj} />
+      <SweetFactory userObj={userObj} darkMode={darkMode} />
       <div style={{ marginTop: 30 }}>
         {sweets.map((sweet) => (
           <Sweet
@@ -64,6 +64,7 @@ const Home = ({ userObj }) => {
             userObj={userObj}
             sweetObj={sweet}
             isOwner={sweet.creatorId === userObj.uid}
+            darkMode={darkMode}
           />
         ))}
       </div>

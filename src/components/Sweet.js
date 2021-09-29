@@ -5,7 +5,7 @@ import { ref, deleteObject } from '@firebase/storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Sweet = ({ sweetObj, isOwner }) => {
+const Sweet = ({ sweetObj, isOwner, darkMode }) => {
   // console.log('Sweet sweetObj', sweetObj);
   const [editing, setEditing] = useState(false);
   const [newSweet, setNewSweet] = useState(sweetObj.text);
@@ -44,18 +44,18 @@ const Sweet = ({ sweetObj, isOwner }) => {
   // const getUserEmail = () => sweetObj.email.split('@')[0];
 
   return (
-    <div className="sweet">
+    <div className={darkMode ? 'sweet dark' : 'sweet'}>
       {editing ? (
         <>
-          <form onSubmit={onSubmit} className="container sweetEdit">
+          <form className="container sweetEdit" onSubmit={onSubmit}>
             <input
+              className="formInput"
               type="text"
               placeholder="Edit your sweet"
               value={newSweet}
               required
               autoFocus
               onChange={onChange}
-              className="formInput"
             />
             <input type="submit" value="Update Sweet" className="formBtn" />
           </form>
@@ -67,7 +67,10 @@ const Sweet = ({ sweetObj, isOwner }) => {
         <>
           <div className="hello">
             <div className="info">
-              <span style={{ fontWeight: 'bold', marginRight: 4 }}>
+              <span
+                className="dname"
+                style={{ fontWeight: 'bold', marginRight: 4 }}
+              >
                 {sweetObj.dName || '♥'}
               </span>
               <span
