@@ -12,17 +12,17 @@
 # 기능 소개
 
 1. 이메일 비번 or 구글 깃허브 로그인 회원가입
-   <img src="public/img/1.JPG" width="400">
+   + <img src="public/img/1.JPG" width="400">
 2. 게시글
-   <img src="public/img/2.JPG" width="400">
+   + <img src="public/img/2.JPG" width="400">
 3. 프로필
-   <img src="public/img/3.JPG" width="400">
+   + <img src="public/img/3.JPG" width="400">
 4. 메신저
-   <img src="public/img/4.JPG" width="400">
+   + <img src="public/img/4.JPG" width="400">
 5. 다크모드
-   <img src="public/img/5.JPG" width="400">
+   + <img src="public/img/5.JPG" width="400">
 6. 좋아요
-   <img src="public/img/6.JPG" width="400">
+   + <img src="public/img/6.JPG" width="400">
 
 # TODO
 1. 댓글달기
