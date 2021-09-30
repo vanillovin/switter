@@ -136,7 +136,7 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
                       : '#d3d3d3',
                   }}
                 />
-                {' ' + numberOfLikes()}
+                <span>{' ' + numberOfLikes()}</span>
               </button>
             </div>
             <div style={{ padding: 4 }}>

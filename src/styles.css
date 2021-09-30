@@ -312,8 +312,11 @@ form.sweetEdit {
   align-items: center;
   justify-content: space-between;
 }
+.sweet .bottom div {
+}
 .sweet .heart {
-  padding: 4px 0 0 0;
+  /* display: flex;
+  align-items: center; */
 }
 .sweet .heart > button {
   cursor: pointer;
