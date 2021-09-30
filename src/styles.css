@@ -15,7 +15,6 @@ body {
 }
 .test {
   display: flex;
-  align-items: c;
   justify-content: space-between;
 }
 .left {
@@ -504,13 +503,14 @@ form.profileForm .formBtn:hover {
     background-color: #fff8e5;
   }
   .test {
+    width: 100%;
     flex-direction: column;
   }
   .left {
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
     height: 100px;
     background-color: #fff8e5;
     z-index: 100;
@@ -521,6 +521,8 @@ form.profileForm .formBtn:hover {
     padding: 40px 0 0 0;
   }
   .right {
+    width: 100%;
+    align-items: center;
     border: none;
     margin-top: 40px;
   }
@@ -531,12 +533,20 @@ form.profileForm .formBtn:hover {
   .right.dark {
     border: none;
   }
+  .authContainer {
+    width: 400px;
+  }
+  .authContainer input {
+    width: 100%;
+  }
   .authBtns {
+    width: 400px;
+    padding: 0 20px;
     flex-direction: row;
     justify-content: space-between;
   }
   .authBtns button {
-    width: 196px;
+    padding: 10px 22px;
   }
   form.sweetEdit {
     padding: 0;
