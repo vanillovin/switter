@@ -37,12 +37,15 @@ form {
 }
 /* nav dark */
 .nav.dark {
-  border-right: 1px solid rgba(231, 230, 237, 0.4);
   background-color: #193446;
+  border-right: 1px solid rgba(231, 230, 237, 0.4);
 }
 .nav.dark .navlink,
 .nav.dark li span {
   color: #e7e6ed;
+}
+.nav.dark li:first-child span {
+  color: transparent;
 }
 .nav.dark .navlink:hover svg {
   color: rgba(231, 230, 237, 0.6);
@@ -72,8 +75,11 @@ li span {
   text-align: center;
   overflow-wrap: break-word;
 }
-/* nav msg */
+/* nav msg active */
 li a.active span {
+  color: transparent;
+}
+.nav.dark li a.active span {
   color: transparent;
 }
 /* nav logo */
@@ -245,11 +251,14 @@ form.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .info {
   display: flex;
   align-items: center;
+}
+.sweet .dname {
+  padding-left: 1px;
 }
 form.sweetEdit {
   margin: 0;
@@ -297,6 +306,21 @@ form.sweetEdit {
   cursor: pointer;
   background-color: #e5dbff;
 }
+.sweet .bottom {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sweet .heart {
+  padding: 4px 0 0 0;
+}
+.sweet .heart > button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: 4px 4px 4px 2px;
+}
 /* sweet dark */
 .sweet.dark {
   background-color: #193446;
@@ -321,6 +345,9 @@ form.sweetEdit {
 .sweet.dark .cancelBtn {
   color: black;
   background-color: #c4d4e0;
+}
+.sweet.dark .heart > button {
+  color: #e7e6ed;
 }
 
 /* Auth */
@@ -471,6 +498,9 @@ form.profileForm .formBtn:hover {
   li.logo span {
     /* display: block; */
     color: #e05d5d;
+  }
+  .nav.dark li:first-child span {
+    color: #e7e6ed;
   }
   .nav {
     width: 100%;

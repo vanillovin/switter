@@ -3,9 +3,15 @@ import { dbService, storageService } from 'fbase';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { ref, deleteObject } from '@firebase/storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTrash,
+  faPencilAlt,
+  faHeart,
+  faShare,
+  faComment,
+} from '@fortawesome/free-solid-svg-icons';
 
-const Sweet = ({ sweetObj, isOwner, darkMode }) => {
+const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
   // console.log('Sweet sweetObj', sweetObj);
   const [editing, setEditing] = useState(false);
   const [newSweet, setNewSweet] = useState(sweetObj.text);
@@ -17,8 +23,9 @@ const Sweet = ({ sweetObj, isOwner, darkMode }) => {
       // delete sweet
       // await deleteDoc(doc(dbService, 'sweets', sweetObj.id));
       await deleteDoc(doc(dbService, `sweets/${sweetObj.id}`));
-      await deleteDoc(doc(dbService, `sweets/${sweetObj.id}`));
-      await deleteObject(ref(storageService, sweetObj.attachmentUrl));
+      if (sweetObj.attachmentUrl !== '') {
+        await deleteObject(ref(storageService, sweetObj.attachmentUrl));
+      }
     }
   };
 
@@ -41,7 +48,27 @@ const Sweet = ({ sweetObj, isOwner, darkMode }) => {
     return `${month}.${date}`;
   };
 
-  // const getUserEmail = () => sweetObj.email.split('@')[0];
+  const like = async () => {
+    console.log('like');
+    const iLike = sweetObj.likes.includes(userObj.uid);
+    if (!iLike) {
+      await updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
+        likes: [...sweetObj.likes, userObj.uid],
+      });
+    } else {
+      await updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
+        likes: sweetObj.likes.filter((user) => user !== userObj.uid),
+      });
+    }
+  };
+
+  const numberOfLikes = () => {
+    let count = 0;
+    for (let i = 0; i < sweetObj.likes.length; i++) {
+      count += 1;
+    }
+    return count;
+  };
 
   return (
     <div className={darkMode ? 'sweet dark' : 'sweet'}>
@@ -98,6 +125,27 @@ const Sweet = ({ sweetObj, isOwner, darkMode }) => {
           {sweetObj.attachmentUrl && (
             <img alt="img" src={sweetObj.attachmentUrl} />
           )}
+          <div className="bottom">
+            <div className="heart">
+              <button onClick={like}>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  style={{
+                    color: sweetObj.likes.includes(userObj.uid)
+                      ? '#e05d5d'
+                      : '#d3d3d3',
+                  }}
+                />
+                {' ' + numberOfLikes()}
+              </button>
+            </div>
+            <div style={{ padding: 4 }}>
+              <FontAwesomeIcon icon={faComment} color="#d3d3d3" />
+            </div>
+            <div style={{ padding: '4px 2px 4px 4px ' }}>
+              <FontAwesomeIcon icon={faShare} color="#d3d3d3" />
+            </div>
+          </div>
         </>
       )}
     </div>

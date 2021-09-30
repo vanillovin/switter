@@ -35,22 +35,11 @@ const SweetFactory = ({ userObj, darkMode }) => {
       attachmentUrl,
       dName: userObj.displayName,
       email: userObj.email,
+      likes: [],
     };
     await addDoc(collection(dbService, 'sweets'), sweetObj);
     setSweet('');
     setAttachment('');
-
-    // try {
-    //   const docRef = await addDoc(collection(dbService, 'sweets'), {
-    //     text: sweet,
-    //     createdAt: Date.now(),
-    //     creatorId: userObj.uid,
-    //   });
-    //   console.log('Document written with ID: ', docRef.id);
-    // } catch (error) {
-    //   console.error('Error adding document: ', error);
-    // }
-    // setSweet('');
   };
 
   const onChange = ({ target: { value } }) => {
@@ -74,27 +63,6 @@ const SweetFactory = ({ userObj, darkMode }) => {
   };
 
   const onClearAttachment = () => setAttachment('');
-
-  //  <form onSubmit={onSubmit} className="factoryForm">
-  //     <div>
-  //       <input
-  //         className="factoryInput__input"
-  //         value={sweet}
-  //         onChange={onChange}
-  //         type="text"
-  //         placeholder="What's on your mind"
-  //         maxLength={120}
-  //       />
-  //       <input type="file" accept="image/*" onChange={onFileChange} />
-  //       <input type="submit" value="Sweet" />
-  //     </div>
-  //     {attachment && (
-  //       <div>
-  //         <img src={attachment} alt="imgs" width="50px" height="50px" />
-  //         <button onClick={onClearAttachment}>Clear</button>
-  //       </div>
-  //     )}
-  //   </form>
 
   return (
     <form
