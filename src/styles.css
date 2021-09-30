@@ -377,12 +377,13 @@ form.sweetEdit {
 
 /* Auth */
 .authContainer {
+  /* -80px */
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  margin-left: -80px;
 }
 .authBtns {
   width: 400px;
@@ -535,18 +536,20 @@ form.profileForm .formBtn:hover {
   }
   .authContainer {
     width: 400px;
+    padding: 0 10px;
+    margin: 0;
   }
   .authContainer input {
     width: 100%;
   }
   .authBtns {
     width: 400px;
-    padding: 0 20px;
+    padding: 0 30px;
     flex-direction: row;
     justify-content: space-between;
   }
   .authBtns button {
-    padding: 10px 22px;
+    width: 166px;
   }
   form.sweetEdit {
     padding: 0;
