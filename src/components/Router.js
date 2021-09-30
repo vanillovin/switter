@@ -21,49 +21,55 @@ const AppRouter = ({
     <Router>
       <Switch>
         <>
-          {isLoggedIn && (
-            <Navigation
-              userObj={userObj}
-              darkMode={darkMode}
-              onDarkMode={onDarkMode}
-            />
-          )}
-          {isLoggedIn ? (
-            <div
-              style={{
-                width: '100%',
-                margin: '0 auto',
-                // marginTop: 80,
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <Route exact path="/">
-                <Home
+          <div className={darkMode ? 'test dark' : 'test'}>
+            <div className={darkMode ? 'left dark' : 'left'}>
+              {isLoggedIn && (
+                <Navigation
                   userObj={userObj}
                   darkMode={darkMode}
                   onDarkMode={onDarkMode}
                 />
-              </Route>
-              <Route exact path="/profile">
-                <Profile
-                  userObj={userObj}
-                  refreshUser={refreshUser}
-                  darkMode={darkMode}
-                />
-              </Route>
-              <Route exact path="/msg">
-                <Message userName={userObj.displayName} />
-              </Route>
+              )}
             </div>
-          ) : (
-            <>
-              <Route exact path="/">
-                <Auth darkMode={darkMode} />
-              </Route>
-              {/* <Redirect from="*" to="/" /> */}
-            </>
-          )}
+            {isLoggedIn ? (
+              <div
+                className={darkMode ? 'right dark' : 'right'}
+                // style={{
+                //   width: '100%',
+                //   margin: '0 auto',
+                //   // marginTop: 80,
+                //   display: 'flex',
+                //   justifyContent: 'center',
+                // }}
+              >
+                <Route exact path="/">
+                  <Home
+                    userObj={userObj}
+                    darkMode={darkMode}
+                    onDarkMode={onDarkMode}
+                  />
+                </Route>
+                <Route exact path="/profile">
+                  <Profile
+                    userObj={userObj}
+                    refreshUser={refreshUser}
+                    darkMode={darkMode}
+                  />
+                </Route>
+                <Route exact path="/msg">
+                  <Message userName={userObj.displayName} />
+                </Route>
+              </div>
+            ) : (
+              <>
+                <Route exact path="/">
+                  <Auth darkMode={darkMode} />
+                </Route>
+                {/* <Redirect from="*" to="/" /> */}
+              </>
+            )}
+            {/* <div></div> */}
+          </div>
         </>
       </Switch>
     </Router>

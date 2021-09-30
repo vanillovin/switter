@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { dbService } from 'fbase';
 import {
   collection,
   getFirestore,
@@ -35,7 +34,7 @@ const Home = ({ userObj, darkMode }) => {
       //   likes: doc.data().likes,
       // }));
       // console.log('likeArray', likeArray);
-      console.log('sweetArray', sweetArray);
+      // console.log('sweetArray', sweetArray);
       setSweets(sweetArray);
     });
 
@@ -45,9 +44,9 @@ const Home = ({ userObj, darkMode }) => {
   }, []);
 
   return (
-    <div className="container">
+    <div className={darkMode ? 'container dark' : 'container'}>
       <SweetFactory userObj={userObj} darkMode={darkMode} />
-      <div style={{ marginTop: 30 }}>
+      <div style={{ marginTop: 30 }} className="sweet-container">
         {sweets.map((sweet) => (
           <Sweet
             key={sweet.id}

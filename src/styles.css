@@ -1,23 +1,50 @@
 @import 'https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css';
-
+body {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  background-color: #fff8e5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+}
 * {
   box-sizing: border-box;
+}
+.test {
+  display: flex;
+  align-items: c;
+  justify-content: space-between;
+}
+.left {
+  width: 80px;
+  height: 100vh;
+}
+.left.dark {
+  background-color: #193446;
+}
+.right {
+  width: 540px;
+  display: flex;
+  justify-content: center;
+  background-color: #fff8e5;
+  border-left: 1px solid rgba(255, 180, 66, 0.2);
+  border-left: 1px solid white;
+}
+.right.dark {
+  background-color: #193446;
+  border-left: 1px solid white;
 }
 input {
   all: unset;
   box-sizing: border-box;
   appearance: none;
 }
-body {
-  background-color: #fff8e5;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  color: white;
-}
 button {
-  background-color: white;
   color: black;
+  background-color: white;
 }
 a {
   text-decoration: none;
@@ -27,19 +54,11 @@ form {
   width: 100%;
 }
 .nav {
-  width: 80px;
-  height: 100vh;
   position: fixed;
   top: 0;
-  left: 0;
-  background-color: white;
-  padding: 40px 0;
+  padding: 40px 20px 0 0;
 }
 /* nav dark */
-.nav.dark {
-  background-color: #193446;
-  border-right: 1px solid rgba(231, 230, 237, 0.4);
-}
 .nav.dark .navlink,
 .nav.dark li span {
   color: #e7e6ed;
@@ -96,14 +115,16 @@ li.logo span {
   opacity: 0.9;
 }
 form.container {
+  width: 100%;
   margin: 60px 0 0 0;
 }
+/* right > container */
 .container {
-  width: 100%;
-  max-width: 400px;
+  width: 450px;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  margin: 80px 0;
+  margin-top: 60px;
 }
 .formInput {
   padding: 8px 20px;
@@ -131,13 +152,15 @@ form.container {
 
 /* Profile Page */
 .profileForm {
+  width: 100%;
+  margin: 100px 0 0 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.9);
   padding-bottom: 30px;
-  width: 100%;
   display: flex;
   flex-direction: column;
 }
 .formBtn.logOut {
+  width: 100%;
   margin-top: 25px;
   background-color: black;
   color: white;
@@ -148,18 +171,16 @@ form.container {
   background-color: rgba(0, 0, 0, 0.6);
 }
 .profileForm.dark .formInput {
-  border: 1px solid #e7e6ed;
-}
-.profileForm.dark .formInput::placeholder {
   color: #e7e6ed;
+  border: 1px solid #e7e6ed;
 }
 
 /* Switter Factory */
 .factoryForm {
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 .factoryInput__container {
   display: flex;
@@ -247,6 +268,20 @@ form.container {
 }
 
 /* Sweet */
+.sweet-container {
+  width: 100%;
+}
+.sweet {
+  margin-bottom: 20px;
+  background-color: white;
+  padding: 22px; /*20*/
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 180, 66, 0.2);
+}
 .hello {
   display: flex;
   align-items: center;
@@ -268,19 +303,6 @@ form.sweetEdit {
   margin-top: 15px;
   margin-bottom: 5px;
 }
-.sweet {
-  margin-bottom: 20px;
-  background-color: white;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 6px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  color: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 180, 66, 0.2);
-}
 .sweet .sweet__text {
   font-size: 14px;
   overflow-wrap: break-word;
@@ -291,7 +313,7 @@ form.sweetEdit {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 .sweet__actions {
   color: #00a19d;
@@ -300,7 +322,7 @@ form.sweetEdit {
   cursor: pointer;
 }
 .sweet__actions span:first-child {
-  margin-right: 16px;
+  margin-right: 25px; /*16*/
 }
 .cancelBtn {
   cursor: pointer;
@@ -355,7 +377,6 @@ form.sweetEdit {
 
 /* Auth */
 .authContainer {
-  width: 400px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -364,11 +385,10 @@ form.sweetEdit {
   margin: 0 auto;
 }
 .authBtns {
+  width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-  max-width: 400px;
 }
 .authBtn {
   cursor: pointer;
@@ -388,8 +408,11 @@ form.profileForm .formBtn:hover {
 }
 
 /* AuthForm */
+.authContainer {
+  width: 100%;
+}
 .authInput {
-  max-width: 400px;
+  width: 400px; /*400*/
   padding: 10px 20px;
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 1);
@@ -424,14 +447,12 @@ form.profileForm .formBtn:hover {
 
 /* Message */
 .msg-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  user-select: none;
-  width: 100%;
+  margin-top: 60px;
+  width: 400px;
   height: 400px;
-  background-color: white;
   border-radius: 6px;
+  user-select: none;
+  background-color: white;
 }
 .msg-container .msgh {
   display: flex;
@@ -479,50 +500,58 @@ form.profileForm .formBtn:hover {
 }
 
 @media screen and (max-width: 800px) {
-  .container {
-    margin-top: 60px;
-    padding: 0 20px;
+  body {
+    background-color: #fff8e5;
   }
-  .authContainer {
+  .test {
+    flex-direction: column;
+  }
+  .left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #fff8e5;
+    z-index: 100;
+  }
+  .nav {
+    height: 100%;
+    position: unset;
+    padding: 40px 0 0 0;
+  }
+  .right {
+    border: none;
+    margin-top: 40px;
+  }
+  .container {
     padding: 0 20px;
+    margin: 100px 0 0 0;
+  }
+  .right.dark {
+    border: none;
+  }
+  .authBtns {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .authBtns button {
+    width: 196px;
   }
   form.sweetEdit {
     padding: 0;
   }
-  .authBtns {
+  ul {
     flex-direction: row;
-    padding: 0 20px;
   }
-  .authBtns button {
-    width: 156px;
-    font-size: 11.5px;
-    /* padding: 10px 12px; */
+  li {
+    margin: 0 6px;
   }
   li.logo span {
-    /* display: block; */
     color: #e05d5d;
   }
   .nav.dark li:first-child span {
     color: #e7e6ed;
-  }
-  .nav {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    position: unset;
-    height: 100px;
-    padding: 40px 0 0 0;
-  }
-  ul {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  li {
-    margin: 0 6px;
-    margin-bottom: 0;
   }
   .home,
   .more {
