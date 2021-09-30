@@ -20,11 +20,13 @@
 4. 메신저
    + <img src="public/img/4.JPG" width="400">
 5. 다크모드
+   + 9.29 추가!
    + <img src="public/img/5.JPG" width="400">
 6. 좋아요
+   + 9.30 추가!
    + <img src="public/img/6.JPG" width="400">
 
 # TODO
 1. 댓글달기
 2. 공유하기
-3. 
+3. 프로필이미지
