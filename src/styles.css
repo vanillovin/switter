@@ -30,8 +30,8 @@ body {
   display: flex;
   justify-content: center;
   background-color: #fff8e5;
-  border-left: 1px solid rgba(255, 180, 66, 0.2);
   border-left: 1px solid white;
+  border-left: 1px solid rgba(224, 93, 93, 0.4);
 }
 .right.dark {
   background-color: #193446;
@@ -56,7 +56,7 @@ form {
 .nav {
   position: fixed;
   top: 0;
-  padding: 40px 20px 0 0;
+  padding: 40px 25px 0 0;
 }
 /* nav dark */
 .nav.dark .navlink,
