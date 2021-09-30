@@ -504,6 +504,7 @@ form.profileForm .formBtn:hover {
   }
   .test {
     width: 100%;
+    align-items: center;
     flex-direction: column;
   }
   .left {
@@ -521,12 +522,13 @@ form.profileForm .formBtn:hover {
     padding: 40px 0 0 0;
   }
   .right {
-    width: 100%;
+    width: 420px;
     align-items: center;
     border: none;
     margin-top: 40px;
   }
   .container {
+    width: 100%;
     padding: 0 20px;
     margin: 100px 0 0 0;
   }
@@ -566,5 +568,8 @@ form.profileForm .formBtn:hover {
   .home,
   .more {
     display: none;
+  }
+  .sweet {
+    padding: 18px;
   }
 }
