@@ -452,6 +452,7 @@ form.profileForm .formBtn:hover {
 
 /* Message */
 .msg-container {
+  position: relative;
   margin-top: 60px;
   width: 400px;
   height: 400px;
@@ -477,27 +478,31 @@ form.profileForm .formBtn:hover {
 .msgs .chat {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 15px 20px;
+}
+.msgs .chat span {
+  line-height: 1.6;
+}
+.msgs .chat:hover {
+  transition: 0.2s linear;
+  background-color: rgba(230, 230, 230, 0.2);
 }
 .mymsg {
+  line-height: 1.4;
   cursor: pointer;
   background-color: rgba(208, 191, 255, 0.4);
   color: black;
-  border-radius: 20px;
-  width: 200px;
-  padding: 15px 20px;
+  border-radius: 30px;
+  width: 220px;
+  padding: 10px 15px;
 }
 .back {
   position: absolute;
   top: 8px;
   left: 16px;
-  font-size: 26px;
+  font-size: 24px;
   cursor: pointer;
   color: gray;
-}
-.msgs .chat:hover {
-  transition: 0.2s linear;
-  background-color: rgba(230, 230, 230, 0.2);
 }
 .back:hover {
   color: #000;
@@ -539,7 +544,7 @@ form.profileForm .formBtn:hover {
 }
 .comments-container .comments .comment {
   padding: 8px 0;
-  border-bottom: 1px solid rgba(211, 211, 211, 0.6);
+  border-bottom: 1px solid rgba(211, 211, 211, 0.5);
 }
 .comments-container .comments .comment:last-child {
   border-bottom: none;

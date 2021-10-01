@@ -9,12 +9,8 @@ import {
   faHeart,
   faShare,
   faComment,
-  faAddressBook,
-  faPlus,
-  faMinus,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { faXbox } from '@fortawesome/free-brands-svg-icons';
 
 const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
   console.log('Sweet sweetObj', sweetObj);
@@ -31,7 +27,7 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
   const [test, setTest] = useState(false);
 
   const onDeleteClick = async () => {
-    const ok = window.confirm('Are you sure you want to delete this sweet?');
+    const ok = window.confirm('스윗을 삭제하시겠습니까?');
     // console.log(ok);
     if (ok) {
       // delete sweet
@@ -154,20 +150,20 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
             <input
               className="formInput"
               type="text"
-              placeholder="Edit your sweet"
+              placeholder="스윗 수정하기"
               name="sweet"
               required
               autoFocus
               value={sweet}
               onChange={onChange}
             />
-            <input type="submit" value="Update Sweet" className="formBtn" />
+            <input type="submit" value="스윗 업데이트" className="formBtn" />
           </form>
           <span
             onClick={(prev) => setEditing(!prev)}
             className="formBtn cancelBtn"
           >
-            Cancel
+            취소
           </span>
         </>
       ) : (
@@ -225,7 +221,7 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
                         name="comment"
                         value={comment}
                         onChange={onChange}
-                        placeholder="comment"
+                        placeholder="댓글 달기"
                         required
                       />
                       <input
@@ -249,9 +245,8 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
                           <button
                             className="delcommentBtn"
                             onClick={() => {
-                              window.confirm(
-                                'Are you going to delete the comments?'
-                              ) && deleteComment(comment.createdAt);
+                              window.confirm('댓글을 삭제하시겠습니까?') &&
+                                deleteComment(comment.createdAt);
                             }}
                           >
                             <FontAwesomeIcon icon={faTimes} />

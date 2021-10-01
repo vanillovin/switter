@@ -44,7 +44,7 @@ const Auth = ({ darkMode }) => {
       <AuthForm />
       <div className="authBtns">
         <button onClick={onSocialClick} name="google" className="authBtn">
-          Continue with Google{' '}
+          Google로 로그인{' '}
           <FontAwesomeIcon
             icon={faGoogle}
             color={'#fff'}
@@ -52,7 +52,7 @@ const Auth = ({ darkMode }) => {
           />
         </button>
         <button onClick={onSocialClick} name="github" className="authBtn">
-          Continue with Github{' '}
+          Github로 로그인{' '}
           <FontAwesomeIcon
             icon={faGithub}
             color={'#fff'}

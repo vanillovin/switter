@@ -76,7 +76,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
           value={sweet}
           onChange={onChange}
           type="text"
-          placeholder="What sweet thoughts are you thinking of?"
+          placeholder="무슨 달콤한 생각을 하고 있나요?"
           maxLength={120}
         />
         <input
@@ -87,7 +87,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
         />
       </div>
       <label htmlFor="attach-file" className="factoryInput__label">
-        <span>Add photos</span>
+        <span>사진 선택하기</span>
         <FontAwesomeIcon icon={faPlus} />
       </label>
       <input

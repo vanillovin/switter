@@ -44,7 +44,7 @@ const Navigation = ({ userObj, darkMode, onDarkMode }) => {
           <FontAwesomeIcon
             icon={faMoon}
             size="2x"
-            color={darkMode ? '#e9c77b' : '#000'}
+            color={darkMode ? '#e9c77b' : '#000000cc'}
           />
           <span>{darkMode ? 'light' : 'dark'}</span>
         </li>
