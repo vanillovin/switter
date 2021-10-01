@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/switter/static/css/main.ce0f2de1.chunk.css",
-    "main.js": "/switter/static/js/main.cf979728.chunk.js",
-    "main.js.map": "/switter/static/js/main.cf979728.chunk.js.map",
+    "main.js": "/switter/static/js/main.23921684.chunk.js",
+    "main.js.map": "/switter/static/js/main.23921684.chunk.js.map",
     "runtime-main.js": "/switter/static/js/runtime-main.6029861b.js",
     "runtime-main.js.map": "/switter/static/js/runtime-main.6029861b.js.map",
     "static/js/2.a98d5f2b.chunk.js": "/switter/static/js/2.a98d5f2b.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.6029861b.js",
     "static/js/2.a98d5f2b.chunk.js",
     "static/css/main.ce0f2de1.chunk.css",
-    "static/js/main.cf979728.chunk.js"
+    "static/js/main.23921684.chunk.js"
   ]
 }
