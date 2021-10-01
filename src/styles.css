@@ -549,9 +549,14 @@ form.profileForm .formBtn:hover {
 .comments-container .comments .comment:last-child {
   border-bottom: none;
 }
-.comments-container .comments .comment .hello,
-.comments-container .comments .comment .ctext {
+.comments-container .comments .comment .hello {
   padding: 4px;
+}
+.comments-container .comments .comment .ctext {
+  font-size: 13px;
+  padding: 4px 8px 4px 4px;
+  overflow-wrap: break-word;
+  line-height: 1.2;
 }
 .comments-container .delcommentBtn {
   cursor: pointer;
