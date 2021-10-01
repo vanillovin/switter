@@ -32,16 +32,7 @@ const AppRouter = ({
               )}
             </div>
             {isLoggedIn ? (
-              <div
-                className={darkMode ? 'right dark' : 'right'}
-                // style={{
-                //   width: '100%',
-                //   margin: '0 auto',
-                //   // marginTop: 80,
-                //   display: 'flex',
-                //   justifyContent: 'center',
-                // }}
-              >
+              <div className={darkMode ? 'right dark' : 'right'}>
                 <Route exact path="/">
                   <Home
                     userObj={userObj}

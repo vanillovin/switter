@@ -558,6 +558,9 @@ form.profileForm .formBtn:hover {
   border: none;
   background-color: transparent;
 }
+.comments-container .comment .hello {
+  margin: 0;
+}
 /* comment dark */
 .sweet.dark .commentInput__input {
   color: #e7e6ed;

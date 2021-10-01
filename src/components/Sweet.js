@@ -13,8 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
-  console.log('Sweet sweetObj', sweetObj);
-  const comments = sweetObj.comments.sort((a, b) => b.id - a.id);
+  // console.log('Sweet sweetObj', sweetObj);
+  const comments = sweetObj.comments.sort((a, b) => b.createdAt - a.createdAt);
 
   const [text, setText] = useState({
     sweet: sweetObj.text,
@@ -121,24 +121,28 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
         comments: [
           ...sweetObj.comments,
           {
-            id: sweetObj.comments.length + 1,
+            uid: userObj.uid,
             createdAt: Date.now(),
             name: userObj.displayName,
             text: comment,
           },
         ],
       });
-      setText({
-        ...text,
-        comment: '',
-      });
     }
+    setText({
+      ...text,
+      comment: '',
+    });
   };
 
-  const deleteComment = async (id) => {
-    // console.log('delete', id);
+  const deleteComment = async (cid) => {
+    // console.log('comment', uid, 'delete comment createdAt', cid);
+
+    // 삭제하려는 문서 id(cid)의 uid가 나의 아이디(uid)와 같을 때
     await updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
-      comments: sweetObj.comments.filter((comment) => comment.createdAt !== id),
+      comments: sweetObj.comments.filter(
+        (comment) => comment.createdAt !== cid
+      ),
     });
   };
 
@@ -242,15 +246,17 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
                               {displayedAt(comment.createdAt)}
                             </span>
                           </div>
-                          <button
-                            className="delcommentBtn"
-                            onClick={() => {
-                              window.confirm('댓글을 삭제하시겠습니까?') &&
-                                deleteComment(comment.createdAt);
-                            }}
-                          >
-                            <FontAwesomeIcon icon={faTimes} />
-                          </button>
+                          {comment.uid === userObj.uid && (
+                            <button
+                              className="delcommentBtn"
+                              onClick={() => {
+                                window.confirm('댓글을 삭제하시겠습니까?') &&
+                                  deleteComment(comment.createdAt);
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faTimes} />
+                            </button>
+                          )}
                         </div>
                         <div className="ctext">{comment.text}</div>
                       </div>
