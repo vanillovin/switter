@@ -36,6 +36,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
       dName: userObj.displayName,
       email: userObj.email,
       likes: [],
+      comments: [],
     };
     await addDoc(collection(dbService, 'sweets'), sweetObj);
     setSweet('');

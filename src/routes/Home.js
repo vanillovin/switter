@@ -15,7 +15,7 @@ const Home = ({ userObj, darkMode }) => {
 
   useEffect(() => {
     // onSnapshot은 데이터베이스의 변화를 실시간으로 알려주는 기능
-    // 실시간으로 데이터를 데이터베이스에서 가져오기(쿼리 스냅샷 차이)
+    // 실시간으로 데이터를 데이터베이스에서 가져오기 (쿼리 스냅샷 차이)
     // snapshot은 우리가 가진 query와 같은 것 docs를 갖고 있음
     const q = query(
       collection(getFirestore(), 'sweets'),
@@ -27,14 +27,9 @@ const Home = ({ userObj, darkMode }) => {
       const sweetArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         likes: doc.data().likes,
+        comments: doc.data().comments,
         ...doc.data(),
       }));
-      // const likeArray = snapshot.docs.map((doc) => ({
-      //   id: doc.id,
-      //   likes: doc.data().likes,
-      // }));
-      // console.log('likeArray', likeArray);
-      // console.log('sweetArray', sweetArray);
       setSweets(sweetArray);
     });
 

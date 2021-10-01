@@ -14,6 +14,16 @@ body {
 * {
   box-sizing: border-box;
 }
+.dname {
+  font-weight: bold;
+  padding-left: 1px;
+  margin-right: 3px;
+}
+.mini {
+  color: gray;
+  font-size: 10px;
+  font-weight: 400;
+}
 .test {
   display: flex;
   justify-content: space-between;
@@ -127,6 +137,7 @@ form.container {
   margin-top: 60px;
 }
 .formInput {
+  width: 100%;
   padding: 8px 20px;
   border-radius: 20px;
   border: 1px solid black;
@@ -274,8 +285,8 @@ form.container {
 .sweet {
   margin-bottom: 20px;
   background-color: white;
-  padding: 22px; /*20*/
-  border-radius: 6px;
+  padding: 22px;
+  border-radius: 2px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -286,19 +297,17 @@ form.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .info {
   display: flex;
   align-items: center;
 }
-.sweet .dname {
-  padding-left: 1px;
-}
 form.sweetEdit {
   margin: 0;
 }
 .sweetEdit .formBtn {
+  width: 100%;
   cursor: pointer;
   margin-top: 15px;
   margin-bottom: 5px;
@@ -322,29 +331,23 @@ form.sweetEdit {
   cursor: pointer;
 }
 .sweet__actions span:first-child {
-  margin-right: 25px; /*16*/
+  margin-right: 20px;
 }
 .cancelBtn {
   cursor: pointer;
   background-color: #e5dbff;
 }
 .sweet .bottom {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.sweet .bottom div {
-}
-.sweet .heart {
-  /* display: flex;
-  align-items: center; */
-}
-.sweet .heart > button {
-  cursor: pointer;
+.sweet .bottom button {
+  padding: 0;
   border: none;
+  cursor: pointer;
   background-color: transparent;
-  padding: 4px 4px 4px 2px;
 }
 /* sweet dark */
 .sweet.dark {
@@ -352,7 +355,8 @@ form.sweetEdit {
   border: 1px solid rgba(231, 230, 237, 0.4);
 }
 .sweet.dark .dname,
-.sweet.dark .sweet__text {
+.sweet.dark .sweet__text,
+.sweet.dark .ctext {
   color: #e7e6ed;
 }
 .sweet.dark .sweet__actions {
@@ -371,7 +375,7 @@ form.sweetEdit {
   color: black;
   background-color: #c4d4e0;
 }
-.sweet.dark .heart > button {
+.sweet.dark div button span {
   color: #e7e6ed;
 }
 
@@ -500,6 +504,69 @@ form.profileForm .formBtn:hover {
   transition: 0.2s linear;
 }
 
+/* comments */
+.comments-container {
+  /* border: 1px solid black; */
+}
+.comments-container .commentInput__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 10px;
+}
+.comments-container .commentInput__input {
+  border-bottom: 1px solid #000;
+  flex-grow: 1;
+  height: 30px;
+  padding: 0 10px;
+  font-weight: 500;
+  font-size: 12px;
+}
+.comments-container .commentInput__arrow {
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  background-color: #000;
+  border: 1px solid #000;
+}
+.comments-container .comments .comment {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(211, 211, 211, 0.6);
+}
+.comments-container .comments .comment:last-child {
+  border-bottom: none;
+}
+.comments-container .comments .comment .hello,
+.comments-container .comments .comment .ctext {
+  padding: 4px;
+}
+.comments-container .delcommentBtn {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+/* comment dark */
+.sweet.dark .commentInput__input {
+  color: #e7e6ed;
+  border-bottom: 1px solid #e7e6ed;
+}
+.sweet.dark .commentInput__arrow {
+  color: #000;
+  background-color: #e7e6ed;
+  border: 1px solid #e7e6ed;
+}
+.sweet.dark .delcommentBtn {
+  color: #e7e6ed;
+}
+
 @media screen and (max-width: 700px) {
   .test {
     align-items: center;
@@ -538,6 +605,7 @@ form.profileForm .formBtn:hover {
     width: 400px;
     padding: 0 10px;
     margin: 0;
+    z-index: 101;
   }
   .authContainer input {
     width: 100%;
@@ -574,7 +642,7 @@ form.profileForm .formBtn:hover {
     padding: 18px;
   }
   .sweet__actions span:first-child {
-    margin-right: 18px;
+    margin-right: 16px;
   }
   .profileForm {
     margin: 0;
