@@ -227,7 +227,6 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
                         onChange={onChange}
                         placeholder="comment"
                         required
-                        autoFocus
                       />
                       <input
                         className="commentInput__arrow"
