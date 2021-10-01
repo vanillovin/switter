@@ -59,7 +59,6 @@ const Profile = ({ refreshUser, userObj, darkMode }) => {
         <input
           onChange={onChange}
           type="text"
-          autoFocus
           placeholder="Display name"
           value={newDisplayName || ''}
           className="formInput"
