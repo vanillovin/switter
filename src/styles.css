@@ -438,6 +438,7 @@ form.profileForm .formBtn:hover {
   text-align: center;
   font-weight: 500;
   font-size: 12px;
+  padding: 5px 0;
 }
 .authSwitch {
   font-weight: bold;

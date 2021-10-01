@@ -241,7 +241,7 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
                       <div className="comment" key={comment.createdAt}>
                         <div className="hello">
                           <div className="info">
-                            <span className="dname">{comment.name}</span>
+                            <span className="dname">{comment.name || '♥'}</span>
                             <span className="mini">
                               {displayedAt(comment.createdAt)}
                             </span>

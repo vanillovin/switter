@@ -1,6 +1,7 @@
 # **Switter** (sweet+twitter)
 
 ### Cloning Twitter with React and Firebase.
+
 ### URL: https://vanillovin.github.io/switter/#/
 
 # 기술 스택
@@ -11,6 +12,7 @@
 # 기능 소개
 
 1. 이메일 비번 or 구글 깃허브 로그인 회원가입
+   - **회원정보는 개인 및 상업적 용도로 사용하지 않습니다!**
    - <img src="public/img/1.JPG" width="400">
 2. 게시글
    1. 사용자 displayname과 올린 시간 표시
@@ -30,4 +32,5 @@
 # TODO
 
 1. 공유하기
-2. 프로필이미지
+2. 프로필이미지 추가
+3. 회원정보 변경 & 인증

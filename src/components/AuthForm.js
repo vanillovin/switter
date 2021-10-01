@@ -39,9 +39,18 @@ const AuthForm = () => {
       }
       console.log('Auth data', data);
     } catch (error) {
-      // const errorCode = error.code;
-      const errorMessage = error.message;
-      setError(errorMessage);
+      console.log(error.message);
+      if (error.code.includes('weak-password')) {
+        setError('비밀번호는 6자 이상이어야 합니다.');
+      } else if (error.code.includes('wrong-password')) {
+        setError('비밀번호가 틀렸습니다.');
+      } else if (error.code.includes('user-not-found')) {
+        setError('가입되지 않는 이메일입니다.');
+      } else if (error.code.includes('email-already-in-use')) {
+        setError('이미 사용 중인 이메일입니다.');
+      } else if (error.code.includes('too-many')) {
+        setError('로그인 실패. 비밀번호를 재설정해주세요.');
+      }
     }
   };
 
