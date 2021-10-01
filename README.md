@@ -1,8 +1,7 @@
 # **Switter** (sweet+twitter)
 
 ### Cloning Twitter with React and Firebase.
-
-## https://vanillovin.github.io/switter/#/
+### https://vanillovin.github.io/switter/#/
 
 # 기술 스택
 
