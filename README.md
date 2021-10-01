@@ -19,7 +19,6 @@
    3. 댓글 기능 (10.1 추가)
    - <img src="public/img/2.JPG" width="400">
    - <img src="public/img/7.JPG" width="400">
-   - <img src="public/img/8.JPG" width="400">
 3. 프로필
    - <img src="public/img/3.JPG" width="400">
 4. 메신저
@@ -27,6 +26,7 @@
 5. 다크모드
    - 9.29 추가!
    - <img src="public/img/5.JPG" width="400">
+   - <img src="public/img/8.JPG" width="400">
 
 # TODO
 
