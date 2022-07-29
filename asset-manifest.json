@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/switter/static/css/main.ff3c3164.chunk.css",
+    "main.css": "/switter/static/css/main.53c001ce.chunk.css",
     "main.js": "/switter/static/js/main.cd6a7453.chunk.js",
     "main.js.map": "/switter/static/js/main.cd6a7453.chunk.js.map",
     "runtime-main.js": "/switter/static/js/runtime-main.2372981f.js",
@@ -10,13 +10,13 @@
     "static/js/3.1716625d.chunk.js": "/switter/static/js/3.1716625d.chunk.js",
     "static/js/3.1716625d.chunk.js.map": "/switter/static/js/3.1716625d.chunk.js.map",
     "index.html": "/switter/index.html",
-    "static/css/main.ff3c3164.chunk.css.map": "/switter/static/css/main.ff3c3164.chunk.css.map",
+    "static/css/main.53c001ce.chunk.css.map": "/switter/static/css/main.53c001ce.chunk.css.map",
     "static/js/2.1b3986ce.chunk.js.LICENSE.txt": "/switter/static/js/2.1b3986ce.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2372981f.js",
     "static/js/2.1b3986ce.chunk.js",
-    "static/css/main.ff3c3164.chunk.css",
+    "static/css/main.53c001ce.chunk.css",
     "static/js/main.cd6a7453.chunk.js"
   ]
 }
