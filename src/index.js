@@ -2,12 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import fbase from './fbase';
 import './styles.css';
+import { Provider } from 'react-redux';
+import store from 'services/store';
+// import { applyMiddleware, createStore } from 'redux';
+// import rootReducer from 'modules';
+// import ReduxThunk from 'redux-thunk';
+// // import logger from 'redux-logger';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+
+// logger랑 다른 미들웨어 사용 시 logger를 맨 뒤에 설정. logger도 함수로 간주해 프린트함
+// const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk)));
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
