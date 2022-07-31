@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSweets } from 'services/actions/sweetsAction';
+import { clearSweets, getSweets } from 'services/actions/sweetsAction';
 
 function Home({ userObj, darkMode }) {
   const {
@@ -15,9 +15,14 @@ function Home({ userObj, darkMode }) {
 
   useEffect(() => {
     dispatch(getSweets());
+    return () => {
+      dispatch(clearSweets());
+    };
   }, [dispatch]);
 
   // console.log('Home', '{ loading:', loading, ', data:', sweets, ', error:', error, ' }');
+  // const { data } = useSelector((state) => state.sweetsReducer.sweet);
+  // console.log('Home - Detail data:', data);
 
   if (error) return <div>에러 발생! {error}</div>;
 

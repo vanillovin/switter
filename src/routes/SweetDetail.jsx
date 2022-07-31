@@ -27,6 +27,9 @@ function SweetDetail({ userObj, darkMode }) {
 
   useEffect(() => {
     dispatch(getSweetsById(params.id));
+    return () => {
+      dispatch(clearSweet());
+    };
   }, [dispatch, params.id]);
 
   const isOwner = sweet?.creatorId === userObj.uid;
