@@ -12,17 +12,21 @@ import { dbService } from 'services/firebase/fbase';
 export const GET_SWEETS = 'GET_SWEETS';
 export const GET_SWEETS_SUCCESS = 'GET_SWEETS_SUCCESS';
 export const GET_SWEETS_ERROR = 'GET_SWEETS_ERROR';
+export const CLEAR_SWEETS = 'CLEAR_SWEETS';
 export const GET_SWEET = 'GET_SWEET';
 export const GET_SWEET_SUCCESS = 'GET_SWEET_SUCCESS';
 export const GET_SWEET_ERROR = 'GET_SWEET_ERROR';
+export const CLEAR_SWEET = 'CLEAR_SWEET';
 export const CREATE_SWEET = 'CREATE_SWEET';
 
 // Action Creators
+export const clearSweets = () => ({ type: CLEAR_SWEETS });
+export const clearSweet = () => ({ type: CLEAR_SWEET });
 export const getSweetsAction = (type, payload) => {
   return { type: GET_SWEETS, payload };
 };
 export const getSweetAction = (sweet) => {
-  return { type: GET_SWEET, payload: { sweet } };
+  return { type: GET_SWEET, payload: sweet };
 };
 export const createSweetAction = () => {
   return { type: CREATE_SWEET };
@@ -42,13 +46,13 @@ export const getSweets = () => {
             ...doc.data(),
           };
         });
-        dispatch({ type: GET_SWEETS_SUCCESS, payload: { sweets } });
+        dispatch({ type: GET_SWEETS_SUCCESS, payload: sweets });
       });
     } catch (e) {
       console.log('getSweetsData error', e);
       dispatch({
         type: GET_SWEETS_ERROR,
-        payload: { error: e },
+        payload: e,
       });
     }
   };
@@ -68,13 +72,13 @@ export const getSweetsById = (id) => {
             ...doc.data(),
           }))
           .filter((sweet) => sweet.id === id)[0];
-        dispatch({ type: GET_SWEET_SUCCESS, payload: { sweet } });
+        dispatch({ type: GET_SWEET_SUCCESS, payload: sweet });
       });
     } catch (e) {
       console.log('getSweetsData error', e);
       dispatch({
         type: GET_SWEET_ERROR,
-        payload: { error: e },
+        payload: e,
       });
     }
   };

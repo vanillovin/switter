@@ -1,3 +1,4 @@
+import { reducerUtils } from 'lib/asyncUtils';
 import {
   GET_SWEET,
   GET_SWEETS,
@@ -6,6 +7,8 @@ import {
   GET_SWEET_ERROR,
   GET_SWEET_SUCCESS,
   CREATE_SWEET,
+  CLEAR_SWEETS,
+  CLEAR_SWEET,
 } from 'services/actions/sweetsAction';
 
 const initialState = {
@@ -21,93 +24,50 @@ const initialState = {
   },
 };
 
-export const reducerUtils = {
-  initial: (data = null) => ({
-    loading: false,
-    data,
-    error: null,
-  }),
-  loading: (prevState = null) => ({
-    loading: true,
-    data: prevState,
-    error: null,
-  }),
-  success: (data) => ({
-    loading: false,
-    data,
-    error: null,
-  }),
-  error: (error) => ({
-    loading: false,
-    data: null,
-    error,
-  }),
-};
-
 const sweetsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SWEETS:
       return {
         ...state,
-        sweets: {
-          loading: true,
-          data: null,
-          error: null,
-        },
+        // 만약 여기에 기존 상태 값을 유지하고 싶다면 (state.sweets.data)
+        sweets: reducerUtils.loading(),
       };
     case GET_SWEETS_SUCCESS:
       return {
         ...state,
-        sweets: {
-          loading: false,
-          data: action.payload.sweets,
-          error: null,
-        },
+        sweets: reducerUtils.success(action.payload),
       };
     case GET_SWEETS_ERROR:
       return {
         ...state,
-        sweets: {
-          loading: false,
-          data: null,
-          error: action.payload.error,
-        },
+        sweets: reducerUtils.error(action.payload),
+      };
+    case CLEAR_SWEETS:
+      return {
+        ...state,
+        sweets: reducerUtils.initial(),
       };
     case GET_SWEET:
       return {
         ...state,
-        sweet: {
-          loading: true,
-          data: null,
-          error: null,
-        },
+        sweet: reducerUtils.loading(),
       };
     case GET_SWEET_SUCCESS:
       return {
         ...state,
-        sweet: {
-          loading: false,
-          data: action.payload.sweet,
-          error: null,
-        },
+        sweet: reducerUtils.success(action.payload),
       };
     case GET_SWEET_ERROR:
       return {
         ...state,
-        sweet: {
-          loading: false,
-          data: null,
-          error: action.payload.error,
-        },
+        sweet: reducerUtils.error(action.payload),
+      };
+    case CLEAR_SWEET:
+      return {
+        ...state,
+        sweet: reducerUtils.initial(),
       };
     case CREATE_SWEET:
-      // return {
-      //   ...state,
-      //   sweets: {
-      //     ...state.sweets,
-      //     data: [...state.sweets.data, action.payload.sweet],
-      //   },
-      // };
       return state;
     default:
       return state;
