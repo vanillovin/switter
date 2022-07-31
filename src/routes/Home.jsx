@@ -21,8 +21,6 @@ function Home({ userObj, darkMode }) {
   }, [dispatch]);
 
   // console.log('Home', '{ loading:', loading, ', data:', sweets, ', error:', error, ' }');
-  // const { data } = useSelector((state) => state.sweetsReducer.sweet);
-  // console.log('Home - Detail data:', data);
 
   if (error) return <div>에러 발생! {error}</div>;
 

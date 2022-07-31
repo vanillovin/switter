@@ -5,7 +5,6 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
   faEllipsisH,
   faEnvelope,
-  faHeart,
   faHome,
   faMoon,
   faUser,
@@ -40,7 +39,7 @@ const Navigation = ({ userObj, darkMode, onDarkMode }) => {
             <span>{'+1'}</span>
           </NavLink>
         </li>
-        <li className="dark" onClick={onDarkMode} className="navlink">
+        <li className="dark navlink" onClick={onDarkMode}>
           <FontAwesomeIcon
             icon={faMoon}
             size="2x"

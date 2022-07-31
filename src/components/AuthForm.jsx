@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { authService } from 'fbase';
+import { authService } from 'services/firebase/fbase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -28,18 +28,14 @@ const AuthForm = () => {
       let data;
       if (newAccount) {
         // create newAccount
-        data = await createUserWithEmailAndPassword(
-          authService,
-          email,
-          password
-        );
+        data = await createUserWithEmailAndPassword(authService, email, password);
       } else {
         // log in
         data = await signInWithEmailAndPassword(authService, email, password);
       }
       console.log('Auth data', data);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       if (error.code.includes('weak-password')) {
         setError('비밀번호는 6자 이상이어야 합니다.');
       } else if (error.code.includes('wrong-password')) {

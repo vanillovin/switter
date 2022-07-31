@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaFacebook, FaShare, FaTwitter } from 'react-icons/fa';
 import { FiLink } from 'react-icons/fi';
-import { shareSns } from 'utils/shareSns';
+import { shareSns } from 'utils';
 
 const handleCopy = (sweetId) => {
   navigator.clipboard.writeText(
@@ -17,7 +17,7 @@ function SweetShareButton({ toggle, toggleRef, onToggleChange, sweetId }) {
         <FaShare />
       </button>
       {toggle && (
-        <div className="buttons">
+        <div title="링크 복사하기" className="buttons">
           <button onClick={() => handleCopy(sweetId)}>
             <FiLink /> 스윗 링크 복사하기
           </button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SweetEdit({ text, onSubmit }) {
+function SweetEdit({ text, onSubmit, closeEdit }) {
   const [newText, setNewText] = useState(text);
 
   const onChange = (e) => setNewText(e.target.value);
@@ -22,12 +22,13 @@ function SweetEdit({ text, onSubmit }) {
           autoFocus
           value={newText}
           onChange={onChange}
+          maxLength={500}
         />
         <input type="submit" value="스윗 업데이트" className="formBtn" />
       </form>
-      <span onClick={() => {}} className="formBtn cancelBtn">
+      <button onClick={closeEdit} className="formBtn cancelBtn">
         취소
-      </span>
+      </button>
     </>
   );
 }

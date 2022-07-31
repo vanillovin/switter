@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { authService } from 'fbase';
+import { authService } from 'services/firebase/fbase';
 import { signOut, updateProfile } from '@firebase/auth';
 // import { collection, getDocs, orderBy, query, where } from '@firebase/firestore';
 
@@ -52,10 +52,9 @@ const Profile = ({ refreshUser, userObj, darkMode }) => {
 
   return (
     <div className="container">
-      <form
-        onSubmit={onSubmit}
-        className={darkMode ? 'profileForm dark' : 'profileForm'}
-      >
+      {/* <div style={{ fontWeight: 'bold' }}>{userObj.displayName}</div>
+      <div>{userObj.email}</div> */}
+      <form onSubmit={onSubmit} className={darkMode ? 'profileForm dark' : 'profileForm'}>
         <input
           onChange={onChange}
           type="text"

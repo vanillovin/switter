@@ -1,16 +1,8 @@
 import React from 'react';
-import { authService } from 'fbase';
-import {
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth';
+import { authService } from 'services/firebase/fbase';
+import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTwitter,
-  faGoogle,
-  faGithub,
-} from '@fortawesome/free-brands-svg-icons';
+import { faTwitter, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
 import AuthForm from 'components/AuthForm';
 
 const Auth = ({ darkMode }) => {
@@ -45,33 +37,14 @@ const Auth = ({ darkMode }) => {
       <div className="authBtns">
         <button onClick={onSocialClick} name="google" className="authBtn">
           Google로 로그인{' '}
-          <FontAwesomeIcon
-            icon={faGoogle}
-            color={'#fff'}
-            style={{ marginLeft: 2 }}
-          />
+          <FontAwesomeIcon icon={faGoogle} color={'#fff'} style={{ marginLeft: 2 }} />
         </button>
         <button onClick={onSocialClick} name="github" className="authBtn">
           Github로 로그인{' '}
-          <FontAwesomeIcon
-            icon={faGithub}
-            color={'#fff'}
-            style={{ marginLeft: 2 }}
-          />
+          <FontAwesomeIcon icon={faGithub} color={'#fff'} style={{ marginLeft: 2 }} />
         </button>
       </div>
     </div>
-    // <div>
-    //   <AuthForm />
-    //   <div>
-    //     <button onClick={onSocialClick} name="google">
-    //       Continue with Google
-    //     </button>
-    //     <button onClick={onSocialClick} name="github">
-    //       Continue with Github
-    //     </button>
-    //   </div>
-    // </div>
   );
 };
 

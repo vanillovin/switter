@@ -1,23 +1,19 @@
 import { reducerUtils } from 'lib/asyncUtils';
 import {
-  GET_SWEET,
   GET_SWEETS,
   GET_SWEETS_ERROR,
   GET_SWEETS_SUCCESS,
-  GET_SWEET_ERROR,
-  GET_SWEET_SUCCESS,
   CREATE_SWEET,
   CLEAR_SWEETS,
-  CLEAR_SWEET,
+  DELETE_SWEET,
+  LIKE_SWEET,
+  UPDATE_SWEET,
+  CREATE_SWEET_COMMENT,
+  DELETE_SWEET_COMMENT,
 } from 'services/actions/sweetsAction';
 
 const initialState = {
   sweets: {
-    loading: false,
-    data: null,
-    error: null,
-  },
-  sweet: {
     loading: false,
     data: null,
     error: null,
@@ -47,27 +43,17 @@ const sweetsReducer = (state = initialState, action) => {
         ...state,
         sweets: reducerUtils.initial(),
       };
-    case GET_SWEET:
-      return {
-        ...state,
-        sweet: reducerUtils.loading(),
-      };
-    case GET_SWEET_SUCCESS:
-      return {
-        ...state,
-        sweet: reducerUtils.success(action.payload),
-      };
-    case GET_SWEET_ERROR:
-      return {
-        ...state,
-        sweet: reducerUtils.error(action.payload),
-      };
-    case CLEAR_SWEET:
-      return {
-        ...state,
-        sweet: reducerUtils.initial(),
-      };
     case CREATE_SWEET:
+      return state;
+    case DELETE_SWEET:
+      return state;
+    case LIKE_SWEET:
+      return state;
+    case UPDATE_SWEET:
+      return state;
+    case CREATE_SWEET_COMMENT:
+      return state;
+    case DELETE_SWEET_COMMENT:
       return state;
     default:
       return state;
