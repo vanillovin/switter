@@ -1,22 +1,13 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import Navigation from 'components/Navigation';
 import Profile from 'routes/Profile';
 import Message from 'components/Message';
+import SweetDetail from '../routes/SweetDetail';
 
-const AppRouter = ({
-  refreshUser,
-  isLoggedIn,
-  userObj,
-  darkMode,
-  onDarkMode,
-}) => {
-  // <Route exact path="/">
-  //   {isLoggedIn ? <Home /> : <Auth />}
-  // </Route>;
-
+const AppRouter = ({ refreshUser, isLoggedIn, userObj, darkMode, onDarkMode }) => {
   return (
     <Router>
       <Switch>
@@ -34,11 +25,10 @@ const AppRouter = ({
             {isLoggedIn ? (
               <div className={darkMode ? 'right dark' : 'right'}>
                 <Route exact path="/">
-                  <Home
-                    userObj={userObj}
-                    darkMode={darkMode}
-                    onDarkMode={onDarkMode}
-                  />
+                  <Home userObj={userObj} darkMode={darkMode} onDarkMode={onDarkMode} />
+                </Route>
+                <Route exact path="/sweet/:id">
+                  <SweetDetail userObj={userObj} darkMode={darkMode} />
                 </Route>
                 <Route exact path="/profile">
                   <Profile
@@ -56,10 +46,9 @@ const AppRouter = ({
                 <Route exact path="/">
                   <Auth darkMode={darkMode} />
                 </Route>
-                {/* <Redirect from="*" to="/" /> */}
+                <Redirect from="*" to="/" />
               </>
             )}
-            {/* <div></div> */}
           </div>
         </>
       </Switch>
