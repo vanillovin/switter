@@ -1,9 +1,36 @@
-import { collection, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  onSnapshot,
+  orderBy,
+  query,
+} from 'firebase/firestore';
+import { dbService } from 'services/firebase/fbase';
 
-const GET_SWEETS = 'GET_SWEETS';
+// Action
+export const GET_SWEETS = 'GET_SWEETS';
+export const GET_SWEETS_SUCCESS = 'GET_SWEETS_SUCCESS';
+export const GET_SWEETS_ERROR = 'GET_SWEETS_ERROR';
+export const GET_SWEET = 'GET_SWEET';
+export const GET_SWEET_SUCCESS = 'GET_SWEET_SUCCESS';
+export const GET_SWEET_ERROR = 'GET_SWEET_ERROR';
+export const CREATE_SWEET = 'CREATE_SWEET';
 
-const sweetsData = () => {
+// Action Creators
+export const getSweetsAction = (type, payload) => {
+  return { type: GET_SWEETS, payload };
+};
+export const getSweetAction = (sweet) => {
+  return { type: GET_SWEET, payload: { sweet } };
+};
+export const createSweetAction = () => {
+  return { type: CREATE_SWEET };
+};
+
+export const getSweets = () => {
   return (dispatch) => {
+    dispatch({ type: GET_SWEETS });
     try {
       const q = query(collection(getFirestore(), 'sweets'), orderBy('createdAt', 'desc'));
       onSnapshot(q, (snapshot) => {
@@ -15,39 +42,52 @@ const sweetsData = () => {
             ...doc.data(),
           };
         });
-        dispatch({ type: GET_SWEETS, payload: sweets });
+        dispatch({ type: GET_SWEETS_SUCCESS, payload: { sweets } });
       });
     } catch (e) {
-      console.log(e);
+      console.log('getSweetsData error', e);
+      dispatch({
+        type: GET_SWEETS_ERROR,
+        payload: { error: e },
+      });
     }
   };
 };
 
-// const sweetsData = () => {
-//   return (dispatch) => {
-//     return storageService
-//       .collection('sweets')
-//       .orderBy('createdAt', 'desc')
-//       .onSnapshot((snapshot) => {
-//         snapshot.docs.map((doc) => {
-//           const sweets = {
-//             id: doc.id,
-//             likes: doc.data().likes,
-//             comments: doc.data().comments,
-//             ...doc.data(),
-//           };
+export const getSweetsById = (id) => {
+  return (dispatch) => {
+    dispatch({ type: GET_SWEET });
+    try {
+      const q = query(collection(getFirestore(), 'sweets'), orderBy('createdAt', 'desc'));
+      onSnapshot(q, (snapshot) => {
+        const sweet = snapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            likes: doc.data().likes,
+            comments: doc.data().comments,
+            ...doc.data(),
+          }))
+          .filter((sweet) => sweet.id === id)[0];
+        dispatch({ type: GET_SWEET_SUCCESS, payload: { sweet } });
+      });
+    } catch (e) {
+      console.log('getSweetsData error', e);
+      dispatch({
+        type: GET_SWEET_ERROR,
+        payload: { error: e },
+      });
+    }
+  };
+};
 
-//           dispatch({ type: GET_SWEETS, payload: sweets });
-//           // if (change.type === 'added') {
-//           // }
-//           // else if (change.type === 'modified') {
-//           //   dispatch(board_save(childData));
-//           // } else if (change.type === 'removed') {
-//           //   dispatch(board_remove(childData.brdno));
-//           // }
-//         });
-//       });
-//   };
-// };
-
-export default sweetsData;
+export const createSweet = (sweetObj) => {
+  return function (dispatch) {
+    addDoc(collection(dbService, 'sweets'), sweetObj)
+      .then((docRef) => {
+        dispatch({ type: CREATE_SWEET });
+      })
+      .catch((err) => {
+        console.log('createSweet err', err);
+      });
+  };
+};

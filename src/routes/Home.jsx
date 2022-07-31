@@ -2,20 +2,30 @@ import React, { useEffect } from 'react';
 import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
 import { useDispatch, useSelector } from 'react-redux';
-import sweetsData from 'services/actions/sweetsAction';
+import { getSweets } from 'services/actions/sweetsAction';
 
-const Home = ({ userObj, darkMode }) => {
-  const sweets = useSelector((state) => state.sweetsReducer);
+function Home({ userObj, darkMode }) {
+  const {
+    loading,
+    data: sweets,
+    error,
+  } = useSelector((state) => state.sweetsReducer.sweets);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(sweetsData());
+    dispatch(getSweets());
   }, [dispatch]);
 
-  return (
+  // console.log('Home', '{ loading:', loading, ', data:', sweets, ', error:', error, ' }');
+
+  if (error) return <div>에러 발생! {error}</div>;
+
+  return !loading ? (
     <div className={darkMode ? 'container dark' : 'container'}>
       <SweetFactory userObj={userObj} darkMode={darkMode} />
       <div style={{ marginTop: 30 }} className="sweet-container">
-        {sweets.map((sweet) => (
+        {sweets?.map((sweet) => (
           <Sweet
             key={sweet.id}
             userObj={userObj}
@@ -26,7 +36,9 @@ const Home = ({ userObj, darkMode }) => {
         ))}
       </div>
     </div>
+  ) : (
+    <div>loading...</div>
   );
-};
+}
 
 export default Home;

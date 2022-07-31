@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { dbService, storageService } from 'fbase';
-import { addDoc, collection } from 'firebase/firestore';
+import { storageService } from 'services/firebase/fbase';
 import { ref, uploadString, getDownloadURL } from '@firebase/storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { createSweet } from 'services/actions/sweetsAction';
 
 const SweetFactory = ({ userObj, darkMode }) => {
-  // console.log('SweetFactory userObj', userObj);
   const [sweet, setSweet] = useState('');
   const [attachment, setAttachment] = useState('');
+  const dispatch = useDispatch();
 
   const onSubmit = async (e) => {
-    if (sweet === '') {
-      return;
-    }
     e.preventDefault();
+    if (sweet === '') return;
     let attachmentUrl = '';
     if (attachment !== '') {
       // 파일 경로 참조 만들기
@@ -38,7 +37,10 @@ const SweetFactory = ({ userObj, darkMode }) => {
       likes: [],
       comments: [],
     };
-    await addDoc(collection(dbService, 'sweets'), sweetObj);
+
+    // await addDoc(collection(dbService, 'sweets'), sweetObj);
+    dispatch(createSweet(sweetObj));
+
     setSweet('');
     setAttachment('');
   };
@@ -66,10 +68,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
   const onClearAttachment = () => setAttachment('');
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className={darkMode ? 'factoryForm dark' : 'factoryForm'}
-    >
+    <form onSubmit={onSubmit} className={darkMode ? 'factoryForm dark' : 'factoryForm'}>
       <div className="factoryInput__container">
         <input
           className="factoryInput__input"
@@ -109,7 +108,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
             }}
           />
           <div className="factoryForm__clear" onClick={onClearAttachment}>
-            <span>Remove</span>
+            <span>제거하기</span>
             <FontAwesomeIcon icon={faTimes} />
           </div>
         </div>
