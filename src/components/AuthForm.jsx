@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { authService } from 'services/firebase/fbase';
+import { authService, dbService } from 'services/firebase/fbase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
+
+const defaultProfileURL =
+  'https://firebasestorage.googleapis.com/v0/b/switter-b2db8.appspot.com/o/logo.png?alt=media&token=d636781d-a94b-4b3f-8b18-374cceacf61d';
 
 const AuthForm = () => {
   const [loginInputs, setLoginInputs] = useState({
@@ -28,25 +32,48 @@ const AuthForm = () => {
       let data;
       if (newAccount) {
         // create newAccount
-        data = await createUserWithEmailAndPassword(authService, email, password);
+        createUserWithEmailAndPassword(authService, email, password)
+          .then((res) => {
+            data = res;
+            return res.user.uid;
+          })
+          .then((uid) => {
+            const userObj = {
+              [uid]: defaultProfileURL,
+            };
+
+            const usersRef = collection(dbService, 'users');
+
+            setDoc(doc(usersRef, 'profilePhoto'), userObj).catch((err) => {
+              console.log('가입시 usersProfilePhoto 설정 err', err);
+            });
+
+            setDoc(doc(usersRef, 'profileData'), {
+              [uid]: {
+                email,
+                aboutMe: '',
+                displayName: '♥',
+                photoURL: defaultProfileURL,
+                commentedSweets: [],
+                writtenSweets: [],
+                likesSweets: [],
+              },
+            })
+              .then((res) => {
+                console.log('가입시 usersProfileData 설정 res', res);
+              })
+              .catch((err) => {
+                console.log('가입시 usersProfileData 설정 err', err);
+              });
+          });
       } else {
         // log in
         data = await signInWithEmailAndPassword(authService, email, password);
       }
-      console.log('Auth data', data);
+      console.log('Auth data', data.user.uid);
     } catch (error) {
-      // console.log(error.message);
-      if (error.code.includes('weak-password')) {
-        setError('비밀번호는 6자 이상이어야 합니다.');
-      } else if (error.code.includes('wrong-password')) {
-        setError('비밀번호가 틀렸습니다.');
-      } else if (error.code.includes('user-not-found')) {
-        setError('가입되지 않는 이메일입니다.');
-      } else if (error.code.includes('email-already-in-use')) {
-        setError('이미 사용 중인 이메일입니다.');
-      } else if (error.code.includes('too-many')) {
-        setError('로그인 실패. 비밀번호를 재설정해주세요.');
-      }
+      console.log('AuthForm onSubmit error :', error, 'error.message :', error.message);
+      setError(error.message);
     }
   };
 

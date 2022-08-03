@@ -7,7 +7,7 @@ import SweetEdit from './SweetEdit';
 import useToggle from 'hooks/useToggle';
 import SweetShareButton from './SweetShareButton';
 import SweetComments from './SweetComments';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   createSweetComment,
   deleteSweet,
@@ -17,6 +17,8 @@ import {
 } from 'services/actions/sweetsAction';
 
 const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
+  // console.log('Sweet sweetObj', sweetObj);
+
   const dispatch = useDispatch();
   const toggleRef = useRef();
   const history = useHistory();
@@ -24,6 +26,9 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
   const [editing, setEditing] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [toggle, onToggleChange] = useToggle(toggleRef);
+
+  const { data } = useSelector((state) => state.usersReducer.profilePhoto);
+  // console.log('Sweet users/profilePhoto data', data);
 
   const toggleEditing = () => setEditing((prev) => !prev);
 
@@ -56,7 +61,6 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
 
   const handleDeleteComment = (cid) => {
     if (!window.confirm('댓글을 삭제하시겠습니까?')) return;
-    // console.log('comment', uid, 'delete comment createdAt', cid);
     dispatch(deleteSweetComment(sweetObj, cid));
   };
 
@@ -72,6 +76,13 @@ const Sweet = ({ userObj, sweetObj, isOwner, darkMode }) => {
         <>
           <div className="hello">
             <div className="info">
+              <img
+                alt="profile"
+                src={
+                  data?.[sweetObj?.creatorId] ||
+                  `${process.env.PUBLIC_URL}/default-profile.png`
+                }
+              />
               <span className="dname">{sweetObj.dName || '♥'}</span>
               <span className="mini">{displayedAt(sweetObj.createdAt)}</span>
             </div>

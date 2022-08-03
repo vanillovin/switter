@@ -98,7 +98,11 @@ function SweetDetail({ userObj, darkMode }) {
           <>
             <div className="sweetDetailTopInfo" onClick={() => {}}>
               <div className="userInfo">
-                <div className="profile"></div>
+                <img
+                  alt="profile"
+                  className="profile"
+                  src={sweet?.photoURL || `${process.env.PUBLIC_URL}/default-profile.png`}
+                />
                 <div className="text">
                   <span className="dname">{sweet?.dName || '♥'}</span>
                   <span className="email">@{sweet?.email?.split('@')[0]}</span>

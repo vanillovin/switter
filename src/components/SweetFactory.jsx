@@ -31,6 +31,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
       text: sweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
+      // creatorPhotoURL: userObj.photoURL,
       attachmentUrl,
       dName: userObj.displayName,
       email: userObj.email,

@@ -15,11 +15,12 @@ function App() {
     // 사용자의 로그인 상태의 변화를 관찰하는 관찰자 추가
     onAuthStateChanged(authService, (user) => {
       if (user) {
-        // setUserObj(user);
+        // console.log('App user', user);
         setUserObj({
           email: user.email,
           displayName: user.displayName,
           uid: user.uid,
+          photoURL: user.photoURL,
           updateProfile: (args) => user.updateProfile(args),
         });
       } else {
@@ -33,13 +34,33 @@ function App() {
   // firebase의 정보를 가지고 react를 업데이트
   const refreshUser = () => {
     const user = authService.currentUser;
+    // console.log('refreshUser! user', user);
     setUserObj({
       email: user.email,
       displayName: user.displayName,
       uid: user.uid,
+      photoURL: user.photoURL,
       updateProfile: (args) => user.updateProfile(args),
     });
   };
+
+  // useEffect(() => {
+  //   if (!userObj?.uid) return;
+  //   (async () => {
+  //     const fileRef = ref(storageService, `${userObj.uid}/profileImage`);
+  //     await getDownloadURL(fileRef)
+  //       .then((res) => {
+  //         // console.log('downloadaUrlImg res', res);
+  //         setUserObj((prev) => ({
+  //           ...prev,
+  //           photoURL: res,
+  //         }));
+  //       })
+  //       .catch((err) => {
+  //         console.log('downloadaUrlImg err', err);
+  //       });
+  //   })();
+  // }, [userObj?.uid]);
 
   const onDarkMode = () => {
     darkMode
@@ -47,6 +68,8 @@ function App() {
       : (document.body.style = 'background-color: #193446');
     setDarkMode(!darkMode);
   };
+
+  // console.log('App userObj', userObj);
 
   return (
     <>

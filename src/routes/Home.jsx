@@ -3,24 +3,21 @@ import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearSweets, getSweets } from 'services/actions/sweetsAction';
+import { getUsersProfilePhoto } from 'services/actions/usersAction';
 
 function Home({ userObj, darkMode }) {
-  const {
-    loading,
-    data: sweets,
-    error,
-  } = useSelector((state) => state.sweetsReducer.sweets);
+  const { loading, data: sweets, error } = useSelector((state) => state.sweetsReducer);
+  // console.log('Home, { loading:', loading, ', data:', sweets, ', error:', error, ' }');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getSweets());
+    dispatch(getUsersProfilePhoto());
     return () => {
       dispatch(clearSweets());
     };
   }, [dispatch]);
-
-  // console.log('Home', '{ loading:', loading, ', data:', sweets, ', error:', error, ' }');
 
   if (error) return <div>에러 발생! {error}</div>;
 

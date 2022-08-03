@@ -11,8 +11,8 @@ import {
 } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
 import { dbService, storageService } from 'services/firebase/fbase';
+import type from '../typeActions';
 
-// Action
 export const GET_SWEETS = 'GET_SWEETS';
 export const GET_SWEETS_SUCCESS = 'GET_SWEETS_SUCCESS';
 export const GET_SWEETS_ERROR = 'GET_SWEETS_ERROR';
@@ -28,9 +28,7 @@ export const DELETE_SWEET_COMMENT = 'DELETE_SWEET_COMMENT';
 // Action Creators
 export const clearSweets = () => ({ type: CLEAR_SWEETS });
 export const clearSweet = () => ({ type: CLEAR_SWEET });
-export const getSweetsAction = (type, payload) => {
-  return { type: GET_SWEETS, payload };
-};
+export const getSweetsAction = (type, payload) => ({ type: GET_SWEETS, payload });
 export const createSweetAction = () => ({ type: CREATE_SWEET });
 export const deleteSweetAction = () => ({ type: DELETE_SWEET });
 export const likeSweetAction = () => ({ type: LIKE_SWEET });
@@ -38,7 +36,8 @@ export const updateSweetAction = () => ({ type: UPDATE_SWEET });
 export const createSweetCommentAction = () => ({ type: CREATE_SWEET_COMMENT });
 export const deleteSweetCommentAction = () => ({ type: DELETE_SWEET_COMMENT });
 
-export const getSweets = () => {
+/* */
+export const fetchSweets = () => {
   return (dispatch) => {
     dispatch({ type: GET_SWEETS });
     try {
@@ -136,6 +135,14 @@ export const createSweetComment = (sweetObj, userObj, comment) => (dispatch) => 
         createdAt: Date.now(),
         name: userObj.displayName,
         text: comment,
+        likes: [],
+        nestedComments: [],
+        //   {
+        //     uid: userObj.uid,
+        //     createdAt: Date.now(),
+        //     name: userObj.displayName,
+        //     text,
+        //   },
       },
     ],
   })
