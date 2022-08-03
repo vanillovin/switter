@@ -1,30 +1,54 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 
 import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
-import { clearSweets, fetchSweets } from 'services/sweets/actions';
+import { fetchSweets } from 'services/sweets';
+import Loading from 'components/Loading';
+import Error from 'components/Error';
 
 function Home({ userObj, darkMode }) {
-  const { loading, data: sweets, error } = useSelector((state) => state.sweets);
-  // console.log('Home, { loading:', loading, ', data:', sweets, ', error:', error, ' }');
-
-  const dispatch = useDispatch();
+  const [sweets, setSweets] = useState({
+    loading: true,
+    data: [],
+    error: null,
+  });
+  const { loading, data, error } = sweets;
 
   useEffect(() => {
-    dispatch(fetchSweets());
-    return () => {
-      dispatch(clearSweets());
-    };
-  }, [dispatch]);
+    fetchSweets(
+      (snapshot) => {
+        const sweets = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setSweets((prev) => ({
+          ...prev,
+          loading: false,
+          data: sweets,
+        }));
+      },
+      (err) => {
+        console.log('fetchSweets error', err);
+        setSweets((prev) => ({
+          ...prev,
+          loading: false,
+          error: err,
+        }));
+      }
+    );
 
-  if (error) return <div>에러 발생! {error}</div>;
+    return () => {
+      fetchSweets();
+    };
+  }, []);
+
+  if (error) return <Error message={error} />;
 
   return !loading ? (
     <div className={darkMode ? 'container dark' : 'container'}>
       <SweetFactory userObj={userObj} darkMode={darkMode} />
       <div className="sweet-container" style={{ marginTop: 30 }}>
-        {sweets?.map((sweet) => (
+        {data?.map((sweet) => (
           <Sweet
             key={sweet.id}
             userObj={userObj}
@@ -36,7 +60,7 @@ function Home({ userObj, darkMode }) {
       </div>
     </div>
   ) : (
-    <div>loading...</div>
+    <Loading />
   );
 }
 

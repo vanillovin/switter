@@ -2,16 +2,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaComment, FaPencilAlt, FaTrash, FaEllipsisH } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
 
 import useToggle from 'hooks/useToggle';
 import SweetShareButton from '../components/SweetShareButton';
 import SweetComments from '../components/SweetComments';
 import SweetEdit from 'components/SweetEdit';
-import { clearSweets, fetchSweets } from 'services/sweets/actions';
+import { fetchSweet } from 'services/sweets';
+import Loading from 'components/Loading';
+import Error from 'components/Error';
+
+const regex = /[\s\uFEFF\xA0]+$/gi;
 
 function SweetDetail({ userObj, darkMode }) {
-  const dispatch = useDispatch();
+  const [sweet, setSweet] = useState({
+    loading: true,
+    data: null,
+    error: null,
+  });
+  const { loading, data, error } = sweet;
+
   const topToggleRef = useRef();
   const botToggleRef = useRef();
   const params = useParams();
@@ -22,17 +31,31 @@ function SweetDetail({ userObj, darkMode }) {
 
   const toggleEditing = () => setEditing((prev) => !prev);
 
-  const { loading, data: sweets, error } = useSelector((state) => state.sweets);
-  console.log('Detail', '{loading:', loading, ', data:', sweets, ', error:', error, '}');
-
   useEffect(() => {
-    dispatch(fetchSweets());
-    return () => {
-      dispatch(clearSweets());
-    };
-  }, [dispatch]);
+    fetchSweet(
+      params.id,
+      (doc) => {
+        // console.log(doc.data());
+        setSweet((prev) => ({
+          ...prev,
+          loading: false,
+          data: doc.data(),
+        }));
+      },
+      (err) => {
+        console.log('fetchSweet error', err);
+        setSweet((prev) => ({
+          ...prev,
+          loading: false,
+          error: err,
+        }));
+      }
+    );
 
-  const sweet = sweets?.filter((sweet) => sweet.id === params.id)[0];
+    return () => {
+      fetchSweet();
+    };
+  }, [params.id]);
 
   const isOwner = sweet?.creatorId === userObj.uid;
 
@@ -50,9 +73,7 @@ function SweetDetail({ userObj, darkMode }) {
     if (!window.confirm('댓글을 삭제하시겠습니까?')) return;
   };
 
-  const regex = /[\s\uFEFF\xA0]+$/gi;
-
-  if (error) return <div>에러 발생! {error}</div>;
+  if (error) <Error message={error} />;
 
   return !loading ? (
     <div className={darkMode ? 'sweetDetailContainer dark' : 'sweetDetailContainer'}>
@@ -63,7 +84,7 @@ function SweetDetail({ userObj, darkMode }) {
       <div className="sweetDetail">
         {editing ? (
           <SweetEdit
-            text={sweet.text}
+            text={data?.text}
             onSubmit={handleUpdateSweet}
             closeEdit={() => setEditing(false)}
           />
@@ -74,11 +95,11 @@ function SweetDetail({ userObj, darkMode }) {
                 <img
                   alt="profile"
                   className="profile"
-                  src={sweet?.photoURL || `${process.env.PUBLIC_URL}/default-profile.png`}
+                  src={data?.photoURL || `${process.env.PUBLIC_URL}/default-profile.png`}
                 />
                 <div className="text">
-                  <span className="dname">{sweet?.dName || '♥'}</span>
-                  <span className="email">@{sweet?.email?.split('@')[0]}</span>
+                  <span className="dname">{data?.dName || '♥'}</span>
+                  <span className="email">@{data?.email?.split('@')[0]}</span>
                 </div>
               </div>
               <div className="rightButtons" ref={topToggleRef}>
@@ -101,22 +122,22 @@ function SweetDetail({ userObj, darkMode }) {
                 )}
               </div>
             </div>
-            <p className="sweetDetailContent">{sweet?.text.replace(regex, '')}</p>
-            {sweet?.attachmentUrl && <img alt="img" src={sweet?.attachmentUrl} />}
+            <p className="sweetDetailContent">{data?.text.replace(regex, '')}</p>
+            {sweet?.attachmentUrl && <img alt="img" src={data?.attachmentUrl} />}
           </>
         )}
         <div className="sweetDetailInfo">
           <div className="commentText">
-            <span>{sweet?.comments?.length}</span> 답글
+            <span>{data?.comments?.length}</span> 답글
           </div>
           <div>
-            <span>{sweet?.likes?.length}</span> 마음에 들어요
+            <span>{data?.likes?.length}</span> 마음에 들어요
           </div>
         </div>
 
         <div className="sweetDetailActions">
           <button title="마음에 들어요" onClick={handleSweetLike}>
-            {sweet?.likes?.includes(userObj.uid) ? <AiFillHeart /> : <AiOutlineHeart />}
+            {data?.likes?.includes(userObj.uid) ? <AiFillHeart /> : <AiOutlineHeart />}
           </button>
           <button title="답글">
             <FaComment />
@@ -125,20 +146,20 @@ function SweetDetail({ userObj, darkMode }) {
             toggle={botToggle}
             toggleRef={botToggleRef}
             onToggleChange={onBotToggleChange}
-            sweetId={sweet?.id}
+            sweetId={data?.id}
           />
         </div>
 
         <SweetComments
           handleAddComment={handleAddComment}
           handleDeleteComment={handleDeleteComment}
-          comments={sweet?.comments}
+          comments={data?.comments}
           userObj={userObj}
         />
       </div>
     </div>
   ) : (
-    <div>loading...</div>
+    <Loading />
   );
 }
 
