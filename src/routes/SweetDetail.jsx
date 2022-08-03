@@ -2,21 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaComment, FaPencilAlt, FaTrash, FaEllipsisH } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useToggle from 'hooks/useToggle';
 import SweetShareButton from '../components/SweetShareButton';
 import SweetComments from '../components/SweetComments';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  clearSweets,
-  createSweetComment,
-  deleteSweet,
-  deleteSweetComment,
-  getSweets,
-  likeSweet,
-  updateSweet,
-} from 'services/actions/sweetsAction';
 import SweetEdit from 'components/SweetEdit';
+import { clearSweets, fetchSweets } from 'services/sweets/actions';
 
 function SweetDetail({ userObj, darkMode }) {
   const dispatch = useDispatch();
@@ -30,14 +22,11 @@ function SweetDetail({ userObj, darkMode }) {
 
   const toggleEditing = () => setEditing((prev) => !prev);
 
-  const {
-    loading,
-    data: sweets,
-    error,
-  } = useSelector((state) => state.sweetsReducer.sweets);
+  const { loading, data: sweets, error } = useSelector((state) => state.sweets);
+  console.log('Detail', '{loading:', loading, ', data:', sweets, ', error:', error, '}');
 
   useEffect(() => {
-    dispatch(getSweets());
+    dispatch(fetchSweets());
     return () => {
       dispatch(clearSweets());
     };
@@ -47,34 +36,18 @@ function SweetDetail({ userObj, darkMode }) {
 
   const isOwner = sweet?.creatorId === userObj.uid;
 
-  // console.log('Detail', '{loading:', loading, ', data:', sweet, ', error:', error, '}');
+  const handleDeleteSweet = () => {};
 
-  const handleDeleteSweet = () => {
-    if (!window.confirm('스윗을 삭제하시겠습니까?')) return;
-    dispatch(deleteSweet(sweet.id, sweet.attachmentUrl));
-    history.push('/');
-  };
+  const handleSweetLike = async () => {};
 
-  const handleSweetLike = async () => {
-    const liked = sweet.likes.includes(userObj.uid);
-    dispatch(likeSweet(sweet, liked, userObj.uid));
-  };
-
-  const handleUpdateSweet = (text) => {
-    dispatch(updateSweet(sweet.id, text));
-    setEditing(false);
-  };
+  const handleUpdateSweet = (text) => {};
 
   const handleAddComment = (comment, clearComment) => {
     if (comment === '') return;
-    dispatch(createSweetComment(sweet, userObj, comment));
-    clearComment();
   };
 
   const handleDeleteComment = async (cid) => {
     if (!window.confirm('댓글을 삭제하시겠습니까?')) return;
-    // console.log('comment', uid, 'delete comment createdAt', cid);
-    dispatch(deleteSweetComment(sweet, cid));
   };
 
   const regex = /[\s\uFEFF\xA0]+$/gi;

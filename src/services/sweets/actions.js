@@ -11,58 +11,35 @@ import {
 } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
 import { dbService, storageService } from 'services/firebase/fbase';
-import type from '../typeActions';
+import type from './typeActions';
 
-export const GET_SWEETS = 'GET_SWEETS';
-export const GET_SWEETS_SUCCESS = 'GET_SWEETS_SUCCESS';
-export const GET_SWEETS_ERROR = 'GET_SWEETS_ERROR';
-export const CLEAR_SWEETS = 'CLEAR_SWEETS';
-export const CLEAR_SWEET = 'CLEAR_SWEET';
-export const CREATE_SWEET = 'CREATE_SWEET';
-export const DELETE_SWEET = 'DELETE_SWEET';
-export const LIKE_SWEET = 'LIKE_SWEET';
-export const UPDATE_SWEET = 'UPDATE_SWEET';
-export const CREATE_SWEET_COMMENT = 'CREATE_SWEET_COMMENT';
-export const DELETE_SWEET_COMMENT = 'DELETE_SWEET_COMMENT';
-
-// Action Creators
-export const clearSweets = () => ({ type: CLEAR_SWEETS });
-export const clearSweet = () => ({ type: CLEAR_SWEET });
-export const getSweetsAction = (type, payload) => ({ type: GET_SWEETS, payload });
-export const createSweetAction = () => ({ type: CREATE_SWEET });
-export const deleteSweetAction = () => ({ type: DELETE_SWEET });
-export const likeSweetAction = () => ({ type: LIKE_SWEET });
-export const updateSweetAction = () => ({ type: UPDATE_SWEET });
-export const createSweetCommentAction = () => ({ type: CREATE_SWEET_COMMENT });
-export const deleteSweetCommentAction = () => ({ type: DELETE_SWEET_COMMENT });
-
-/* */
-export const fetchSweets = () => {
-  return (dispatch) => {
-    dispatch({ type: GET_SWEETS });
-    try {
-      const q = query(collection(getFirestore(), 'sweets'), orderBy('createdAt', 'desc'));
-      onSnapshot(q, (snapshot) => {
-        const sweets = snapshot.docs.map((doc) => {
-          return {
-            id: doc.id,
-            likes: doc.data().likes,
-            comments: doc.data().comments,
-            ...doc.data(),
-          };
-        });
-        dispatch({ type: GET_SWEETS_SUCCESS, payload: sweets });
+export const fetchSweets = () => (dispatch) => {
+  console.log('into fetch sweets');
+  dispatch({ type: type.FETCH_SWEETS_STARTED });
+  try {
+    const q = query(collection(getFirestore(), 'sweets'), orderBy('createdAt', 'desc'));
+    onSnapshot(q, (snapshot) => {
+      const sweets = snapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          likes: doc.data().likes,
+          comments: doc.data().comments,
+          ...doc.data(),
+        };
       });
-    } catch (e) {
-      console.log('getSweetsData error', e);
-      dispatch({
-        type: GET_SWEETS_ERROR,
-        payload: e,
-      });
-    }
-  };
+      dispatch({ type: type.FETCH_SWEETS_FULFILLED, payload: { data: sweets } });
+    });
+  } catch (e) {
+    console.log('getSweetsData error', e);
+    dispatch({ type: type.FETCH_SWEETS_REJECTED, payload: { error: e } });
+  }
 };
 
+export const fetchSweet = (id) => (dispatch) => {};
+
+export const clearSweets = () => ({ type: type.CLEAR_SWEETS });
+
+/*
 export const createSweet = (sweetObj) => {
   return function (dispatch) {
     addDoc(collection(dbService, 'sweets'), sweetObj)
@@ -165,3 +142,4 @@ export const deleteSweetComment = (sweetObj, cid) => (dispatch) => {
       console.log('deleteSweetComment error', err);
     });
 };
+ */

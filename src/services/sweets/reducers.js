@@ -3,7 +3,7 @@ import type from './typeActions';
 const sweets = (
   state = {
     loading: false,
-    data: [],
+    data: null,
     error: null,
   },
   action
@@ -12,9 +12,11 @@ const sweets = (
     case type.FETCH_SWEETS_STARTED:
       return { ...state, loading: true };
     case type.FETCH_SWEETS_FULFILLED:
-      return { ...state, ...action.payload };
+      return { ...state, loading: false, ...action.payload };
     case type.FETCH_SWEETS_REJECTED:
-      return { ...state, ...action.payload };
+      return { ...state, loading: false, ...action.payload };
+    case type.CLEAR_SWEETS:
+      return { ...state, data: null };
     default:
       return state;
   }

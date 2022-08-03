@@ -5,7 +5,7 @@ import { ref, uploadString, getDownloadURL } from '@firebase/storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
-import { createSweet } from 'services/actions/sweetsAction';
+// import { createSweet } from 'services/actions/sweetsAction';
 
 const SweetFactory = ({ userObj, darkMode }) => {
   const [sweet, setSweet] = useState('');
@@ -40,7 +40,7 @@ const SweetFactory = ({ userObj, darkMode }) => {
     };
 
     // await addDoc(collection(dbService, 'sweets'), sweetObj);
-    dispatch(createSweet(sweetObj));
+    // dispatch(createSweet(sweetObj));
 
     setSweet('');
     setAttachment('');

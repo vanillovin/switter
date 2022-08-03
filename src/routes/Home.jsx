@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearSweets, getSweets } from 'services/actions/sweetsAction';
-import { getUsersProfilePhoto } from 'services/actions/usersAction';
+import { clearSweets, fetchSweets } from 'services/sweets/actions';
 
 function Home({ userObj, darkMode }) {
-  const { loading, data: sweets, error } = useSelector((state) => state.sweetsReducer);
+  const { loading, data: sweets, error } = useSelector((state) => state.sweets);
   // console.log('Home, { loading:', loading, ', data:', sweets, ', error:', error, ' }');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSweets());
-    dispatch(getUsersProfilePhoto());
+    dispatch(fetchSweets());
     return () => {
       dispatch(clearSweets());
     };
@@ -24,12 +23,12 @@ function Home({ userObj, darkMode }) {
   return !loading ? (
     <div className={darkMode ? 'container dark' : 'container'}>
       <SweetFactory userObj={userObj} darkMode={darkMode} />
-      <div style={{ marginTop: 30 }} className="sweet-container">
+      <div className="sweet-container" style={{ marginTop: 30 }}>
         {sweets?.map((sweet) => (
           <Sweet
             key={sweet.id}
             userObj={userObj}
-            sweetObj={sweet}
+            sweet={sweet}
             isOwner={sweet.creatorId === userObj.uid}
             darkMode={darkMode}
           />
