@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import './styles.css';
-import { Provider } from 'react-redux';
-import store from 'services/store';
+// import { Provider } from 'react-redux';
+// import store from 'services/store';
 // import { applyMiddleware, createStore } from 'redux';
 // import rootReducer from 'modules';
 // import ReduxThunk from 'redux-thunk';
@@ -16,9 +16,7 @@ import store from 'services/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
