@@ -1,3 +1,10 @@
+export const handleCopy = (sweetId) => {
+  navigator.clipboard.writeText(
+    `https://vanillovin.github.io/switter/#/sweet/${sweetId}`
+  );
+  alert('클립보드로 복사됐습니다');
+};
+
 export const shareSns = (sns, id) => {
   const title = 'Switter';
   const pageUrl = 'https://vanillovin.github.io/switter';

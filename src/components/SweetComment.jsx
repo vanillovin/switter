@@ -1,6 +1,6 @@
+import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 import { displayedAt } from 'utils';
 
 function SweetComment({ comment, isOwner, handleDeleteComment }) {

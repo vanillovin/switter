@@ -15,7 +15,9 @@ function useToggle(toggleRef) {
     if (toggle) {
       document.addEventListener('mousedown', clickToggleOutside);
     }
-    return () => document.addEventListener('mousedown', clickToggleOutside);
+    return () => {
+      document.addEventListener('mousedown', clickToggleOutside);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggle]);
 

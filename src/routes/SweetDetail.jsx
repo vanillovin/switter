@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { FaComment, FaPencilAlt, FaTrash, FaEllipsisH } from 'react-icons/fa';
+import { FaPencilAlt, FaTrash, FaEllipsisH } from 'react-icons/fa';
 
 import useToggle from 'hooks/useToggle';
-import SweetShareButton from '../components/SweetShareButton';
 import SweetComments from '../components/SweetComments';
 import SweetEdit from 'components/SweetEdit';
 import { fetchSweet } from 'services/sweets';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
+import SweetActionButtons from 'components/SweetActionButtons';
 
 const regex = /[\s\uFEFF\xA0]+$/gi;
 
@@ -20,16 +19,12 @@ function SweetDetail({ userObj, darkMode }) {
     error: null,
   });
   const { loading, data, error } = sweet;
-
   const topToggleRef = useRef();
-  const botToggleRef = useRef();
   const params = useParams();
   const history = useHistory();
   const [editing, setEditing] = useState(false);
   const [topToggle, onTopToggleChange] = useToggle(topToggleRef);
-  const [botToggle, onBotToggleChange] = useToggle(botToggleRef);
-
-  const toggleEditing = () => setEditing((prev) => !prev);
+  const isOwner = data?.creatorId === userObj.uid;
 
   useEffect(() => {
     fetchSweet(
@@ -57,23 +52,7 @@ function SweetDetail({ userObj, darkMode }) {
     };
   }, [params.id]);
 
-  const isOwner = sweet?.creatorId === userObj.uid;
-
-  const handleDeleteSweet = () => {};
-
-  const handleSweetLike = async () => {};
-
-  const handleUpdateSweet = (text) => {};
-
-  const handleAddComment = (comment, clearComment) => {
-    if (comment === '') return;
-  };
-
-  const handleDeleteComment = async (cid) => {
-    if (!window.confirm('댓글을 삭제하시겠습니까?')) return;
-  };
-
-  if (error) <Error message={error} />;
+  if (error) return <Error message={error} />;
 
   return !loading ? (
     <div className={darkMode ? 'sweetDetailContainer dark' : 'sweetDetailContainer'}>
@@ -85,7 +64,7 @@ function SweetDetail({ userObj, darkMode }) {
         {editing ? (
           <SweetEdit
             text={data?.text}
-            onSubmit={handleUpdateSweet}
+            onSubmit={() => {}}
             closeEdit={() => setEditing(false)}
           />
         ) : (
@@ -105,15 +84,15 @@ function SweetDetail({ userObj, darkMode }) {
               <div className="rightButtons" ref={topToggleRef}>
                 {isOwner && (
                   <>
-                    <button onClick={onTopToggleChange}>
+                    <button className="rToggleBtn" onClick={onTopToggleChange}>
                       <FaEllipsisH />
                     </button>
                     {topToggle && (
                       <div className="buttons">
-                        <button onClick={handleDeleteSweet}>
+                        <button onClick={() => {}}>
                           <FaTrash /> 삭제하기
                         </button>
-                        <button onClick={toggleEditing}>
+                        <button onClick={() => setEditing((prev) => !prev)}>
                           <FaPencilAlt /> 수정하기
                         </button>
                       </div>
@@ -134,25 +113,18 @@ function SweetDetail({ userObj, darkMode }) {
             <span>{data?.likes?.length}</span> 마음에 들어요
           </div>
         </div>
-
-        <div className="sweetDetailActions">
-          <button title="마음에 들어요" onClick={handleSweetLike}>
-            {data?.likes?.includes(userObj.uid) ? <AiFillHeart /> : <AiOutlineHeart />}
-          </button>
-          <button title="답글">
-            <FaComment />
-          </button>
-          <SweetShareButton
-            toggle={botToggle}
-            toggleRef={botToggleRef}
-            onToggleChange={onBotToggleChange}
-            sweetId={data?.id}
-          />
-        </div>
-
+        <SweetActionButtons
+          type="detail"
+          id={params.id}
+          likes={data.likes}
+          liked={data.likes.includes(userObj?.uid)}
+          comments={data.comments}
+          handleLikeSweet={() => {}}
+          handleAddComment={() => {}}
+        />
         <SweetComments
-          handleAddComment={handleAddComment}
-          handleDeleteComment={handleDeleteComment}
+          handleAddComment={() => {}}
+          handleDeleteComment={() => {}}
           comments={data?.comments}
           userObj={userObj}
         />
