@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   doc,
   getFirestore,
@@ -6,7 +7,9 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
-import { dbService } from './firebase/fbase';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { dbService, storageService } from './firebase/fbase';
+import { v4 as uuidv4 } from 'uuid';
 
 export const fetchSweets = (snapshot, error) => {
   // console.log('into fetch sweets');
@@ -21,6 +24,20 @@ export const fetchSweet = (id, snapshot, error) => {
   return onSnapshot(doc(dbService, `sweets/${id}`), snapshot, error);
 };
 
+export const createSweet = (sweetObj) => {
+  return addDoc(collection(dbService, 'sweets'), sweetObj);
+};
+
+export const imageFileUploadAndDownload = async (uid, attachment) => {
+  try {
+    const fileRef = ref(storageService, `${uid}/${uuidv4()}`);
+    const uploadFile = await uploadString(fileRef, attachment, 'data_url');
+    return getDownloadURL(uploadFile.ref);
+  } catch (err) {
+    console.log('imageFileUploadAndDown err', err);
+  }
+};
+
 /*
 export const createGroceryList = (userName) => {
   const groceriesColRef = collection(db, 'groceryLists');
@@ -28,18 +45,6 @@ export const createGroceryList = (userName) => {
     created: serverTimestamp(),
     users: [{ name: userName }],
   });
-};
-
-export const createSweet = (sweetObj) => {
-  return function (dispatch) {
-    addDoc(collection(dbService, 'sweets'), sweetObj)
-      .then((docRef) => {
-        dispatch({ type: CREATE_SWEET });
-      })
-      .catch((err) => {
-        console.log('createSweet err', err);
-      });
-  };
 };
 
 export const deleteSweet = (id, attachmentUrl) => (dispatch, getState) => {
