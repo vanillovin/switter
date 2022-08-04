@@ -1,13 +1,17 @@
 import {
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getFirestore,
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { dbService, storageService } from './firebase/fbase';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -38,6 +42,30 @@ export const imageFileUploadAndDownload = async (uid, attachment) => {
   }
 };
 
+export const deleteStorageFile = (fileUrl) => {
+  return deleteObject(ref(storageService, fileUrl));
+};
+
+export const deleteSweet = (sid) => {
+  return deleteDoc(doc(dbService, `sweets/${sid}`));
+};
+
+export const likeSweet = (liked, sid, uid) => {
+  if (!liked) {
+    return updateDoc(doc(dbService, `sweets/${sid}`), {
+      likes: arrayUnion(uid),
+    });
+  } else {
+    return updateDoc(doc(dbService, `sweets/${sid}`), {
+      likes: arrayRemove(uid),
+    });
+  }
+};
+
+export const updateSweet = (sid, text) => {
+  return updateDoc(doc(dbService, `sweets/${sid}`), { text });
+};
+
 /*
 export const createGroceryList = (userName) => {
   const groceriesColRef = collection(db, 'groceryLists');
@@ -45,57 +73,6 @@ export const createGroceryList = (userName) => {
     created: serverTimestamp(),
     users: [{ name: userName }],
   });
-};
-
-export const deleteSweet = (id, attachmentUrl) => (dispatch, getState) => {
-  const sweetData = getState().sweetsReducer.sweets.data.find((sweet) => sweet.id === id);
-  if (!sweetData) return;
-  if (attachmentUrl !== '') {
-    deleteObject(ref(storageService, attachmentUrl));
-  }
-  deleteDoc(doc(dbService, `sweets/${id}`))
-    .then((res) => {
-      dispatch(deleteSweetAction());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const likeSweet = (sweetObj, liked, uid) => (dispatch) => {
-  if (!liked) {
-    updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
-      likes: [...sweetObj.likes, uid],
-    })
-      .then((res) => {
-        dispatch(likeSweetAction());
-      })
-      .catch((err) => {
-        console.log('likeSweet err', err);
-      });
-  } else {
-    updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
-      likes: sweetObj.likes.filter((user) => user !== uid),
-    })
-      .then((res) => {
-        dispatch(likeSweetAction());
-      })
-      .catch((err) => {
-        console.log('likeSweet err', err);
-      });
-  }
-};
-
-export const updateSweet = (id, text) => (dispatch, getState) => {
-  const sweetData = getState().sweetsReducer.sweets.data.find((sweet) => sweet.id === id);
-  if (!sweetData.id) return;
-  updateDoc(doc(dbService, `sweets/${id}`), { text })
-    .then((res) => {
-      dispatch(updateSweetAction());
-    })
-    .catch((err) => {
-      console.log('err', err);
-    });
 };
 
 export const createSweetComment = (sweetObj, userObj, comment) => (dispatch) => {

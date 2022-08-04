@@ -6,6 +6,7 @@ import { displayedAt } from 'utils';
 import SweetEdit from './SweetEdit';
 import SweetComments from './SweetComments';
 import SweetActionButtons from './SweetActionButtons';
+import { deleteStorageFile, deleteSweet, likeSweet, updateSweet } from 'services/sweets';
 
 const Sweet = ({ userObj, sweet, isOwner, darkMode, profilePhoto }) => {
   const history = useHistory();
@@ -21,12 +22,43 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode, profilePhoto }) => {
     history.push(`/sweet/${sweet.id}`);
   };
 
+  const handleDeleteSweet = () => {
+    if (!window.confirm('스윗을 삭제하시겠습니까?')) return;
+    if (sweet.attachmentUrl !== '') {
+      deleteStorageFile(sweet.attachmentUrl).catch((err) => {
+        console.log('deleteStorageFile err', err);
+      });
+    }
+    deleteSweet(sweet.id).catch((err) => {
+      console.log('deleteSweet err', err);
+    });
+  };
+
+  const handleLikeSweet = () => {
+    const liked = new Set(sweet.likes).has(userObj.uid);
+    likeSweet(liked, sweet.id, userObj.uid).catch((err) => {
+      console.log('likeSweet err', err);
+    });
+  };
+
+  const handleUpdateSweet = (text) => {
+    // const sweetData = getState().sweetsReducer.sweets.data.find((sweet) => sweet.id === id);
+    // if (!sweetData.id) return;
+    updateSweet(sweet.id, text)
+      .then((res) => {
+        setEditing(false);
+      })
+      .catch((err) => {
+        console.log('updateSweet err', err);
+      });
+  };
+
   return (
     <div className={darkMode ? 'sweet dark' : 'sweet'} onClick={goToSweetDetailPage}>
       {editing ? (
         <SweetEdit
           text={sweet.text}
-          onSubmit={() => {}}
+          onSubmit={handleUpdateSweet}
           closeEdit={() => setEditing(false)}
         />
       ) : (
@@ -42,7 +74,7 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode, profilePhoto }) => {
             </div>
             {isOwner && (
               <div className="sweet__actions">
-                <span onClick={() => {}}>
+                <span onClick={handleDeleteSweet}>
                   <FaTrash />
                 </span>
                 <span onClick={toggleEditing}>
@@ -64,7 +96,7 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode, profilePhoto }) => {
               likes={sweet.likes}
               liked={sweet.likes.includes(userObj?.uid)}
               comments={sweet.comments}
-              handleLikeSweet={() => alert('like!')}
+              handleLikeSweet={handleLikeSweet}
               handleAddComment={() => setAddComment((prev) => !prev)}
             />
             {addComment && (

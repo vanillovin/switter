@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useInput from 'hooks/useInput';
 
 function SweetEdit({ text, onSubmit, closeEdit }) {
-  const [newText, setNewText] = useState(text);
-
-  const onChange = (e) => setNewText(e.target.value);
+  const { value, onChangeValue } = useInput(text);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(newText);
+    onSubmit(value);
   };
 
   return (
@@ -20,8 +19,8 @@ function SweetEdit({ text, onSubmit, closeEdit }) {
           name="sweet"
           required
           autoFocus
-          value={newText}
-          onChange={onChange}
+          value={value}
+          onChange={onChangeValue}
           maxLength={500}
         />
         <input type="submit" value="스윗 업데이트" className="formBtn" />
