@@ -7,7 +7,7 @@ import SweetEdit from './SweetEdit';
 import SweetComments from './SweetComments';
 import SweetActionButtons from './SweetActionButtons';
 
-const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
+const Sweet = ({ userObj, sweet, isOwner, darkMode, profilePhoto }) => {
   const history = useHistory();
   const comments = sweet.comments.sort((a, b) => b.createdAt - a.createdAt);
   const [editing, setEditing] = useState(false);
@@ -35,10 +35,7 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
             <div className="info">
               <img
                 alt="profile"
-                src={
-                  // data?.[sweet?.creatorId] ||
-                  `${process.env.PUBLIC_URL}/default-profile.png`
-                }
+                src={profilePhoto || `${process.env.PUBLIC_URL}/default-profile.png`}
               />
               <span className="dname">{sweet.dName || '♥'}</span>
               <span className="mini">{displayedAt(sweet.createdAt)}</span>
@@ -70,7 +67,6 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
               handleLikeSweet={() => alert('like!')}
               handleAddComment={() => setAddComment((prev) => !prev)}
             />
-
             {addComment && (
               <SweetComments
                 handleAddComment={() => {}}

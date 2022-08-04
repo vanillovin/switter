@@ -1,20 +1,36 @@
 import React, { useEffect, useState } from 'react';
-
 import Sweet from 'components/Sweet';
 import SweetFactory from 'components/SweetFactory';
 import { fetchSweets } from 'services/sweets';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
+import { fetchUsersProfilePhoto } from 'services/users';
+
+const initialSweets = {
+  loading: true,
+  data: null,
+  error: null,
+};
 
 function Home({ userObj, darkMode }) {
-  const [sweets, setSweets] = useState({
-    loading: true,
-    data: [],
-    error: null,
-  });
+  const [usersProfilePhoto, setUsersProfilePhoto] = useState({});
+  const [sweets, setSweets] = useState(initialSweets);
   const { loading, data, error } = sweets;
 
+  const clearUsersProfilePhoto = () => setUsersProfilePhoto({});
+  const clearSweets = () => setSweets(initialSweets);
+
   useEffect(() => {
+    fetchUsersProfilePhoto(
+      (doc) => {
+        // console.log('fetchUsersProfilePhoto res', doc.data());
+        setUsersProfilePhoto(doc.data());
+      },
+      (err) => {
+        console.log('fetchUsersProfilePhoto error', err);
+      }
+    );
+
     fetchSweets(
       (snapshot) => {
         const sweets = snapshot.docs.map((doc) => ({
@@ -39,6 +55,9 @@ function Home({ userObj, darkMode }) {
 
     return () => {
       fetchSweets();
+      fetchUsersProfilePhoto();
+      clearSweets();
+      clearUsersProfilePhoto();
     };
   }, []);
 
@@ -55,6 +74,7 @@ function Home({ userObj, darkMode }) {
             sweet={sweet}
             isOwner={sweet.creatorId === userObj.uid}
             darkMode={darkMode}
+            profilePhoto={usersProfilePhoto[sweet.creatorId]}
           />
         ))}
       </div>

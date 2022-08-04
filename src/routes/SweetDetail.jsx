@@ -9,15 +9,19 @@ import { fetchSweet } from 'services/sweets';
 import Loading from 'components/Loading';
 import Error from 'components/Error';
 import SweetActionButtons from 'components/SweetActionButtons';
+import { fetchUsersProfilePhoto } from 'services/users';
 
 const regex = /[\s\uFEFF\xA0]+$/gi;
 
+const initialSweet = {
+  loading: true,
+  data: null,
+  error: null,
+};
+
 function SweetDetail({ userObj, darkMode }) {
-  const [sweet, setSweet] = useState({
-    loading: true,
-    data: null,
-    error: null,
-  });
+  const [usersProfilePhoto, setUsersProfilePhoto] = useState({});
+  const [sweet, setSweet] = useState(initialSweet);
   const { loading, data, error } = sweet;
   const topToggleRef = useRef();
   const params = useParams();
@@ -26,7 +30,19 @@ function SweetDetail({ userObj, darkMode }) {
   const [topToggle, onTopToggleChange] = useToggle(topToggleRef);
   const isOwner = data?.creatorId === userObj.uid;
 
+  const clearUsersProfilePhoto = () => setUsersProfilePhoto({});
+  const clearSweet = () => setSweet(initialSweet);
+
   useEffect(() => {
+    fetchUsersProfilePhoto(
+      (doc) => {
+        setUsersProfilePhoto(doc.data());
+      },
+      (err) => {
+        console.log('fetchUsersProfilePhoto error', err);
+      }
+    );
+
     fetchSweet(
       params.id,
       (doc) => {
@@ -49,6 +65,9 @@ function SweetDetail({ userObj, darkMode }) {
 
     return () => {
       fetchSweet();
+      fetchUsersProfilePhoto();
+      clearSweet();
+      clearUsersProfilePhoto();
     };
   }, [params.id]);
 
@@ -74,7 +93,10 @@ function SweetDetail({ userObj, darkMode }) {
                 <img
                   alt="profile"
                   className="profile"
-                  src={data?.photoURL || `${process.env.PUBLIC_URL}/default-profile.png`}
+                  src={
+                    usersProfilePhoto[data.creatorId] ||
+                    `${process.env.PUBLIC_URL}/default-profile.png`
+                  }
                 />
                 <div className="text">
                   <span className="dname">{data?.dName || '♥'}</span>
