@@ -1,14 +1,26 @@
 import { ModalContext } from 'contexts/ModalContext';
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import ModalPortal from './ModalPortal';
 
 function Modal() {
-  const { modalContent, handleModal, modal } = useContext(ModalContext);
+  const el = useRef();
+  const { modal, modalContent, closeModal } = useContext(ModalContext);
   return modal ? (
     <ModalPortal>
-      <div className="modal">
-        <p>{modalContent}</p>
-        <button onClick={() => handleModal()}>닫기</button>
+      <div
+        className="modal-container"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeModal();
+        }}
+        ref={el}
+      >
+        <div className="modal">
+          <h1>Ooops</h1>
+          <p>{modalContent}</p>
+          <button className="closeBtn" onClick={() => closeModal()}>
+            닫기
+          </button>
+        </div>
       </div>
     </ModalPortal>
   ) : null;
