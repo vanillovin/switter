@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AppRouter from './Router';
 import { authService } from 'services/firebase/fbase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { ModalProvider } from 'contexts/ModalContext';
 
 function App() {
   // console.log('유저의 로그인 여부', authService.currentUser);
@@ -72,7 +73,7 @@ function App() {
   // console.log('App userObj', userObj);
 
   return (
-    <>
+    <ModalProvider>
       {init ? (
         <AppRouter
           refreshUser={refreshUser}
@@ -85,7 +86,7 @@ function App() {
         <div style={{ marginTop: 10 }}>Initializing....</div>
       )}
       {/* <footer>&copy; {new Date().getFullYear()} Switter</footer> */}
-    </>
+    </ModalProvider>
   );
 }
 
