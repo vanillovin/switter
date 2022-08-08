@@ -1,48 +1,42 @@
-import { doc, onSnapshot } from 'firebase/firestore';
-import { dbService } from 'services/firebase/fbase';
+import { updateProfile } from 'firebase/auth';
+import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { authService, dbService } from 'services/firebase/fbase';
+
+// Users Manage
+export const updateUserProfile = (userObj) => {
+  return updateProfile(authService, userObj);
+};
+
+// Users Profile Photo
+export const updateAllUsersProfilePhoto = (obj) => {
+  const usersRef = collection(dbService, 'users');
+  return updateDoc(doc(usersRef, 'profilePhoto'), obj);
+};
 
 export const fetchUsersProfilePhoto = (snapshot, error) => {
   return onSnapshot(doc(dbService, 'users', 'profilePhoto'), snapshot, error);
 };
 
-// export const updateUserProfilePhoto = (uid, newDisplayName, photoURL) => {
-//   return (dispatch) => {
-//     try {
-//       const usersRef = collection(dbService, 'users');
-//       setDoc(doc(usersRef, 'profilePhoto'), {
-//         [uid]: {
-//           displayName: newDisplayName,
-//           photoURL,
-//         },
-//       })
-//         .then((res) => {
-//           console.log('users/profilePhoto 업데이트 res', res);
-//           dispatch({
-//             type: UPDATE_USERS_PROFILE_PHOTO,
-//             payload: { uid, newDisplayName, photoURL },
-//           });
-//         })
-//         .catch((err) => {
-//           console.log('users/profilePhoto 업데이트 err', err);
-//         });
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-// };
+// Users Profile Data
+export const updateAllUsersProfileData = (obj) => {
+  const usersRef = collection(dbService, 'users');
+  return updateDoc(doc(usersRef, 'profileData'), obj);
+};
 
-// // storage 파일 업로드 & 다운
-// export const imgAjjigu = () => {};
+export const fetchUsersProfileData = (snapshot, error) => {
+  return onSnapshot(doc(dbService, 'users', 'profileData'), snapshot, error);
+};
 
-// export const updateUsersProfilePhoto = (uid, attachmentUrl) => (dispatch, getState) => {
-//   const usersRef = collection(dbService, 'users');
-//   setDoc(doc(usersRef, 'profilePhoto'), {
-//     [uid]: attachmentUrl,
-//   })
-//     .then((res) => {
-//       console.log('users/profilePhoto 업데이트 res', res);
-//     })
-//     .catch((err) => {
-//       console.log('users/profilePhoto 업데이트 err', err);
-//     });
-// };
+export const updateUsersProfilePhoto = (uid, url) => {
+  const usersRef = collection(dbService, 'users');
+  return updateDoc(doc(usersRef, 'profilePhoto'), {
+    [uid]: url,
+  });
+};
+
+export const updateUsersProfileData = (uid, userObj) => {
+  const usersRef = collection(dbService, 'users');
+  return updateDoc(doc(usersRef, 'profileData'), {
+    [uid]: userObj,
+  });
+};

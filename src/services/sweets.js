@@ -66,6 +66,24 @@ export const updateSweet = (sid, text) => {
   return updateDoc(doc(dbService, `sweets/${sid}`), { text });
 };
 
+export const addSweetComment = (sid, commentObj) => {
+  return updateDoc(doc(dbService, `sweets/${sid}`), {
+    comments: arrayUnion(commentObj),
+  });
+};
+
+export const updateSweetNestedComment = (sid, comments) => {
+  return updateDoc(doc(dbService, `sweets/${sid}`), {
+    comments,
+  });
+};
+
+export const deleteSweetComment = (sweetObj, cid) => {
+  return updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
+    comments: sweetObj.comments.filter((comment) => comment.createdAt !== cid),
+  });
+};
+
 /*
 export const createGroceryList = (userName) => {
   const groceriesColRef = collection(db, 'groceryLists');
@@ -73,45 +91,5 @@ export const createGroceryList = (userName) => {
     created: serverTimestamp(),
     users: [{ name: userName }],
   });
-};
-
-export const createSweetComment = (sweetObj, userObj, comment) => (dispatch) => {
-  updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
-    comments: [
-      ...sweetObj.comments,
-      {
-        uid: userObj.uid,
-        createdAt: Date.now(),
-        name: userObj.displayName,
-        text: comment,
-        likes: [],
-        nestedComments: [],
-        //   {
-        //     uid: userObj.uid,
-        //     createdAt: Date.now(),
-        //     name: userObj.displayName,
-        //     text,
-        //   },
-      },
-    ],
-  })
-    .then((res) => {
-      dispatch(createSweetCommentAction());
-    })
-    .catch((err) => {
-      console.log('createSweetComment error', err);
-    });
-};
-
-export const deleteSweetComment = (sweetObj, cid) => (dispatch) => {
-  updateDoc(doc(dbService, `sweets/${sweetObj.id}`), {
-    comments: sweetObj.comments.filter((comment) => comment.createdAt !== cid),
-  })
-    .then((res) => {
-      dispatch(deleteSweetCommentAction());
-    })
-    .catch((err) => {
-      console.log('deleteSweetComment error', err);
-    });
 };
  */

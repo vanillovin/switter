@@ -3,7 +3,7 @@ import { authService } from 'services/firebase/fbase';
 import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
-import AuthForm from 'components/AuthForm';
+import AuthForm from 'components/auth/AuthForm';
 
 const Auth = ({ darkMode }) => {
   const onSocialClick = async ({ target: { name } }) => {

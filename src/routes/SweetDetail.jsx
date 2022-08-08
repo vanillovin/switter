@@ -1,15 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FaPencilAlt, FaTrash, FaEllipsisH } from 'react-icons/fa';
 
 import useToggle from 'hooks/useToggle';
-import SweetComments from '../components/SweetComments';
-import SweetEdit from 'components/SweetEdit';
-import { fetchSweet } from 'services/sweets';
+import SweetComments from '../components/sweet/SweetComments';
+import SweetEdit from 'components/sweet/SweetEdit';
+import {
+  addSweetComment,
+  deleteStorageFile,
+  deleteSweet,
+  deleteSweetComment,
+  fetchSweet,
+  likeSweet,
+  updateSweet,
+} from 'services/sweets';
 import Loading from 'components/Loading';
-import Error from 'components/Error';
-import SweetActionButtons from 'components/SweetActionButtons';
-import { fetchUsersProfilePhoto } from 'services/users';
+import SweetActionButtons from 'components/sweet/SweetActionButtons';
+import NotFoundPage from 'components/NotFoundPage';
+import { UsersProfileContext } from 'contexts/UsersProfileContext';
+import { updateUsersProfileData } from 'services/users';
 
 const regex = /[\s\uFEFF\xA0]+$/gi;
 
@@ -20,34 +29,25 @@ const initialSweet = {
 };
 
 function SweetDetail({ userObj, darkMode }) {
-  const [usersProfilePhoto, setUsersProfilePhoto] = useState({});
-  const [sweet, setSweet] = useState(initialSweet);
-  const { loading, data, error } = sweet;
+  const [sweetData, setSweetData] = useState(initialSweet);
+  const { loading, data: sweet, error } = sweetData;
   const topToggleRef = useRef();
   const params = useParams();
   const history = useHistory();
   const [editing, setEditing] = useState(false);
   const [topToggle, onTopToggleChange] = useToggle(topToggleRef);
-  const isOwner = data?.creatorId === userObj.uid;
+  const isOwner = sweet?.creatorId === userObj.uid;
+  const { usersProfilePhoto, usersProfileData } = useContext(UsersProfileContext);
+  const profileData = usersProfileData?.[userObj?.uid];
 
-  const clearUsersProfilePhoto = () => setUsersProfilePhoto({});
-  const clearSweet = () => setSweet(initialSweet);
+  const clearSweet = () => setSweetData(initialSweet);
 
   useEffect(() => {
-    fetchUsersProfilePhoto(
-      (doc) => {
-        setUsersProfilePhoto(doc.data());
-      },
-      (err) => {
-        console.log('fetchUsersProfilePhoto error', err);
-      }
-    );
-
     fetchSweet(
       params.id,
       (doc) => {
         // console.log(doc.data());
-        setSweet((prev) => ({
+        setSweetData((prev) => ({
           ...prev,
           loading: false,
           data: doc.data(),
@@ -55,7 +55,7 @@ function SweetDetail({ userObj, darkMode }) {
       },
       (err) => {
         console.log('fetchSweet error', err);
-        setSweet((prev) => ({
+        setSweetData((prev) => ({
           ...prev,
           loading: false,
           error: err,
@@ -65,15 +65,141 @@ function SweetDetail({ userObj, darkMode }) {
 
     return () => {
       fetchSweet();
-      fetchUsersProfilePhoto();
       clearSweet();
-      clearUsersProfilePhoto();
     };
   }, [params.id]);
 
-  if (error) return <Error message={error} />;
+  const handleDeleteSweet = () => {
+    if (!window.confirm('스윗을 삭제하시겠습니까?')) return;
+    if (sweet?.attachmentUrl !== '') {
+      deleteStorageFile(sweet.attachmentUrl).catch((err) => {
+        console.log('deleteStorageFile err', err);
+      });
+    }
+    deleteSweet(params?.id)
+      .then((res) => {
+        history.goBack();
+        updateUsersProfileData(userObj?.uid, {
+          ...profileData,
+          likesSweets: profileData.likesSweets.filter(
+            (lSweet) => lSweet.id !== params?.id
+          ),
+          commentedSweets: profileData.commentedSweets.filter(
+            (cSweet) => cSweet.id !== params?.id
+          ),
+          writtenSweets: profileData.writtenSweets.filter(
+            (wSweet) => wSweet.id !== params?.id
+          ),
+        }).catch((err) => {
+          console.log('updateUsersProfileData delComment err', err);
+        });
+      })
+      .catch((err) => {
+        console.log('deleteSweet err', err);
+      });
+  };
 
-  return !loading ? (
+  const handleLikeSweet = () => {
+    const liked = new Set(sweet?.likes).has(userObj?.uid);
+    likeSweet(liked, params?.id, userObj?.uid)
+      .then((res) => {
+        updateUsersProfileData(userObj?.uid, {
+          ...profileData,
+          likesSweets: liked
+            ? profileData.likesSweets.filter((lSweet) => lSweet.id !== sweet.id)
+            : [...profileData.likesSweets, sweet],
+        })
+          .then((res) => {
+            console.log('updateProfileLikesSweets res', res);
+          })
+          .catch((err) => {
+            console.log('updateProfileLikesSweets err', err);
+          });
+      })
+      .catch((err) => {
+        console.log('likeSweet err', err);
+      });
+  };
+
+  const handleUpdateSweet = (text) => {
+    // const sweetData = getState().sweetsReducer.sweets.data.find((sweet) => sweet.id === id);
+    // if (!sweetData.id) return;
+    updateSweet(params?.id, text)
+      .then((res) => {
+        setEditing(false);
+        updateUsersProfileData(userObj?.uid, {
+          ...profileData,
+          likesSweets: profileData.likesSweets.map((lSweet) =>
+            lSweet.id === params?.id ? { ...lSweet, text } : lSweet
+          ),
+          commentedSweets: profileData.commentedSweets.map((cSweet) =>
+            cSweet.id === params?.id ? { ...cSweet, text } : cSweet
+          ),
+          writtenSweets: profileData.writtenSweets.map((wSweet) =>
+            wSweet.id === params?.id ? { ...wSweet, text } : wSweet
+          ),
+        });
+      })
+      .catch((err) => {
+        console.log('updateSweet err', err);
+      });
+  };
+
+  const handleAddComment = (text, clearText) => {
+    const commentObj = {
+      id: params.id,
+      uid: userObj?.uid,
+      createdAt: Date.now(),
+      name: userObj?.displayName,
+      text,
+      likes: [],
+      nestedComments: [],
+    };
+    addSweetComment(params.id, commentObj)
+      .then((res) => {
+        clearText();
+        // console.log('addSweetComment res', res);
+        updateUsersProfileData(userObj.uid, {
+          ...profileData,
+          commentedSweets: [...profileData.commentedSweets, commentObj],
+        })
+          .then((res) => {
+            console.log('updateUsersCommentedSweets res', res);
+          })
+          .catch((err) => {
+            console.log('updateUsersCommentedSweets err', err);
+          });
+      })
+      .catch((err) => {
+        console.log('addSweetComment err', err);
+      });
+  };
+
+  const handleDeleteComment = (cid) => {
+    if (!window.confirm('댓글을 삭제하시겠습니까?')) return;
+    deleteSweetComment({ ...sweet, id: params?.id }, cid)
+      .then((res) => {
+        updateUsersProfileData(userObj?.uid, {
+          ...profileData,
+          commentedSweets: profileData.commentedSweets
+            .filter((cSweet) => cSweet.createdAt !== cid)
+            .filter((s) => s.commentId !== cid),
+        })
+          .then((res) => {
+            console.log('updateUsersCommentedSweets delete res', res);
+          })
+          .catch((err) => {
+            console.log('updateUsersCommentedSweets delete err', err);
+          });
+      })
+      .catch((err) => console.log('deleteSweetComment err', err));
+  };
+
+  if (loading) return <Loading />;
+
+  if (!sweet) return <NotFoundPage message="존재하지 않는 스윗입니다" />;
+
+  return (
     <div className={darkMode ? 'sweetDetailContainer dark' : 'sweetDetailContainer'}>
       <div className="sweetDetailTop">
         <button onClick={() => history.push('/')}>←</button>
@@ -82,8 +208,8 @@ function SweetDetail({ userObj, darkMode }) {
       <div className="sweetDetail">
         {editing ? (
           <SweetEdit
-            text={data?.text}
-            onSubmit={() => {}}
+            text={sweet?.text}
+            onSubmit={handleUpdateSweet}
             closeEdit={() => setEditing(false)}
           />
         ) : (
@@ -94,13 +220,13 @@ function SweetDetail({ userObj, darkMode }) {
                   alt="profile"
                   className="profile"
                   src={
-                    usersProfilePhoto[data.creatorId] ||
+                    usersProfilePhoto[sweet.creatorId] ||
                     `${process.env.PUBLIC_URL}/default-profile.png`
                   }
                 />
                 <div className="text">
-                  <span className="dname">{data?.dName || '♥'}</span>
-                  <span className="email">@{data?.email?.split('@')[0]}</span>
+                  <span className="dname">{sweet?.dName || '♥'}</span>
+                  <span className="email">@{sweet?.email?.split('@')[0]}</span>
                 </div>
               </div>
               <div className="rightButtons" ref={topToggleRef}>
@@ -111,7 +237,7 @@ function SweetDetail({ userObj, darkMode }) {
                     </button>
                     {topToggle && (
                       <div className="buttons">
-                        <button onClick={() => {}}>
+                        <button onClick={handleDeleteSweet}>
                           <FaTrash /> 삭제하기
                         </button>
                         <button onClick={() => setEditing((prev) => !prev)}>
@@ -123,37 +249,35 @@ function SweetDetail({ userObj, darkMode }) {
                 )}
               </div>
             </div>
-            <p className="sweetDetailContent">{data?.text.replace(regex, '')}</p>
-            {sweet?.attachmentUrl && <img alt="img" src={data?.attachmentUrl} />}
+            <p className="sweetDetailContent">{sweet?.text.replace(regex, '')}</p>
+            {sweet?.attachmentUrl && <img alt="img" src={sweet?.attachmentUrl} />}
           </>
         )}
         <div className="sweetDetailInfo">
           <div className="commentText">
-            <span>{data?.comments?.length}</span> 답글
+            <span>{sweet?.comments?.length}</span> 답글
           </div>
           <div>
-            <span>{data?.likes?.length}</span> 마음에 들어요
+            <span>{sweet?.likes?.length}</span> 마음에 들어요
           </div>
         </div>
         <SweetActionButtons
           type="detail"
           id={params.id}
-          likes={data.likes}
-          liked={data.likes.includes(userObj?.uid)}
-          comments={data.comments}
-          handleLikeSweet={() => {}}
+          likes={sweet.likes}
+          liked={sweet.likes.includes(userObj?.uid)}
+          comments={sweet.comments}
+          handleLikeSweet={handleLikeSweet}
           handleAddComment={() => {}}
         />
         <SweetComments
-          handleAddComment={() => {}}
-          handleDeleteComment={() => {}}
-          comments={data?.comments}
+          handleAddComment={handleAddComment}
+          handleDeleteComment={handleDeleteComment}
+          comments={sweet?.comments.sort((a, b) => b.createdAt - a.createdAt)}
           userObj={userObj}
         />
       </div>
     </div>
-  ) : (
-    <Loading />
   );
 }
 

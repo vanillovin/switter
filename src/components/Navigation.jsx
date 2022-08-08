@@ -28,9 +28,9 @@ const Navigation = ({ userObj, darkMode, onDarkMode }) => {
           </NavLink>
         </li>
         <li className="profile">
-          <NavLink className="navlink" activeClassName="" to="/profile">
+          <NavLink className="navlink" activeClassName="" to={`/profile/${userObj.uid}`}>
             <FontAwesomeIcon icon={faUser} size="2x" />
-            <span>{userObj.displayName ? `${userObj.displayName}` : '♥'}</span>
+            <span>{userObj.displayName || '♥'}</span>
           </NavLink>
         </li>
         <li className="msg">

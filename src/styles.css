@@ -718,8 +718,15 @@ form.sweetEdit {
   padding: 8px 4px 4px 4px;
 }
 .bottom.bcomment button svg {
+  color: #d3d3d3;
   font-size: 0.8rem;
-  color: rgba(0, 0, 0, 0.8);
+}
+.bottom.bcomment button svg,
+.bottom.bcomment button span {
+  font-size: 0.8rem;
+}
+.sweetDetailContainer.dark .bottom.bcomment button {
+  color: #e7e6ed;
 }
 /* toggles */
 .bottom .toggles {
@@ -1011,6 +1018,7 @@ form.profileForm .formBtn:hover {
   border: none;
   padding-right: 0;
   color: rgba(0, 0, 0, 0.9);
+  background: transparent;
 }
 .comments-container .comment .hello {
   margin: 0;
@@ -1030,6 +1038,36 @@ form.profileForm .formBtn:hover {
 .sweetDetailContainer.dark .delcommentBtn,
 .sweet.dark .delcommentBtn {
   color: #e7e6ed;
+  background: transparent;
+}
+
+/* Nested Comment */
+.nestedCommentsContainer {
+  /* background: rosybrown; */
+  padding: 5px 5px 0px 5px;
+}
+.nestedCommentsContainer .commentForm {
+  /* border: 1px solid red; */
+}
+.nestedCommentsContainer .commentForm .commentInput__arrow {
+  color: black;
+  background-color: transparent;
+}
+.nestedCommentsContainer .comments > div {
+  margin-top: 5px;
+}
+.nestedCommentsContainer .comments .delcommentBtn {
+  font-size: 0.7rem;
+  background: transparent;
+}
+.sweet.dark .nestedCommentsContainer .commentForm .commentInput__arrow,
+.sweetDetailContainer.dark .nestedCommentsContainer .commentForm .commentInput__arrow {
+  color: white;
+  background: transparent;
+}
+.sweet.dark .nestedCommentsContainer .delcommentBtn,
+.sweetDetailContainer.dark .nestedCommentsContainer .delcommentBtn {
+  background: transparent;
 }
 
 /* Media Screen */

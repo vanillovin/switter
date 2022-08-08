@@ -19,7 +19,7 @@ function SweetActionButtons({
   return (
     <div className={`bottom b${type}`}>
       <button title="마음에 들어요" onClick={handleLikeSweet}>
-        {type === 'sweet' ? (
+        {type !== 'detail' ? (
           <>
             <FaHeart color={liked ? '#e05d5d' : ''} />
             <span>{` ${likes.length}`}</span>
@@ -32,7 +32,7 @@ function SweetActionButtons({
       </button>
       <button title="답글" onClick={handleAddComment}>
         <FaComment />
-        {type === 'sweet' && <span>{` ${comments.length}`}</span>}
+        {type !== 'detail' && <span>{` ${comments.length}`}</span>}
       </button>
       <div className="toggles" ref={toggleRef} title="공유하기">
         <button className="shareBtn" onClick={onToggleChange}>

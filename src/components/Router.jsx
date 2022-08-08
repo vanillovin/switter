@@ -4,7 +4,7 @@ import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import Navigation from 'components/Navigation';
 import Profile from 'routes/Profile';
-import Message from 'components/Message';
+import Message from 'routes/Message';
 import SweetDetail from '../routes/SweetDetail';
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj, darkMode, onDarkMode }) => {
@@ -30,7 +30,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj, darkMode, onDarkMode }) =
                 <Route exact path="/sweet/:id">
                   <SweetDetail userObj={userObj} darkMode={darkMode} />
                 </Route>
-                <Route exact path="/profile">
+                <Route exact path="/profile/:uid">
                   <Profile
                     userObj={userObj}
                     refreshUser={refreshUser}

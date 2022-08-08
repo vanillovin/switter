@@ -3,6 +3,7 @@ import AppRouter from './Router';
 import { authService } from 'services/firebase/fbase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ModalProvider } from 'contexts/ModalContext';
+import { UsersProfileProvider } from 'contexts/UsersProfileContext';
 
 function App() {
   // console.log('유저의 로그인 여부', authService.currentUser);
@@ -45,24 +46,6 @@ function App() {
     });
   };
 
-  // useEffect(() => {
-  //   if (!userObj?.uid) return;
-  //   (async () => {
-  //     const fileRef = ref(storageService, `${userObj.uid}/profileImage`);
-  //     await getDownloadURL(fileRef)
-  //       .then((res) => {
-  //         // console.log('downloadaUrlImg res', res);
-  //         setUserObj((prev) => ({
-  //           ...prev,
-  //           photoURL: res,
-  //         }));
-  //       })
-  //       .catch((err) => {
-  //         console.log('downloadaUrlImg err', err);
-  //       });
-  //   })();
-  // }, [userObj?.uid]);
-
   const onDarkMode = () => {
     darkMode
       ? (document.body.style = 'background-color: #fff8e5')
@@ -70,23 +53,23 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  // console.log('App userObj', userObj);
-
   return (
-    <ModalProvider>
-      {init ? (
-        <AppRouter
-          refreshUser={refreshUser}
-          isLoggedIn={Boolean(userObj)}
-          userObj={userObj}
-          darkMode={darkMode}
-          onDarkMode={onDarkMode}
-        />
-      ) : (
-        <div style={{ marginTop: 10 }}>Initializing....</div>
-      )}
-      {/* <footer>&copy; {new Date().getFullYear()} Switter</footer> */}
-    </ModalProvider>
+    <UsersProfileProvider>
+      <ModalProvider>
+        {init ? (
+          <AppRouter
+            refreshUser={refreshUser}
+            isLoggedIn={Boolean(userObj)}
+            userObj={userObj}
+            darkMode={darkMode}
+            onDarkMode={onDarkMode}
+          />
+        ) : (
+          <div style={{ marginTop: 10 }}>Initializing....</div>
+        )}
+        {/* <footer>&copy; {new Date().getFullYear()} Switter</footer> */}
+      </ModalProvider>
+    </UsersProfileProvider>
   );
 }
 

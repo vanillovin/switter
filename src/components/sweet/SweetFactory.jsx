@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { createSweet, imageFileUploadAndDownload } from 'services/sweets';
+
 import useInput from 'hooks/useInput';
+import { updateUsersProfileData } from 'services/users';
+import { createSweet, imageFileUploadAndDownload } from 'services/sweets';
+import { UsersProfileContext } from 'contexts/UsersProfileContext';
 
 const SweetFactory = ({ userObj, darkMode }) => {
+  const { usersProfileData } = useContext(UsersProfileContext);
+  const profileData = usersProfileData[userObj.uid];
   const { value: text, onChangeValue, onClearValue } = useInput('');
   const {
     value: attachment,
@@ -33,9 +38,19 @@ const SweetFactory = ({ userObj, darkMode }) => {
 
     createSweet(sweetObj)
       .then((res) => {
-        // console.log('createSweet res', res);
+        // console.log('createSweet res', res.id);
         onClearValue();
         onClearAttachment();
+        updateUsersProfileData(userObj.uid, {
+          ...profileData,
+          writtenSweets: [...profileData.writtenSweets, { id: res.id, ...sweetObj }],
+        })
+          .then((res) => {
+            console.log('updateUserProfileArrData writtenSweets res', res);
+          })
+          .catch((err) => {
+            console.log('updateUserProfileArrData writtenSweets err', err);
+          });
       })
       .catch((err) => {
         console.log('createSweet err', err);

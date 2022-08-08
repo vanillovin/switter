@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { authService, dbService } from 'services/firebase/fbase';
+import { authService } from 'services/firebase/fbase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { updateUsersProfileData, updateUsersProfilePhoto } from 'services/users';
 
 const defaultProfileURL =
   'https://firebasestorage.googleapis.com/v0/b/switter-b2db8.appspot.com/o/logo.png?alt=media&token=d636781d-a94b-4b3f-8b18-374cceacf61d';
+
+const initialUserObj = (email, photoURL) => ({
+  email,
+  aboutMe: '',
+  displayName: '♥',
+  photoURL,
+  commentedSweets: [],
+  writtenSweets: [],
+  likesSweets: [],
+});
 
 const AuthForm = () => {
   const [loginInputs, setLoginInputs] = useState({
@@ -32,45 +42,20 @@ const AuthForm = () => {
       let data;
       if (newAccount) {
         // create newAccount
-        createUserWithEmailAndPassword(authService, email, password)
-          .then((res) => {
-            data = res;
-            return res.user.uid;
-          })
-          .then((uid) => {
-            const userObj = {
-              [uid]: defaultProfileURL,
-            };
-
-            const usersRef = collection(dbService, 'users');
-
-            setDoc(doc(usersRef, 'profilePhoto'), userObj).catch((err) => {
-              console.log('가입시 usersProfilePhoto 설정 err', err);
-            });
-
-            setDoc(doc(usersRef, 'profileData'), {
-              [uid]: {
-                email,
-                aboutMe: '',
-                displayName: '♥',
-                photoURL: defaultProfileURL,
-                commentedSweets: [],
-                writtenSweets: [],
-                likesSweets: [],
-              },
-            })
-              .then((res) => {
-                console.log('가입시 usersProfileData 설정 res', res);
-              })
-              .catch((err) => {
-                console.log('가입시 usersProfileData 설정 err', err);
-              });
+        createUserWithEmailAndPassword(authService, email, password).then((res) => {
+          const uid = res.user.uid;
+          updateUsersProfilePhoto(uid, defaultProfileURL).catch((err) => {
+            console.log('updateUsersProfilePhoto err', err);
           });
+          updateUsersProfileData(uid, initialUserObj(email, defaultProfileURL)).catch(
+            (err) => console.log('updateUsersProfileData err', err)
+          );
+        });
       } else {
         // log in
         data = await signInWithEmailAndPassword(authService, email, password);
       }
-      console.log('Auth data', data.user.uid);
+      // console.log('Auth data', data.user.uid);
     } catch (error) {
       console.log('AuthForm onSubmit error :', error, 'error.message :', error.message);
       setError(error.message);

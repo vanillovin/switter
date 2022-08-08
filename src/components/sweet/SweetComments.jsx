@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useInput from 'hooks/useInput';
 import SweetComment from './SweetComment';
 
 function SweetComments({ handleAddComment, handleDeleteComment, comments, userObj }) {
-  const [comment, setComment] = useState('');
-
-  const onChange = (e) => setComment(e.target.value);
-
-  const clearComment = () => setComment('');
+  const { value, onChangeValue, onClearValue } = useInput();
 
   const onHandleAddComment = (e) => {
     e.preventDefault();
-    handleAddComment(comment, clearComment);
+    handleAddComment(value, onClearValue);
   };
 
   return (
@@ -22,8 +19,8 @@ function SweetComments({ handleAddComment, handleDeleteComment, comments, userOb
               className="commentInput__input"
               type="text"
               name="comment"
-              value={comment}
-              onChange={onChange}
+              value={value}
+              onChange={onChangeValue}
               placeholder="댓글 달기"
               required
             />
@@ -39,8 +36,9 @@ function SweetComments({ handleAddComment, handleDeleteComment, comments, userOb
           {comments?.map((comment) => (
             <SweetComment
               key={comment.createdAt}
+              comments={comments}
               comment={comment}
-              isOwner={comment.uid === userObj.uid}
+              userObj={userObj}
               handleDeleteComment={handleDeleteComment}
             />
           ))}
