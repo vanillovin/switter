@@ -38,7 +38,20 @@ export const imageFileUploadAndDownload = async (uid, attachment) => {
     const uploadFile = await uploadString(fileRef, attachment, 'data_url');
     return getDownloadURL(uploadFile.ref);
   } catch (err) {
-    console.log('imageFileUploadAndDown err', err);
+    console.log('imageFileUploadAndDownload err', err);
+  }
+};
+
+export const profileImageFileUploadAndDownload = async (uid, fileDataUrl) => {
+  try {
+    // 1. 파일이 업로드되서 저장될 버킷 내부의 래퍼런스 경로를 생성
+    const fileReference = ref(storageService, `${uid}/profileImage`);
+    // 2. 파일 데이터를 버킷 내부의 래퍼런스 경로로 전달 (파일을 버킷에 업로드)
+    const uploadTask = await uploadString(fileReference, fileDataUrl, 'data_url');
+    // 3. 버킷 내부의 래퍼런스에 있는 파일에 대한 DownloadURL을 받음
+    return await getDownloadURL(uploadTask.ref);
+  } catch (err) {
+    console.log('sweets - profileImageFileUploadAndDownload err', err);
   }
 };
 

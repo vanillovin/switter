@@ -1,36 +1,46 @@
 import useInput from 'hooks/useInput';
-import React, { useState } from 'react';
+import React from 'react';
 
-function ProfileEdit({ photoURL, displayName, onSubmit, onCloseEdit }) {
-  const [attachment, setAttachment] = useState(photoURL);
+function ProfileEdit({ photoURL, displayName, aboutMe, onSubmit, onCloseEdit }) {
+  const { value: fileDataUrl, setValue: setFileDataUrl } = useInput(photoURL);
   const { value: newDisplayName, onChangeValue } = useInput(displayName);
+  const { value: newAboutMe, onChangeValue: onChangeAboutMe } = useInput(aboutMe);
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(fileDataUrl, newDisplayName, newAboutMe);
+  };
 
   const onFileChange = (event) => {
     const {
       target: { files },
     } = event;
-    const theFile = files[0];
-    const reader = new FileReader(); // fileReader API 파일 이름을 읽음
-    reader.onloadend = (finishedEvent) => {
-      // console.log('finishedEvent', finishedEvent);
-      const {
-        currentTarget: { result },
-      } = finishedEvent;
-      setAttachment(result);
-    };
-    reader.readAsDataURL(theFile);
+    const uploadFile = files[0];
+    // const uploadFileName = uploadFile?.name;
+    const fileReader = new FileReader();
+    if (fileReader && uploadFile !== undefined && uploadFile !== null) {
+      fileReader.onload = (event) => {
+        const {
+          target: { result },
+        } = event;
+
+        setFileDataUrl(result);
+      };
+      fileReader.readAsDataURL(uploadFile);
+      // setFileName(`${uploadFileName}_${Date.now()}`);
+    }
   };
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handelSubmit}
       // className={darkMode ? 'profileForm dark' : 'profileForm'}
     >
       <div className="editProfileImage">
         <img
           alt="profile"
           className="profileImage"
-          src={attachment || `${process.env.PUBLIC_URL}/default-profile.png`}
+          src={fileDataUrl || `${process.env.PUBLIC_URL}/default-profile.png`}
         />
         <label htmlFor="attach-file" className="">
           <span>사진 선택하기</span>
@@ -42,16 +52,19 @@ function ProfileEdit({ photoURL, displayName, onSubmit, onCloseEdit }) {
           onChange={onFileChange}
           style={{ display: 'none', opacity: 0 }}
         />
-        {attachment !== photoURL && (
-          <button className="profileImgclearBtn" onClick={() => setAttachment(photoURL)}>
+        {fileDataUrl !== photoURL && (
+          <button className="profileImgclearBtn" onClick={() => setFileDataUrl(photoURL)}>
             <span>제거하기</span>
           </button>
         )}
-        {/* <button
-                  className="profileImgclearBtn"
-                >
-                  <span>사진 삭제하기</span>
-                </button> */}
+        {/* {attachment !== defaultProfileURL && (
+          <button
+            className="profileImgclearBtn"
+            onClick={() => setAttachment(defaultProfileURL)}
+          >
+            <span>사진 삭제하기</span>
+          </button>
+        )} */}
       </div>
 
       <input
@@ -62,9 +75,16 @@ function ProfileEdit({ photoURL, displayName, onSubmit, onCloseEdit }) {
         className="formInput"
       />
       <input
+        onChange={onChangeAboutMe}
+        type="text"
+        placeholder="About Me"
+        value={newAboutMe || ''}
+        className="formInput aboutMeInput"
+      />
+      <input
         type="submit"
         className="formBtn updateProfileBtn"
-        onClick={onSubmit}
+        onClick={handelSubmit}
         value="프로필 업데이트"
       />
       <input

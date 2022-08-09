@@ -22,16 +22,19 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
   const comments = sweet.comments.sort((a, b) => b.createdAt - a.createdAt);
   const [editing, setEditing] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  const { usersProfileData, usersProfilePhoto } = useContext(UsersProfileContext);
-  const profileData = usersProfileData[sweet.creatorId];
-  const profilePhoto = usersProfilePhoto[sweet.creatorId];
+  const {
+    usersProfileData: { data },
+    usersProfilePhoto,
+  } = useContext(UsersProfileContext);
+  const profileData = data?.[sweet?.creatorId];
+  const profilePhoto = usersProfilePhoto?.[sweet?.creatorId];
 
   const toggleEditing = () => setEditing((prev) => !prev);
 
   const goToSweetDetailPage = (e) => {
     if (e.target !== e.currentTarget) return;
     // e.stopImmediatePropagation();
-    history.push(`/sweet/${sweet.id}`);
+    history.push(`/sweet/${sweet?.id}`);
   };
 
   const handleDeleteSweet = () => {

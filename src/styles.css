@@ -300,6 +300,8 @@ textarea.formInput::-webkit-scrollbar-track {
   border: 1px solid #eee;
 }
 .aboutMe {
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 0.8rem;
   margin: 5px 0 0 1px;
 }
 .profileInfo .profileBtns {
@@ -363,6 +365,10 @@ textarea.formInput::-webkit-scrollbar-track {
 .profileForm.dark .formInput {
   color: #e7e6ed;
   border: 1px solid #e7e6ed;
+}
+.formInput.aboutMeInput {
+  margin-top: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 /* Switter Factory */

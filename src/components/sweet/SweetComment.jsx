@@ -13,8 +13,10 @@ import { UsersProfileContext } from 'contexts/UsersProfileContext';
 function SweetComment({ comments, comment, userObj, handleDeleteComment }) {
   const { modal, handleModal } = useModal();
   const isOwner = comment.uid === userObj.uid;
-  const { usersProfileData } = useContext(UsersProfileContext);
-  const profileData = usersProfileData[userObj.uid];
+  const {
+    usersProfileData: { data },
+  } = useContext(UsersProfileContext);
+  const profileData = data?.[userObj.uid];
 
   const onHandleDeleteComment = () => handleDeleteComment(comment.createdAt);
 

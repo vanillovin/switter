@@ -8,8 +8,10 @@ import { createSweet, imageFileUploadAndDownload } from 'services/sweets';
 import { UsersProfileContext } from 'contexts/UsersProfileContext';
 
 const SweetFactory = ({ userObj, darkMode }) => {
-  const { usersProfileData } = useContext(UsersProfileContext);
-  const profileData = usersProfileData[userObj.uid];
+  const {
+    usersProfileData: { data },
+  } = useContext(UsersProfileContext);
+  const profileData = data?.[userObj.uid];
   const { value: text, onChangeValue, onClearValue } = useInput('');
   const {
     value: attachment,

@@ -3,8 +3,8 @@ import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { authService, dbService } from 'services/firebase/fbase';
 
 // Users Manage
-export const updateUserProfile = (userObj) => {
-  return updateProfile(authService, userObj);
+export const updateCurUserProfile = (userObj) => {
+  return updateProfile(authService.currentUser, userObj);
 };
 
 // Users Profile Photo

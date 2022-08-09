@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { updateUsersProfileData, updateUsersProfilePhoto } from 'services/users';
 
-const defaultProfileURL =
+export const defaultProfileURL =
   'https://firebasestorage.googleapis.com/v0/b/switter-b2db8.appspot.com/o/logo.png?alt=media&token=d636781d-a94b-4b3f-8b18-374cceacf61d';
 
 const initialUserObj = (email, photoURL) => ({
@@ -39,7 +39,7 @@ const AuthForm = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      let data;
+      // let data;
       if (newAccount) {
         // create newAccount
         createUserWithEmailAndPassword(authService, email, password).then((res) => {
@@ -53,7 +53,7 @@ const AuthForm = () => {
         });
       } else {
         // log in
-        data = await signInWithEmailAndPassword(authService, email, password);
+        await signInWithEmailAndPassword(authService, email, password);
       }
       // console.log('Auth data', data.user.uid);
     } catch (error) {
