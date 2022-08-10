@@ -59,7 +59,7 @@ function SweetComment({ comments, comment, userObj, handleDeleteComment }) {
       id: comment.id,
       createdAt: Date.now(),
       uid: userObj.uid,
-      name: userObj.displayName,
+      dName: userObj.displayName,
       text,
     };
     const newComments = comments.map((pComment) =>

@@ -97,9 +97,6 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
           likesSweets: profileData.likesSweets.map((lSweet) =>
             lSweet.id === sweet.id ? { ...lSweet, text } : lSweet
           ),
-          commentedSweets: profileData.commentedSweets.map((cSweet) =>
-            cSweet.id === sweet.id ? { ...cSweet, text } : cSweet
-          ),
           writtenSweets: profileData.writtenSweets.map((wSweet) =>
             wSweet.id === sweet.id ? { ...wSweet, text } : wSweet
           ),
@@ -115,7 +112,7 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
       id: sweet.id,
       uid: userObj.uid,
       createdAt: Date.now(),
-      name: userObj.displayName,
+      dName: userObj.displayName,
       text,
       likes: [],
       nestedComments: [],
@@ -171,7 +168,10 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
       ) : (
         <>
           <div className="hello">
-            <div className="info">
+            <div
+              className="info"
+              onClick={() => history.push(`/profile/${sweet.creatorId}`)}
+            >
               <img
                 alt="profile"
                 src={profilePhoto || `${process.env.PUBLIC_URL}/default-profile.png`}

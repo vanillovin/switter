@@ -37,6 +37,13 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj, darkMode, onDarkMode }) =
                     darkMode={darkMode}
                   />
                 </Route>
+                <Route exact path="/profile/:uid/*">
+                  <Profile
+                    userObj={userObj}
+                    refreshUser={refreshUser}
+                    darkMode={darkMode}
+                  />
+                </Route>
                 <Route exact path="/msg">
                   <Message userName={userObj.displayName} />
                 </Route>

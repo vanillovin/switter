@@ -53,6 +53,8 @@ function App() {
     setDarkMode(!darkMode);
   };
 
+  console.log('App user', userObj);
+
   return (
     <UsersProfileProvider>
       <ModalProvider>

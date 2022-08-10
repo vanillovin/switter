@@ -135,9 +135,6 @@ function SweetDetail({ userObj, darkMode }) {
           likesSweets: profileData.likesSweets.map((lSweet) =>
             lSweet.id === params?.id ? { ...lSweet, text } : lSweet
           ),
-          commentedSweets: profileData.commentedSweets.map((cSweet) =>
-            cSweet.id === params?.id ? { ...cSweet, text } : cSweet
-          ),
           writtenSweets: profileData.writtenSweets.map((wSweet) =>
             wSweet.id === params?.id ? { ...wSweet, text } : wSweet
           ),
@@ -153,7 +150,7 @@ function SweetDetail({ userObj, darkMode }) {
       id: params.id,
       uid: userObj?.uid,
       createdAt: Date.now(),
-      name: userObj?.displayName,
+      dName: userObj?.displayName,
       text,
       likes: [],
       nestedComments: [],
@@ -217,8 +214,11 @@ function SweetDetail({ userObj, darkMode }) {
           />
         ) : (
           <>
-            <div className="sweetDetailTopInfo" onClick={() => {}}>
-              <div className="userInfo">
+            <div className="sweetDetailTopInfo">
+              <div
+                className="userInfo"
+                onClick={() => history.push(`/profile/${sweet?.creatorId}`)}
+              >
                 <img
                   alt="profile"
                   className="profile"

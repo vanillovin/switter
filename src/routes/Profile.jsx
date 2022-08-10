@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Route, useHistory, useParams } from 'react-router-dom';
 import { authService } from 'services/firebase/fbase';
 import { signOut } from '@firebase/auth';
 import Loading from 'components/Loading';
@@ -8,22 +8,57 @@ import NotFoundPage from 'components/NotFoundPage';
 import { UsersProfileContext } from 'contexts/UsersProfileContext';
 import { profileImageFileUploadAndDownload } from 'services/sweets';
 import {
+  fetchUsersProfileData,
   updateCurUserProfile,
   updateUsersProfileData,
   updateUsersProfilePhoto,
 } from 'services/users';
 import { ModalContext } from 'contexts/ModalContext';
+import { Switch } from 'react-router-dom';
+import { displayedAt } from 'utils';
+import ProfileTimelineData from 'components/profile/ProfileTimelineData';
 
 const Profile = ({ refreshUser, userObj, darkMode }) => {
   const params = useParams();
   const history = useHistory();
-  const {
-    usersProfileData: { loading, data, error },
-  } = useContext(UsersProfileContext);
-  const profileData = data?.[params.uid || userObj.uid];
+  const { usersProfilePhoto } = useContext(UsersProfileContext);
+  const profilePhoto = usersProfilePhoto?.[params.uid];
+  const [usersProfileData, setUsersProfileData] = useState({
+    loading: true,
+    data: null,
+    error: false,
+  });
+  const { loading, data, error } = usersProfileData;
+  const profileData = data?.[params.uid];
   const [editProfile, setEditProfile] = useState(false);
   const isOwner = userObj.uid === params.uid;
   const { handleModal } = useContext(ModalContext);
+  const pathname = history?.location.pathname;
+
+  useEffect(() => {
+    fetchUsersProfileData(
+      (doc) => {
+        // console.log('fetchUsersProfileData res', doc.data());
+        setUsersProfileData((prev) => ({
+          ...prev,
+          loading: false,
+          data: doc.data(),
+        }));
+      },
+      (err) => {
+        console.log('fetchUsersProfileData error', err);
+        setUsersProfileData((prev) => ({
+          ...prev,
+          loading: false,
+          error: err,
+        }));
+      }
+    );
+
+    return () => {
+      fetchUsersProfileData();
+    };
+  }, [params?.uid]);
 
   const handleLogOut = () => {
     signOut(authService); // auth.signOut();
@@ -40,8 +75,8 @@ const Profile = ({ refreshUser, userObj, darkMode }) => {
       return;
     }
 
-    let fileDownloadUrl = '';
-    if (fileDataUrl !== '') {
+    let fileDownloadUrl = profileData?.photoURL;
+    if (fileDataUrl !== profileData?.photoURL) {
       fileDownloadUrl = await profileImageFileUploadAndDownload(userObj.uid, fileDataUrl);
     }
 
@@ -120,6 +155,52 @@ const Profile = ({ refreshUser, userObj, darkMode }) => {
             onCloseEdit={() => setEditProfile(false)}
           />
         )}
+      </div>
+
+      <div>
+        <ul className="profileTimeline">
+          {[
+            ['', '스윗'],
+            ['/comments', '댓글'],
+            ['/likes', '마음에 들어요'],
+          ].map(([timeline, text], i) => (
+            <li
+              key={i}
+              style={{
+                fontWeight: (
+                  i === 0 ? !pathname.split('/')[3] : pathname.includes(timeline)
+                )
+                  ? 'bold'
+                  : '',
+              }}
+              to={`/profile/${params.uid}${timeline}`}
+              onClick={() => history.push(`/profile/${params.uid}${timeline}`)}
+            >
+              {text}
+            </li>
+          ))}
+        </ul>
+
+        <Switch>
+          <Route exact path={`/profile/${params.uid}`}>
+            <ProfileTimelineData
+              sweets={profileData?.writtenSweets}
+              profilePhoto={profilePhoto}
+            />
+          </Route>
+          <Route exact path={`/profile/${params.uid}/comments`}>
+            <ProfileTimelineData
+              sweets={profileData?.commentedSweets}
+              profilePhoto={profilePhoto}
+            />
+          </Route>
+          <Route exact path={`/profile/${params.uid}/likes`}>
+            <ProfileTimelineData
+              sweets={profileData?.likesSweets}
+              profilePhoto={profilePhoto}
+            />
+          </Route>
+        </Switch>
       </div>
     </div>
   );

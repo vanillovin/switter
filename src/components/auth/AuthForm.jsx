@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { updateUsersProfileData, updateUsersProfilePhoto } from 'services/users';
 
-export const defaultProfileURL =
+const defaultProfileURL =
   'https://firebasestorage.googleapis.com/v0/b/switter-b2db8.appspot.com/o/logo.png?alt=media&token=d636781d-a94b-4b3f-8b18-374cceacf61d';
 
 const initialUserObj = (email, photoURL) => ({
@@ -14,8 +14,8 @@ const initialUserObj = (email, photoURL) => ({
   aboutMe: '',
   displayName: '♥',
   photoURL,
-  commentedSweets: [],
   writtenSweets: [],
+  commentedSweets: [],
   likesSweets: [],
 });
 
