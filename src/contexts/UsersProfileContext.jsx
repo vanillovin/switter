@@ -4,11 +4,7 @@ import { fetchUsersProfileData, fetchUsersProfilePhoto } from 'services/users';
 const UsersProfileContext = createContext();
 
 let UsersProfileProvider = ({ children }) => {
-  const [usersProfileData, setUsersProfileData] = useState({
-    loading: true,
-    data: null,
-    error: false,
-  });
+  const [usersProfileData, setUsersProfileData] = useState();
   const [usersProfilePhoto, setUsersProfilePhoto] = useState();
 
   useEffect(() => {
@@ -25,19 +21,10 @@ let UsersProfileProvider = ({ children }) => {
     fetchUsersProfileData(
       (doc) => {
         // console.log('fetchUsersProfileData res', doc.data());
-        setUsersProfileData((prev) => ({
-          ...prev,
-          loading: false,
-          data: doc.data(),
-        }));
+        setUsersProfileData(doc.data());
       },
       (err) => {
         console.log('fetchUsersProfileData error', err);
-        setUsersProfileData((prev) => ({
-          ...prev,
-          loading: false,
-          error: err,
-        }));
       }
     );
   }, []);

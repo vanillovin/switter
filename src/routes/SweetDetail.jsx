@@ -37,11 +37,8 @@ function SweetDetail({ userObj, darkMode }) {
   const [editing, setEditing] = useState(false);
   const [topToggle, onTopToggleChange] = useToggle(topToggleRef);
   const isOwner = sweet?.creatorId === userObj.uid;
-  const {
-    usersProfilePhoto,
-    usersProfileData: { data },
-  } = useContext(UsersProfileContext);
-  const profileData = data?.[userObj?.uid];
+  const { usersProfilePhoto, usersProfileData } = useContext(UsersProfileContext);
+  const profileData = usersProfileData?.[userObj?.uid];
 
   const clearSweet = () => setSweetData(initialSweet);
 
@@ -223,7 +220,7 @@ function SweetDetail({ userObj, darkMode }) {
                   alt="profile"
                   className="profile"
                   src={
-                    usersProfilePhoto[sweet.creatorId] ||
+                    usersProfilePhoto[sweet?.creatorId] ||
                     `${process.env.PUBLIC_URL}/default-profile.png`
                   }
                 />

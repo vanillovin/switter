@@ -22,11 +22,8 @@ const Sweet = ({ userObj, sweet, isOwner, darkMode }) => {
   const comments = sweet.comments.sort((a, b) => b.createdAt - a.createdAt);
   const [editing, setEditing] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  const {
-    usersProfileData: { data },
-    usersProfilePhoto,
-  } = useContext(UsersProfileContext);
-  const profileData = data?.[sweet?.creatorId];
+  const { usersProfileData, usersProfilePhoto } = useContext(UsersProfileContext);
+  const profileData = usersProfileData?.[userObj.uid];
   const profilePhoto = usersProfilePhoto?.[sweet?.creatorId];
 
   const toggleEditing = () => setEditing((prev) => !prev);

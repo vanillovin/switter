@@ -292,8 +292,9 @@ textarea.formInput::-webkit-scrollbar-track {
   display: flex;
   flex-direction: column;
 }
-.profileContainer .dname {
+.profileContainer .profileInfo div .dname {
   font-size: 1rem;
+  margin-bottom: 3px;
 }
 .profileImage {
   width: 100px;
@@ -303,7 +304,7 @@ textarea.formInput::-webkit-scrollbar-track {
   border: 1px solid #eee;
 }
 .aboutMe {
-  margin: 8px 0 0 1px;
+  margin: 6px 0 0 1px;
   color: rgba(0, 0, 0, 0.8);
 }
 .profileInfo .profileBtns {
@@ -401,6 +402,9 @@ textarea.formInput::-webkit-scrollbar-track {
   border-bottom: 1px solid #eee;
   border-radius: 0;
   padding: 14px;
+}
+.timelineSweetcontainer .sweet .hello .dname {
+  font-size: 0.9rem;
 }
 .nothing {
   padding-top: 80px;
@@ -687,6 +691,7 @@ form.sweetEdit {
 .sweetDetailTopInfo .userInfo {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .sweetDetailTopInfo .userInfo .profile {
   width: 45px;

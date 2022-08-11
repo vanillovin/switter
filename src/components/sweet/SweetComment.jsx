@@ -124,7 +124,7 @@ function SweetComment({ comments, comment, userObj, handleDeleteComment }) {
     <div className="comment" key={comment.createdAt}>
       <div className="hello">
         <div className="info">
-          <span className="dname">{comment.name || '♥'}</span>
+          <span className="dname">{comment.dName || '♥'}</span>
           <span className="mini">{displayedAt(comment.createdAt)}</span>
         </div>
         {isOwner && (
