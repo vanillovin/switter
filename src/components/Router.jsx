@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Auth from '../routes/Auth';
 import Home from '../routes/Home';
 import Navigation from 'components/Navigation';
@@ -9,7 +9,7 @@ import SweetDetail from '../routes/SweetDetail';
 
 const AppRouter = ({ refreshUser, isLoggedIn, userObj, darkMode, onDarkMode }) => {
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
         <>
           <div className={darkMode ? 'test dark' : 'test'}>
@@ -59,7 +59,7 @@ const AppRouter = ({ refreshUser, isLoggedIn, userObj, darkMode, onDarkMode }) =
           </div>
         </>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 };
 

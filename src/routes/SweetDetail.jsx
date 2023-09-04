@@ -54,7 +54,7 @@ function SweetDetail({ userObj, darkMode }) {
         }));
       },
       (err) => {
-        console.log('fetchSweet error', err);
+        console.error('fetchSweet error', err);
         setSweetData((prev) => ({
           ...prev,
           loading: false,
