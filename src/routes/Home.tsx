@@ -5,7 +5,6 @@ import type { Sweet } from '../types/Sweet';
 import { userAtom } from '../atoms/userAtom';
 import { useTheme } from '../contexts/ThemeProvider';
 import { fetchSweets } from '../services/firebase/sweetService';
-import Loading from '../components/LoadingScreen';
 import SweetItem from '../components/sweet/SweetItem';
 import SweetFactory from '../components/sweet/SweetFactory';
 
@@ -23,7 +22,7 @@ function Home() {
     data: null,
     error: null,
   });
-  const { loading, data } = sweets;
+  const { data } = sweets;
 
   // const clearSweets = () => setSweets(initialSweets);
 
@@ -60,7 +59,7 @@ function Home() {
 
   return (
     <div className={darkMode ? 'container dark' : 'container'}>
-      <SweetFactory userObj={user} darkMode={darkMode} />
+      <SweetFactory />
       <div className="sweet-container" style={{ marginTop: 30 }}>
         {data?.map((sweet, i) => (
           <SweetItem key={i} sweet={sweet} />

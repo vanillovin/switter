@@ -9,12 +9,12 @@ import {
 } from 'firebase/firestore';
 import { dbService } from '../services/firebase/firebaseConfig';
 
-import type { Sweet } from '../types/Sweet';
+import type { Sweet, SweetT } from '../types/Sweet';
 
 export const useSweets = () => {
   const [sweets, setSweets] = useState<{
     loading: boolean;
-    data: (Sweet & { id: string })[] | null;
+    data: Sweet[] | null;
     error: FirestoreError | null;
   }>({
     loading: true,
@@ -29,7 +29,7 @@ export const useSweets = () => {
       (snapshot: QuerySnapshot) => {
         const sweetsData = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...(doc.data() as Sweet),
+          ...(doc.data() as SweetT),
         }));
         setSweets({ loading: false, data: sweetsData, error: null });
       },

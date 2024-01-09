@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import {
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth';

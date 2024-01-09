@@ -1,15 +1,12 @@
-import { useAtomValue } from 'jotai';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import useInput from '../../hooks/useInput';
 import { useTheme } from '../../contexts/ThemeProvider';
-import { userAtom } from '../../atoms/userAtom';
 import useSweetService from '../../hooks/useSweetService';
 
 function SweetFactory() {
   const { darkMode } = useTheme();
-  const user = useAtomValue(userAtom);
   const { onCreateSweet } = useSweetService();
 
   const { value: content, onChangeValue, onClearValue } = useInput('');
@@ -34,7 +31,7 @@ function SweetFactory() {
     const theFile = files[0];
     const fileReader = new FileReader();
     fileReader.onloadend = (e) => {
-      setAttachment(e.target?.result);
+      setAttachment(e.target?.result as string);
     };
     fileReader.readAsDataURL(theFile);
   };

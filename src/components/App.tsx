@@ -15,7 +15,9 @@ function App() {
   const { darkMode } = useTheme();
 
   const init = async () => {
-    await authService.authStateReady().then((res) => console.log('authStateReady', res));
+    await authService.authStateReady().then(() => {
+      console.log('authStateReady');
+    });
     setLoading(false);
   };
 

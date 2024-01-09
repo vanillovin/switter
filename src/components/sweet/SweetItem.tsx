@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAtomValue } from 'jotai';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 
 import SweetEdit from './SweetEdit';
@@ -15,7 +15,6 @@ import useSweetService from '../../hooks/useSweetService';
 type SweetItemProps = { sweet: Sweet };
 
 function SweetItem({ sweet }: SweetItemProps) {
-  const navigate = useNavigate();
   const { darkMode } = useTheme();
   const user = useAtomValue(userAtom);
   const [editing, setEditing] = useState(false);
