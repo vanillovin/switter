@@ -2,6 +2,7 @@ import { FaComment } from 'react-icons/fa';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 
 import DropdownMenuDemo from '../DropdownMenu';
+import config from '../../config';
 
 type SweetActionButtonsProps = {
   id: string;
@@ -43,7 +44,7 @@ function SweetActionButtons({
 export default SweetActionButtons;
 
 function handleCopy(sweetId: string) {
-  navigator.clipboard.writeText(`${'SITE_URL'}/${sweetId}`);
+  navigator.clipboard.writeText(`${config.siteUrl}/${sweetId}`);
   alert('클립보드로 복사됐습니다');
 }
 
@@ -52,13 +53,13 @@ function shareSns(sns: 'twitter' | 'facebook', id: string) {
 
   if (sns === 'twitter') {
     window.open(
-      `https://twitter.com/intent/tweet?text=${title}&url=${'SITE_URL'}/%23/sweet/${id}`,
+      `https://twitter.com/intent/tweet?text=${title}&url=${config.siteUrl}/%23/sweet/${id}`,
       'popup제목',
       'width=500, height=400, scrollbars=yes'
     );
   } else if (sns === 'facebook') {
     window.open(
-      `http://www.facebook.com/sharer/sharer.php?u=${'SITE_URL'}/%23/sweet/${id}`
+      `http://www.facebook.com/sharer/sharer.php?u=${config.siteUrl}/%23/sweet/${id}`
     );
   } else {
     return;
