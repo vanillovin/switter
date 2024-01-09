@@ -44,7 +44,7 @@ function SweetActionButtons({
 export default SweetActionButtons;
 
 function handleCopy(sweetId: string) {
-  navigator.clipboard.writeText(`${config.siteUrl}/${sweetId}`);
+  navigator.clipboard.writeText(`${config.siteUrl}/sweet/${sweetId}`);
   alert('클립보드로 복사됐습니다');
 }
 
