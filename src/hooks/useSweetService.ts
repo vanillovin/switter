@@ -146,7 +146,7 @@ function useSweetService() {
         : liked
     ).then(() => {
       updateProfileTimeline('likes', user.uid, isLiked ? 'delete' : 'create', {
-        id: isLiked ? liked?.id : id,
+        id: isLiked ? (liked?.id as string) : id,
         sweetId: sweet.id,
         uid: user.uid,
         content: sweet.content,
