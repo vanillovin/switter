@@ -5,7 +5,6 @@ import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-d
 
 import './styles.css';
 import App from './components/App.tsx';
-import { UsersProfileProvider } from './contexts/UsersProfileContext.tsx';
 import { ThemeProvider } from './contexts/ThemeProvider.tsx';
 import { ModalProvider } from './contexts/ModalContext.tsx';
 import DialogDemo from './components/Dialog.tsx';
@@ -55,9 +54,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <JotaiProvider>
       <ThemeProvider>
-        <UsersProfileProvider>
-          <RouterProvider router={router} />
-        </UsersProfileProvider>
+        <RouterProvider router={router} />
       </ThemeProvider>
     </JotaiProvider>
   </React.StrictMode>

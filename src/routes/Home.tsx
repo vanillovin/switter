@@ -1,8 +1,6 @@
-import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 
 import type { Sweet } from '../types/Sweet';
-import { userAtom } from '../atoms/userAtom';
 import { useTheme } from '../contexts/ThemeProvider';
 import { fetchSweets } from '../services/firebase/sweetService';
 import SweetItem from '../components/sweet/SweetItem';
@@ -15,7 +13,6 @@ type SweetsState = {
 };
 
 function Home() {
-  const user = useAtomValue(userAtom);
   const { darkMode } = useTheme();
   const [sweets, setSweets] = useState<SweetsState>({
     loading: true,

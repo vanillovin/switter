@@ -48,7 +48,7 @@ function ProfileEdit({
     const theFile = files[0];
     const fileReader = new FileReader();
     fileReader.onloadend = (e) => {
-      setFileData(e.target?.result);
+      setFileData(e.target?.result as string);
     };
     fileReader.readAsDataURL(theFile);
   };
