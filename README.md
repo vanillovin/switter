@@ -1,4 +1,4 @@
-# **Switter** (sweet+twitter)
+# **Switter** (Sweet + Twitter)
 
 Cloning Twitter with React and Firebase.
 

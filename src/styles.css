@@ -56,25 +56,41 @@
 
 /* Not Found */
 .notFound {
+  width: 400px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
+  margin-top: 50%;
+  /* gap: 10px; */
+}
+.notFound div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
 }
 .notFound button {
   cursor: pointer;
   border: 1px solid lightgray;
   padding: 5px 10px;
   border-radius: 50px;
-  margin-top: 10px;
+}
+.notFound button:hover {
+  color: white;
+  background-color: black;
+  transition: all 0.2s linear;
 }
 
 /* loading */
 .loading-component {
   width: 100%;
+  min-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40%;
 }
 .loading {
   margin: 150px 0 10px 0;
@@ -181,6 +197,9 @@ form {
   font-size: 12px;
   color: #e05d5d;
 }
+.home .navlink > span {
+  color: #e05d5d;
+}
 ul {
   display: flex;
   flex-direction: column;
@@ -276,10 +295,13 @@ textarea.formInput::-webkit-scrollbar-track {
 
 /* Profile */
 .profileContainer {
-  width: 100%;
-  height: 100%;
-  padding: 80px 20px;
+  width: 540px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   background-color: white;
+  padding: 80px 20px;
+  justify-content: start;
   /* background: rgba(255, 252, 242, 1); */
 }
 .profileInfo {
@@ -354,11 +376,15 @@ textarea.formInput::-webkit-scrollbar-track {
 }
 .profileForm {
   width: 100%;
-  margin: 100px 0 0 0;
+  /* margin: 100px 0 0 0; */
   border-bottom: 1px solid rgba(255, 255, 255, 0.9);
   padding-bottom: 30px;
   display: flex;
   flex-direction: column;
+}
+.profileForm .formInput,
+.profileForm .updateProfileBtn {
+  width: 400px;
 }
 .logoutBtn:hover,
 .authSubmit:hover {
@@ -394,7 +420,8 @@ textarea.formInput::-webkit-scrollbar-track {
   background: #eee;
   transition: all 0.2s linear;
 }
-.timelineSweetcontainer {
+.profileContainer .profileTimeline li.active {
+  background: rgba(177, 151, 252, 0.2);
 }
 .timelineSweetcontainer .sweet {
   border: 0;
@@ -417,6 +444,56 @@ textarea.formInput::-webkit-scrollbar-track {
   background: #f9f9f9;
   transition: all 0.2s linear;
 }
+.timeline_sweet {
+  width: 100%;
+  height: fit-content;
+  border-bottom: 1px solid #eee;
+}
+.timeline_sweet a {
+  width: 100%;
+  padding: 16px 8px 16px;
+}
+.timeline_sweet:last-child {
+  border: 0;
+}
+.timeline_sweet a {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.timeline_sweet a:hover {
+  background-color: #f1f1f1;
+  transition: all 0.2s linear;
+}
+.timeline_sweet a img {
+  border-radius: 2px;
+  width: 45px;
+  height: 45px;
+  border: 1px solid #f5f5f5;
+}
+.timeline_sweet a .info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  gap: 8px;
+}
+.timeline_sweet a .info h3 {
+  font-weight: 500;
+  font-size: 1rem;
+}
+.timeline_sweet a .info time {
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+.timeline_sweet a .info .content {
+  width: 100%;
+  max-width: 400px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 /* dark */
 .profileContainer.dark {
   color: #e7e6ed;
@@ -445,6 +522,10 @@ textarea.formInput::-webkit-scrollbar-track {
 }
 .profileContainer.dark .profileTimeline li:hover {
   background: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s linear;
+}
+.profileContainer.dark .timeline_sweet a:hover {
+  background-color: rgb(255, 255, 255, 0.1);
   transition: all 0.2s linear;
 }
 
@@ -539,6 +620,12 @@ textarea.formInput::-webkit-scrollbar-track {
   color: rgba(233, 199, 123, 0.6);
   /* color: rgba(245, 224, 128, 0.6); */
 }
+.container.dark .factoryinput__input {
+  color: #e7e6ed;
+}
+.container.dark .factoryInput__input::placeholder {
+  color: #e7e6ed;
+}
 
 /* Sweet */
 .sweet-container {
@@ -548,7 +635,7 @@ textarea.formInput::-webkit-scrollbar-track {
   width: 100%;
   margin-bottom: 20px;
   background-color: white;
-  padding: 22px;
+  padding: 16px;
   border-radius: 2px;
   position: relative;
   display: flex;
@@ -557,7 +644,9 @@ textarea.formInput::-webkit-scrollbar-track {
   border: 1px solid rgba(255, 180, 66, 0.2);
 }
 .sweet:hover {
-  cursor: pointer;
+  /* cursor: pointer; */
+  background-color: rgba(231, 230, 237, 0.7);
+  transition: all 0.2s linear;
 }
 .hello {
   display: flex;
@@ -598,12 +687,14 @@ form.sweetEdit {
   flex-direction: column;
   width: 100%;
   margin-top: 12px;
+  max-height: 400px;
 }
 .sweet__actions {
   color: #00a19d;
+  font-size: 0.8rem;
 }
-.sweet__actions span {
-  cursor: pointer;
+.sweet__actions button:first-child {
+  margin-right: 14px;
 }
 .sweet__actions svg:hover {
   color: rgba(0, 161, 157, 0.6);
@@ -614,17 +705,16 @@ form.sweetEdit {
 .sweet__actions span:first-child {
   margin-right: 20px;
 }
-.cancelBtn {
-  width: 100%;
-  cursor: pointer;
-  background-color: #e5dbff;
-  border: 0;
-}
 
 /* Sweet - dark */
 .sweet.dark {
-  background-color: #193446;
+  background-color: rgba(255, 255, 255, 0.05);
+  /* background-color: #193446; */
   border: 1px solid rgba(231, 230, 237, 0.4);
+}
+.sweet.dark:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.1s ease-in-out;
 }
 .sweet.dark .dname,
 .sweet.dark .sweet__text,
@@ -653,11 +743,12 @@ form.sweetEdit {
 
 /* Sweet Detail */
 .sweetDetailContainer {
+  width: 540px;
   position: relative;
   font-size: 0.9rem;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
   background: white;
+  border-left: 1px solid rgba(224, 93, 93, 0.7);
 }
 .sweetDetailTop {
   font-size: 1rem;
@@ -671,12 +762,21 @@ form.sweetEdit {
   z-index: 10;
   padding: 0 16px;
   background: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  /* border-bottom: 1px solid #eee; */
+  font-size: 1.1rem;
 }
 .sweetDetailTop > button {
   border: 0;
   background: transparent;
   cursor: pointer;
-  font-size: 20px;
+  margin-right: 5px;
+  padding: 10px;
+  border-radius: 50%;
+}
+.sweetDetailTop > button:hover {
+  background-color: rgba(0, 161, 157, 0.2);
+  transition: all 0.2s linear;
 }
 .sweetDetail {
   width: 100%;
@@ -737,6 +837,18 @@ form.sweetEdit {
 .sweetDetailInfo span {
   font-weight: bold;
 }
+.sweetEditContainer {
+  /* width: ; */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.sweetEditContainer .cancelBtn {
+  cursor: pointer;
+  background-color: #e5dbff;
+  border: 0;
+}
 
 /* Sweet Detail Dark */
 .sweetDetailContainer.dark {
@@ -757,6 +869,7 @@ form.sweetEdit {
 
 /* action & toggle buttons */
 .bottom {
+  margin-top: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -767,6 +880,18 @@ form.sweetEdit {
   border: none;
   cursor: pointer;
   background-color: transparent;
+}
+.bottom button svg {
+  margin-right: 2px;
+}
+.bottom button:first-child svg:hover {
+  color: #e05d5d;
+}
+.bottom button:nth-child(2) svg:hover {
+  color: #00a19d;
+}
+.bottom button:nth-child(3) svg:hover {
+  color: #e9c77b;
 }
 /* detail */
 .bottom.bdetail {
@@ -817,7 +942,7 @@ form.sweetEdit {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  margin-top: -18px;
 }
 .bottom .toggles .buttons {
   width: 190px;
@@ -848,12 +973,17 @@ form.sweetEdit {
   margin-right: 10px;
 }
 .sweet.dark .bottom .toggles .buttons,
+.sweet.dark .bottom svg,
 .sweetDetailContainer.dark .toggles .buttons,
 .sweetDetailContainer.dark .sweetDetailTopInfo .rightButtons .buttons {
   color: #e7e6ed;
   background: #2d2d2d;
   /* filter: brightness(1); */
+  background: transparent;
   box-shadow: 2px 2px 10px #2d2d2d;
+}
+.sweet.dark .bottom svg {
+  color: #e7e6ed;
 }
 .sweet.dark .bottom .toggles .buttons button,
 .sweetDetailContainer.dark .toggles .buttons button {
@@ -925,10 +1055,16 @@ form.sweetEdit {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: -80px;
+  width: 400px;
+  /* margin-left: -80px; */
+}
+.authContainer h2 {
+  font-size: 1.4rem;
+  margin-bottom: -20px;
+  font-weight: 500;
 }
 .authBtns {
-  width: 400px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -943,6 +1079,7 @@ form.sweetEdit {
   margin-bottom: 10px;
   background: #d0bfff;
   cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 .authBtn:hover,
 form.profileForm .formBtn:hover {
@@ -962,6 +1099,10 @@ form.profileForm .formBtn:hover {
   margin-bottom: 10px;
   font-size: 12px;
   color: black;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+.authInput:focus {
+  outline: 2px solid rgba(208, 191, 255, 0.6);
 }
 .authSubmit {
   text-align: center;
@@ -979,21 +1120,29 @@ form.profileForm .formBtn:hover {
   padding: 5px 0;
 }
 .authSwitch {
+  margin-top: 14px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.authSwitch > span {
+  margin-right: 4px;
+}
+.authSwitch > button {
   font-weight: bold;
   color: #5f3dc4;
   cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 50px;
-  display: block;
-  font-size: 12px;
+}
+.authSwitch > button:hover {
   text-decoration: underline;
 }
 
 /* Message */
 .msg-container {
-  position: relative;
-  margin-top: 60px;
   width: 400px;
+  position: relative;
+  margin-top: 100px;
   height: 400px;
   border-radius: 6px;
   user-select: none;
@@ -1018,6 +1167,21 @@ form.profileForm .formBtn:hover {
   display: flex;
   flex-direction: column;
   padding: 15px 20px;
+}
+.msgs .chat > div {
+  display: flex;
+  align-items: center;
+}
+.msgs .chat > div .one {
+  background-color: #e05d5d;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
 }
 .msgs .chat span {
   line-height: 1.6;
@@ -1046,6 +1210,13 @@ form.profileForm .formBtn:hover {
 .back:hover {
   color: #000;
   transition: 0.2s linear;
+}
+.open-msgs {
+  display: flex;
+  flex-direction: column;
+}
+.open-msgs form {
+  place-self: end;
 }
 
 /* comments */
@@ -1093,7 +1264,7 @@ form.profileForm .formBtn:hover {
 }
 .comments-container .comments .comment .ctext {
   font-size: 13px;
-  padding: 4px 8px 4px 4px;
+  padding: 4px 8px 4px 6px;
   overflow-wrap: break-word;
   line-height: 1.2;
 }
@@ -1195,6 +1366,13 @@ form.profileForm .formBtn:hover {
   .right.dark {
     border: none;
   }
+  .profileContainer {
+    width: 100%;
+    /* margin-top: 40px; */
+  }
+  .profileInfoContainer .profileInfo {
+    width: 100%;
+  }
   .authContainer {
     z-index: 101;
     margin: 0;
@@ -1236,9 +1414,6 @@ form.profileForm .formBtn:hover {
   /* Sweet */
   .sweet {
     padding: 18px;
-  }
-  .sweet__actions span:first-child {
-    margin-right: 16px;
   }
 
   /* Sweet Detail */
