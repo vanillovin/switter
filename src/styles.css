@@ -71,16 +71,31 @@
   gap: 7px;
   margin-top: 14px;
 }
+.error-page a,
+.error-page button,
 .notFound button {
   cursor: pointer;
   border: 1px solid lightgray;
   padding: 5px 10px;
   border-radius: 50px;
 }
+.error-page a:hover,
+.error-page button:hover,
 .notFound button:hover {
   color: white;
   background-color: black;
   transition: all 0.2s linear;
+}
+
+/* error */
+.error-page {
+  width: 100%;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40%;
+  gap: 7px;
 }
 
 /* loading */
@@ -468,8 +483,8 @@ textarea.formInput::-webkit-scrollbar-track {
 }
 .timeline_sweet a img {
   border-radius: 2px;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border: 1px solid #f5f5f5;
 }
 .timeline_sweet a .info {
@@ -492,6 +507,12 @@ textarea.formInput::-webkit-scrollbar-track {
   max-width: 400px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+.timeline_sweet a .info img {
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  max-height: 300px;
 }
 
 /* dark */
@@ -527,6 +548,9 @@ textarea.formInput::-webkit-scrollbar-track {
 .profileContainer.dark .timeline_sweet a:hover {
   background-color: rgb(255, 255, 255, 0.1);
   transition: all 0.2s linear;
+}
+.right.dark .timeline_sweet a img {
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Switter Factory */
@@ -643,11 +667,6 @@ textarea.formInput::-webkit-scrollbar-track {
   color: rgba(0, 0, 0, 0.8);
   border: 1px solid rgba(255, 180, 66, 0.2);
 }
-.sweet:hover {
-  /* cursor: pointer; */
-  background-color: rgba(231, 230, 237, 0.7);
-  transition: all 0.2s linear;
-}
 .hello {
   display: flex;
   align-items: center;
@@ -748,7 +767,7 @@ form.sweetEdit {
   font-size: 0.9rem;
   height: 100vh;
   background: white;
-  border-left: 1px solid rgba(224, 93, 93, 0.7);
+  /* border-left: 1px solid rgba(224, 93, 93, 0.7); */
 }
 .sweetDetailTop {
   font-size: 1rem;
@@ -814,10 +833,10 @@ form.sweetEdit {
 .sweetDetailContent {
   font-size: 1.1rem;
   line-height: 1.3;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  padding-left: 4px;
+  padding-left: 2px;
 }
 .sweetDetail img {
   width: 100%;
@@ -1218,11 +1237,25 @@ form.profileForm .formBtn:hover {
 .open-msgs form {
   place-self: end;
 }
+.right.dark .msg-container {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.right.dark .back {
+  color: black;
+}
+.right.dark .msg-container .msgh {
+  border-bottom: 1px solid white;
+}
+.right.dark .msgs {
+  cursor: pointer;
+  width: 100%;
+  border-bottom: 1px dotted white;
+}
 
 /* comments */
-.comments-container {
-  /* border: 1px solid black; */
-}
+/* .comments-container {
+  border: 1px solid black;
+} */
 .comments-container .commentInput__container {
   display: flex;
   align-items: center;
@@ -1348,6 +1381,7 @@ form.profileForm .formBtn:hover {
     height: 100%;
     position: unset;
     padding: 30px 0 0 0;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   }
   .nav ul li svg {
     font-size: 1.4rem;
@@ -1366,11 +1400,15 @@ form.profileForm .formBtn:hover {
   .right.dark {
     border: none;
   }
-  .profileContainer {
+  .right.profileContainer {
     width: 100%;
     /* margin-top: 40px; */
   }
   .profileInfoContainer .profileInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 14px;
     width: 100%;
   }
   .authContainer {
@@ -1418,6 +1456,7 @@ form.profileForm .formBtn:hover {
 
   /* Sweet Detail */
   .sweetDetailContainer {
+    width: 100%;
     font-size: 0.8rem;
   }
   .sweetDetailTop {
@@ -1444,7 +1483,7 @@ form.profileForm .formBtn:hover {
 
   /* Message */
   .msg-container {
-    margin: 0;
+    margin: 100px 20px 0px 20px;
     width: 100%;
   }
 

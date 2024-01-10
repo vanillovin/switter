@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Comment } from '../../types/Sweet';
 import { displayedAt } from '../../utils/utils';
 import { userAtom } from '../../atoms/userAtom';
+import { Link } from 'react-router-dom';
 
 type SweetCommentProps = {
   comment: Comment;
@@ -17,11 +18,11 @@ function SweetComment({ comment, deleteComment }: SweetCommentProps) {
   return (
     <div className="comment" key={comment.createdAt}>
       <div className="hello">
-        <div className="info">
-          {/* <img src={comment.profileImageURL} /> */}
+        <Link to={`/profile/${comment.user.uid}`} className="info">
+          <img src={comment.user.profileImageURL} />
           <span className="dname">{comment.user.displayName || '♥'}</span>
           <span className="mini">{displayedAt(comment.createdAt)}</span>
-        </div>
+        </Link>
         {user && user.uid === comment.user.uid && (
           <button className="delcommentBtn" onClick={deleteComment}>
             <FontAwesomeIcon icon={faTimes} />
