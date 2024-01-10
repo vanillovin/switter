@@ -9,6 +9,8 @@ import NotFoundPage from '../components/NotFoundPage';
 import ProfileEdit from '../components/profile/ProfileEdit';
 import { useTheme } from '../contexts/ThemeProvider';
 import { fetchProfileData } from '../services/firebase/userService';
+import { isUserConfirmed } from '../utils/utils';
+import { authService } from '../services/firebase/firebaseConfig';
 
 function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -18,6 +20,7 @@ function Profile() {
   const [profile, setProfile] = useState<Profile | undefined>();
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'sweets' | 'comments' | 'likes'>('sweets');
+  const timeline = (profile?.[activeTab] ?? []).sort((a, b) => b.createdAt - a.createdAt);
 
   useEffect(() => {
     setLoading(true);
@@ -36,6 +39,10 @@ function Profile() {
     };
   }, [id]);
 
+  const onLogOut = () => {
+    if (isUserConfirmed('정말 로그아웃하시겠습니까?')) authService.signOut();
+  };
+
   if (loading) return <LoadingScreen />;
 
   if (profile === undefined) {
@@ -43,73 +50,79 @@ function Profile() {
   }
 
   return (
-    <div className={darkMode ? 'right profileContainer dark' : 'right profileContainer'}>
-      <div className="profileInfoContainer">
-        <div className="profileInfo">
-          {!isEditing ? (
-            <div>
-              <img
-                alt="profile"
-                className="profileImage"
-                src={profile?.profileImageURL}
-              />
+    <div className={`right ${darkMode ? 'dark' : ''}`}>
+      <div className={darkMode ? ' profileContainer dark' : ' profileContainer'}>
+        <div className="profileInfoContainer">
+          <div className="profileInfo">
+            {!isEditing ? (
               <div>
-                <h2 className="dname">{profile?.displayName}</h2>
-                <p className="email">@{profile?.email.split('@')[0]}</p>
-              </div>
-              <p className="aboutMe">{profile?.about}</p>
-            </div>
-          ) : (
-            <ProfileEdit profile={profile} onCloseEdit={() => setIsEditing(false)} />
-          )}
-
-          {user && profile?.uid === user?.uid && !isEditing && (
-            <div className="profileBtns">
-              <button className="profileEditButton" onClick={() => setIsEditing(true)}>
-                프로필 수정
-              </button>
-              <button className="logoutBtn" onClick={() => {}}>
-                로그아웃
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div>
-        <ul className="profileTimeline">
-          {[
-            ['sweets', '스윗'],
-            ['comments', '댓글'],
-            ['likes', '마음에 들어요'],
-          ].map(([tab, text], i) => (
-            <li
-              key={i}
-              className={tab === activeTab ? 'active' : ''}
-              onClick={() => setActiveTab(tab as 'sweets' | 'comments' | 'likes')}
-            >
-              {text}
-            </li>
-          ))}
-        </ul>
-        <section className="timeline_sweets">
-          {profile?.[activeTab].map((item) => (
-            <article className="timeline_sweet">
-              <Link to={`/sweet/${item.sweetId}`}>
-                <figure>
-                  <img src={item.profileImageURL} />
-                </figure>
-                <div className="info">
-                  <div className="">
-                    <h3>{item.displayName}</h3>
-                    <time>{convertTimestampToFormattedDate(item.createdAt)}</time>
-                  </div>
-                  <p className="content">{item.content}</p>
+                <img
+                  alt="profile"
+                  className="profileImage"
+                  src={profile?.profileImageURL}
+                />
+                <div>
+                  <h2 className="dname">{profile?.displayName}</h2>
+                  <p className="email">@{profile?.email.split('@')[0]}</p>
                 </div>
-              </Link>
-            </article>
-          ))}
-        </section>
+                <p className="aboutMe">{profile?.about}</p>
+              </div>
+            ) : (
+              <ProfileEdit profile={profile} onCloseEdit={() => setIsEditing(false)} />
+            )}
+
+            {user && profile?.uid === user?.uid && !isEditing && (
+              <div className="profileBtns">
+                <button className="profileEditButton" onClick={() => setIsEditing(true)}>
+                  프로필 수정
+                </button>
+                <button className="logoutBtn" onClick={onLogOut}>
+                  로그아웃
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <ul className="profileTimeline">
+            {[
+              ['sweets', '스윗'],
+              ['comments', '댓글'],
+              ['likes', '마음에 들어요'],
+            ].map(([tab, text], i) => (
+              <li
+                key={i}
+                className={tab === activeTab ? 'active' : ''}
+                onClick={() => setActiveTab(tab as 'sweets' | 'comments' | 'likes')}
+              >
+                {text}
+              </li>
+            ))}
+          </ul>
+          <section className="timeline_sweets">
+            {/* {JSON.stringify(profile?.[activeTab] ?? [])} */}
+            {timeline.map((item) => (
+              <article className="timeline_sweet">
+                <Link to={`/sweet/${item.sweetId}`}>
+                  <figure>
+                    <img src={item.profileImageURL} />
+                  </figure>
+                  <div className="info">
+                    <div className="">
+                      <h3>{item.displayName}</h3>
+                      <time>{convertTimestampToFormattedDate(item.createdAt)}</time>
+                    </div>
+                    <p className="content">{item.content}</p>
+                    {item.attachmentURL && item.attachmentURL !== '' && (
+                      <img src={item.attachmentURL} />
+                    )}
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </section>
+        </div>
       </div>
     </div>
   );

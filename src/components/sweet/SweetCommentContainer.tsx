@@ -1,15 +1,14 @@
 import useInput from '../../hooks/useInput';
 import SweetComment from './SweetComment';
-import { Comment } from '../../types/Sweet';
+import type { Comment, Sweet } from '../../types/Sweet';
 import useSweetService from '../../hooks/useSweetService';
 
-function SweetCommentContainer({
-  sweetId,
-  comments,
-}: {
-  sweetId: string;
+type SweetCommentContainerProps = {
+  sweet: Sweet;
   comments: Comment[];
-}) {
+};
+
+function SweetCommentContainer({ sweet, comments }: SweetCommentContainerProps) {
   const { value, onChangeValue, onClearValue } = useInput();
   const { onAddComment, onDeleteComment } = useSweetService();
 
@@ -20,7 +19,7 @@ function SweetCommentContainer({
           className="commentForm"
           onSubmit={(e) => {
             e.preventDefault();
-            onAddComment(sweetId, value);
+            onAddComment(sweet, value);
             onClearValue();
           }}
         >
@@ -43,7 +42,7 @@ function SweetCommentContainer({
             <SweetComment
               key={i}
               comment={comment}
-              deleteComment={() => onDeleteComment(comment.id, sweetId, comments)}
+              deleteComment={() => onDeleteComment(comment.id, sweet.id, comments)}
             />
           ))}
         </div>

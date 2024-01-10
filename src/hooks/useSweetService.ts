@@ -148,22 +148,22 @@ function useSweetService() {
       updateProfileTimeline('likes', user.uid, isLiked ? 'delete' : 'create', {
         id: isLiked ? (liked?.id as string) : id,
         sweetId: sweet.id,
-        uid: user.uid,
         content: sweet.content,
         createdAt: liked?.createdAt ?? Date.now(),
-        displayName: user.displayName,
-        profileImageURL: user.profileImageURL ?? defaultProfileImageURL,
-        attachmentURL: '',
+        uid: sweet.user.uid,
+        displayName: sweet.user.displayName,
+        profileImageURL: sweet.user.profileImageURL,
+        attachmentURL: sweet.attachmentURL,
       });
     });
   };
 
-  const onAddComment = (sweetId: string, content: string) => {
+  const onAddComment = (sweet: Sweet, content: string) => {
     if (!user) return showNotUserModal('create_comment');
     const id = getUUID();
-    addSweetComment(sweetId, {
+    addSweetComment(sweet.id, {
       id,
-      sweetId,
+      sweetId: sweet.id,
       content,
       createdAt: Date.now(),
       user: {
@@ -176,14 +176,14 @@ function useSweetService() {
       nestedComments: [],
     });
     updateProfileTimeline('comments', user.uid, 'create', {
-      content,
-      sweetId,
       id,
-      uid: user.uid,
+      content,
+      sweetId: sweet.id,
+      attachmentURL: sweet.attachmentURL,
+      uid: sweet.user.uid,
       createdAt: Date.now(),
       displayName: user.displayName,
       profileImageURL: user.profileImageURL ?? defaultProfileImageURL,
-      attachmentURL: '',
     });
   };
 

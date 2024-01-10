@@ -82,75 +82,80 @@ function SweetDetail() {
   // if(error) return <Error message />
 
   return (
-    <div className={` sweetDetailContainer ${darkMode ? 'dark' : ''}`}>
-      <div className="sweetDetailTop">
-        <button onClick={() => navigate('/')}>←</button>
-        스레드
-      </div>
-      <div className="sweetDetail">
-        {editing ? (
-          <SweetEdit
-            oldContent={sweet?.content ?? ''}
-            onSubmit={(newContent: string) =>
-              onUpdateSweet(sweet?.id, sweet?.attachmentURL, newContent)
-            }
-            closeEdit={() => setEditing(false)}
-          />
-        ) : (
-          <>
-            <div className="sweetDetailTopInfo">
-              <Link to={`/profile/${sweet?.user?.uid}`} className="userInfo">
-                <img
-                  alt="profile"
-                  className="profile"
-                  src={sweet?.user.profileImageURL ?? defaultProfileImageURL}
-                />
-                <div className="text">
-                  <span className="dname">{sweet?.user.displayName || '♥'}</span>
-                  <span className="email">@{sweet?.user?.email.split('@')[0]}</span>
-                </div>
-              </Link>
-              <div className="rightButtons" ref={topToggleRef}>
-                {sweet?.user.uid === user?.uid && (
-                  <>
-                    <button className="rToggleBtn" onClick={onToggleChange}>
-                      <FaEllipsisH />
-                    </button>
-                    {toggle && (
-                      <div className="buttons">
-                        <button onClick={handleDeleteSweet}>
-                          <FaTrash /> 삭제하기
-                        </button>
-                        <button onClick={() => setEditing((prev) => !prev)}>
-                          <FaPencilAlt /> 수정하기
-                        </button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-            <p className="sweetDetailContent">{sweet?.content.replace(regex, '')}</p>
-            {/* {sweet?.attachmentUrl && <img alt="img" src={sweet?.attachmentUrl} />} */}
-          </>
-        )}
-        <div className="sweetDetailInfo">
-          <div className="commentText">
-            <span>{sweet?.comments?.length}</span> 답글
-          </div>
-          <div>
-            <span>{sweet?.likes?.length}</span> 마음에 들어요
-          </div>
+    <div className={`right ${darkMode ? 'dark' : ''}`}>
+      <div className={` sweetDetailContainer ${darkMode ? 'dark' : ''}`}>
+        <div className="sweetDetailTop">
+          <button onClick={() => navigate('/')}>←</button>
+          스레드
         </div>
-        <SweetActionButtons
-          id={sweet?.id}
-          likesLength={sweet?.likes?.length}
-          isLiked={isLiked}
-          commentsLength={sweet?.comments.length}
-          handleLikeSweet={() => onToggleLikeSweet({ ...sweet, id: id as string })}
-          handleAddComment={() => {}}
-        />
-        <SweetCommentContainer sweetId={id as string} comments={sweet?.comments} />
+        <div className="sweetDetail">
+          {editing ? (
+            <SweetEdit
+              oldContent={sweet?.content ?? ''}
+              onSubmit={(newContent: string) =>
+                onUpdateSweet(sweet?.id, sweet?.attachmentURL, newContent)
+              }
+              closeEdit={() => setEditing(false)}
+            />
+          ) : (
+            <>
+              <div className="sweetDetailTopInfo">
+                <Link to={`/profile/${sweet?.user?.uid}`} className="userInfo">
+                  <img
+                    alt="profile"
+                    className="profile"
+                    src={sweet?.user.profileImageURL ?? defaultProfileImageURL}
+                  />
+                  <div className="text">
+                    <span className="dname">{sweet?.user.displayName || '♥'}</span>
+                    <span className="email">@{sweet?.user?.email.split('@')[0]}</span>
+                  </div>
+                </Link>
+                <div className="rightButtons" ref={topToggleRef}>
+                  {sweet?.user.uid === user?.uid && (
+                    <>
+                      <button className="rToggleBtn" onClick={onToggleChange}>
+                        <FaEllipsisH />
+                      </button>
+                      {toggle && (
+                        <div className="buttons">
+                          <button onClick={handleDeleteSweet}>
+                            <FaTrash /> 삭제하기
+                          </button>
+                          <button onClick={() => setEditing((prev) => !prev)}>
+                            <FaPencilAlt /> 수정하기
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+              <p className="sweetDetailContent">{sweet?.content.replace(regex, '')}</p>
+              {sweet?.attachmentURL && <img alt="img" src={sweet?.attachmentURL} />}
+            </>
+          )}
+          <div className="sweetDetailInfo">
+            <div className="commentText">
+              <span>{sweet?.comments?.length}</span> 답글
+            </div>
+            <div>
+              <span>{sweet?.likes?.length}</span> 마음에 들어요
+            </div>
+          </div>
+          <SweetActionButtons
+            id={sweet?.id}
+            likesLength={sweet?.likes?.length}
+            isLiked={isLiked}
+            commentsLength={sweet?.comments.length}
+            handleLikeSweet={() => onToggleLikeSweet({ ...sweet, id: id as string })}
+            handleAddComment={() => {}}
+          />
+          <SweetCommentContainer
+            sweet={{ ...sweet, id: id as string }}
+            comments={sweet?.comments}
+          />
+        </div>
       </div>
     </div>
   );

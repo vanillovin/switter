@@ -64,9 +64,9 @@ function SweetItem({ sweet }: SweetItemProps) {
           )}
         </div>
         <Link to={`/sweet/${sweet.id}`} className="sweet__text">
-          {sweet.content}
+          <p>{sweet.content}</p>
+          {sweet.attachmentURL && <img alt="img" src={sweet.attachmentURL} />}
         </Link>
-        {sweet.attachmentURL && <img alt="img" src={sweet.attachmentURL} />}
         <>
           <SweetActionButtons
             id={sweet.id}
@@ -76,7 +76,7 @@ function SweetItem({ sweet }: SweetItemProps) {
             handleLikeSweet={() => onToggleLikeSweet(sweet)}
             handleAddComment={() => setAddComment((prev: boolean) => !prev)}
           />
-          {addComment && <SweetCommentContainer sweetId={sweet.id} comments={comments} />}
+          {addComment && <SweetCommentContainer sweet={sweet} comments={comments} />}
         </>
       </>
     </div>
