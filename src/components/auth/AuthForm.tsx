@@ -135,8 +135,8 @@ export default AuthForm;
 
 const getInitialUser = (user: User): Profile => ({
   uid: user.uid,
-  displayName: user.displayName,
   email: user.email,
+  displayName: user.displayName,
   profileImageURL: user.profileImageURL,
   about: '',
   joinedDate: Date.now(),

@@ -122,6 +122,35 @@ button {
   color: var(--mauve-8);
 }
 
+.DialogButtons {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 5px;
+}
+.auth-btn {
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: #5f3dc4ce;
+  color: white;
+  padding: 10px;
+}
+.dialog-close__btn {
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: #e4e4e4;
+  padding: 10px;
+}
+
+.auth-btn:hover {
+  background-color: #5f3dc4;
+  transition: all 0.2s linear;
+}
+.dialog-close__btn:hover {
+  background-color: #bebebe;
+  transition: all 0.2s linear;
+}
+
 @keyframes slideUpAndFade {
   from {
     opacity: 0;

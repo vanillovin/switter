@@ -5,20 +5,29 @@ import { User } from '../../types/User';
 import { authService, dbService } from './firebaseConfig';
 import { Profile, TimelineSweet } from '../../types/Profile';
 
-// 현재 사용자 프로필 업데이트
+const defaultProfileImageURL =
+  'https://firebasestorage.googleapis.com/v0/b/switter-b2db8.appspot.com/o/logo.png?alt=media&token=d636781d-a94b-4b3f-8b18-374cceacf61d';
+
+export const createSocialInitialUser = (uid: string, email: string) => {
+  return {
+    uid,
+    email,
+    displayName: '🧁',
+    profileImageURL: defaultProfileImageURL,
+    about: '',
+    joinedDate: Date.now(),
+    followers: [],
+    following: [],
+    comments: [],
+    likes: [],
+    sweets: [],
+  };
+};
+
 export const updateCurUserProfile = (user: User) => {
   return updateProfile(authService.currentUser!, user);
 };
 
-// 사용자 프로필 사진 가져오기
-// export const fetchUsersProfilePhoto = (
-//   snapshot: (snapshot: DocumentSnapshot) => void,
-//   error: (error: FirebaseError) => void
-// ) => {
-//   return onSnapshot(doc(dbService, 'users', 'profilePhoto'), snapshot, error);
-// };
-
-// 사용자 프로필 데이터 가져오기
 export const fetchProfileData = async (uid: string) => {
   try {
     const docRef = doc(dbService, 'profile', uid);
@@ -99,20 +108,3 @@ export const updateProfileField = async <K extends keyof Profile>(
     [field]: value,
   });
 };
-
-// export const updateProfilePhoto = (uid:string, url: string) => {
-//   const usersRef = collection(dbService, 'users');
-//   return updateDoc(doc(usersRef, 'profilePhoto'), {
-//     [uid]: url,
-//   });
-// };
-
-// export const updateAllUsersProfilePhoto = (obj) => {
-//   const usersRef = collection(dbService, 'users');
-//   return updateDoc(doc(usersRef, 'profilePhoto'), obj);
-// };
-
-// export const updateAllUsersProfileData = (obj) => {
-//   const usersRef = collection(dbService, 'users');
-//   return updateDoc(doc(usersRef, 'profileData'), obj);
-// };

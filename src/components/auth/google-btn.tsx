@@ -1,8 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
+
 import { authService } from '../../services/firebase/firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { defaultProfileImageURL } from './AuthForm';
+import {
+  createSocialInitialUser,
+  setProfileData,
+} from '../../services/firebase/userService';
 
 export default function GoogleButton() {
   const navigate = useNavigate();
@@ -10,10 +16,16 @@ export default function GoogleButton() {
     let provider;
     try {
       provider = new GoogleAuthProvider();
-      await signInWithPopup(authService, provider);
-      navigate('/');
+      const { user } = await signInWithPopup(authService, provider);
+      const uid = user.uid;
       // const credential = GoogleAuthProvider.credentialFromResult(result);
       // const token = credential.accessToken;
+      await updateProfile(user, {
+        displayName: '🧁',
+        photoURL: defaultProfileImageURL,
+      });
+      await setProfileData(uid, createSocialInitialUser(uid, user.email as string));
+      navigate('/');
     } catch (error) {
       console.log(error);
     }

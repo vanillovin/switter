@@ -25,19 +25,20 @@ const DialogDemo = () => {
           </label>
           <input className="Input" id="username" defaultValue="@peduarte" />
         </fieldset>
-        <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
-          <Dialog.Close asChild>
-            <button className="Button green">Save changes</button>
-          </Dialog.Close>
-        </div> */}
-          <button onClick={navigateToAuth} className="" aria-label="Close">
-            로그인·가입하기
-          </button>
-          <Dialog.Close asChild>
-            <button style={{ cursor: 'pointer' }} className="" aria-label="Close">
-              닫기
+        */}
+          <div className="DialogButtons">
+            {/* <Dialog.Close asChild>
+              <button className="Button green">Save changes</button>
+            </Dialog.Close> */}
+            <button onClick={navigateToAuth} className="auth-btn" aria-label="Close">
+              로그인·가입하기
             </button>
-          </Dialog.Close>
+            <Dialog.Close asChild>
+              <button className="dialog-close__btn" aria-label="Close">
+                닫기
+              </button>
+            </Dialog.Close>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
