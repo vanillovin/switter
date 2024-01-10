@@ -4,8 +4,10 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '../atoms/userAtom';
+import { useTheme } from '../contexts/ThemeProvider';
 
 const Message = () => {
+  const { darkMode } = useTheme();
   const user = useAtomValue(userAtom);
   const [open, setOpen] = useState(true);
   const [msg, setMsg] = useState(`${user?.displayName || 'hey'} 클릭해봐 :)`);
@@ -19,7 +21,7 @@ const Message = () => {
   const randomMsg = () => setMsg(messages[Math.floor(Math.random() * messages.length)]);
 
   return (
-    <div className="right">
+    <div className={`right ${darkMode ? 'dark' : ''}`}>
       <div className="msg-container">
         <div className="msgh">
           <span>Message</span>

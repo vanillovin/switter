@@ -1,64 +1,23 @@
-import { useEffect, useState } from 'react';
-
-import type { Sweet } from '../types/Sweet';
-import { useTheme } from '../contexts/ThemeProvider';
-import { fetchSweets } from '../services/firebase/sweetService';
+import Error from './Error';
 import SweetItem from '../components/sweet/SweetItem';
+import LoadingScreen from '../components/LoadingScreen';
 import SweetFactory from '../components/sweet/SweetFactory';
-
-type SweetsState = {
-  loading: boolean;
-  data: Sweet[] | null;
-  error: Error | null;
-};
+import { useTheme } from '../contexts/ThemeProvider';
+import { useSweets } from '../hooks/useFetchSweets';
 
 function Home() {
   const { darkMode } = useTheme();
-  const [sweets, setSweets] = useState<SweetsState>({
-    loading: true,
-    data: null,
-    error: null,
-  });
-  const { data } = sweets;
+  const { loading, error, data: sweets, retry } = useSweets();
 
-  // const clearSweets = () => setSweets(initialSweets);
+  if (loading) return <LoadingScreen msg="스윗을 불러오는 중" />;
 
-  useEffect(() => {
-    fetchSweets(
-      (snapshot) => {
-        const sweets = snapshot.docs.map((doc) => {
-          // console.log(doc.id, doc.data());
-          return {
-            id: doc.id,
-            ...doc.data(),
-          };
-        });
-        setSweets((prev: any) => ({
-          ...prev,
-          loading: false,
-          data: sweets,
-        }));
-      },
-      (err) => {
-        setSweets((prev) => ({
-          ...prev,
-          loading: false,
-          error: err,
-        }));
-      }
-    );
-
-    // return () => {
-    //   fetchSweets();
-    //   clearSweets();
-    // };
-  }, []);
+  if (error) return <Error msg={error.message} onRetry={retry} />;
 
   return (
     <div className={darkMode ? 'container dark' : 'container'}>
       <SweetFactory />
       <div className="sweet-container" style={{ marginTop: 30 }}>
-        {data?.map((sweet, i) => (
+        {sweets?.map((sweet, i) => (
           <SweetItem key={i} sweet={sweet} />
         ))}
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   query,
   collection,
@@ -22,7 +22,9 @@ export const useSweets = () => {
     error: null,
   });
 
-  useEffect(() => {
+  const [retryCount, setRetryCount] = useState(0);
+
+  const fetchData = useCallback(() => {
     const q = query(collection(dbService, 'sweets'), orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(
       q,
@@ -34,12 +36,22 @@ export const useSweets = () => {
         setSweets({ loading: false, data: sweetsData, error: null });
       },
       (error: FirestoreError) => {
-        setSweets({ loading: false, data: null, error });
+        // console.log('fetchDateError retryCount:', retryCount);
+        if (retryCount < 3) {
+          setRetryCount(retryCount + 1);
+          fetchData();
+        } else {
+          setSweets({ loading: false, data: null, error });
+        }
       }
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [retryCount]);
 
-  return sweets;
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { ...sweets, retry: fetchData };
 };
